@@ -1,0 +1,49 @@
+{
+  "name": "fast-four",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fast Four (internal name: NPAT Arena): real-time Name, Place, Animal, Thing word game",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm test --workspace shared --workspace server --workspace client",
+    "test:e2e": "echo \"e2e tests arrive in Phase 5\" && exit 0",
+    "dictionary:build": "echo \"dictionary:build arrives in Phase 3\" && exit 1",
+    "dictionary:seed": "echo \"dictionary:seed arrives in Phase 3\" && exit 1",
+    "prepare": "husky || true"
+  },
+  "lint-staged": {
+    "*.{js,jsx,mjs,cjs}": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ],
+    "*.{json,md,css,yml,yaml,html}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "concurrently": "^10.0.6",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10"
+  }
+}

@@ -1,0 +1,54 @@
+/* Every colour is a CSS variable with a light and a dark set. Values come from the approved designs. */
+:root,
+[data-theme='light'] {
+  --ff-bg: #eef3ff;
+  --ff-card: #ffffff;
+  --ff-text: #1b2250;
+  --ff-muted: #565f8c;
+  --ff-line: #d3dbf4;
+  --ff-link: #2f66f5;
+  --ff-name: #2f66f5;
+  --ff-place: #1fa463;
+  --ff-animal: #ffc247;
+  --ff-thing: #e8473f;
+  --ff-symbol: #ffffff;
+  --ff-font-heading: 'Baloo 2', system-ui, sans-serif;
+  --ff-font-text: 'Nunito', system-ui, sans-serif;
+}
+
+[data-theme='dark'] {
+  --ff-bg: #121633;
+  --ff-card: #1c2147;
+  --ff-text: #eef3ff;
+  --ff-muted: #a2a9ce;
+  --ff-line: #2e3566;
+  --ff-link: #8aa9ff;
+  --ff-name: #3460d8;
+  --ff-place: #24935b;
+  --ff-animal: #e8b04a;
+  --ff-thing: #d24a43;
+  --ff-symbol: #121633;
+}
+
+html,
+body,
+#root {
+  min-height: 100dvh;
+}
+
+body {
+  margin: 0;
+  background: var(--ff-bg);
+  color: var(--ff-text);
+  font-family: var(--ff-font-text);
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+.ff-heading {
+  font-family: var(--ff-font-heading);
+  font-weight: 700;
+}

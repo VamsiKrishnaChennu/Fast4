@@ -1,0 +1,6 @@
+node_modules
+client/dist
+coverage
+package-lock.json
+docs/design
+client/public

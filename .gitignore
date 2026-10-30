@@ -1,0 +1,15 @@
+node_modules
+.env
+.env.*
+!.env.example
+client/dist
+coverage
+playwright-report
+test-results
+*.log
+.DS_Store
+*.keystore
+*.jks
+android/build
+android/*.aab
+android/*.apk
