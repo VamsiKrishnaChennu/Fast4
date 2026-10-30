@@ -16,3 +16,6 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Hosting (default):** Render, region Singapore; Atlas in a nearby Singapore region.
 - **ESLint:** pinned to 9 (eslint-plugin-react does not support 10).
 - **Designs still to create** (in the phase that needs them, in both themes): Forgot password, Check your email, Reset password, Link expired (Phase 2); Terms of use page, Edit nickname, About/WordNet notice, Profile dark-mode row (Phase 9/12).
+- **Mongo URI:** `mongodb://localhost:27017/npatarena`. The string `mongodb://localhost:27017/npat/npatarena` is not valid because a database name cannot contain a slash; the first path segment would be taken as the database.
+- **.env files** are git-ignored (`.env`, `.env.*`, only `.env.example` is tracked) and kept only on the local machine and in host secrets.
+- **Phase 1 sandbox limit:** the build sandbox cannot download the MongoDB binary, so database-backed integration tests run in CI.

@@ -8,7 +8,7 @@ Stack: MongoDB, Express, React 18 (Vite), Node 22, Socket.IO 4, Bootstrap 5, Jav
 
 1. Install Node 22 (`nvm use`), Git and Docker.
 2. `npm install`
-3. `cp server/.env.example server/.env` and `cp client/.env.example client/.env`
+3. `cp server/.env.example server/.env` and `cp client/.env.example client/.env`, then replace the two JWT secrets with long random strings (`node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"`). `.env` files are git-ignored and must never be committed.
 4. `docker compose up mongo -d` (local database `npatarena`)
 5. `npm run dev` (server on 4000, client on 5173)
 

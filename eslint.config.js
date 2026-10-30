@@ -12,6 +12,7 @@ export default [
       'coverage/**',
       'docs/design/**',
       'client/public/**',
+      'server/tests/fixtures/**',
     ],
   },
   js.configs.recommended,
