@@ -8,11 +8,22 @@
     ".": "./index.js"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js --passWithNoTests"
+    "test": "node --experimental-vm-modules ../node_modules/jest/bin/jest.js --coverage"
   },
   "jest": {
     "testEnvironment": "node",
-    "transform": {}
+    "transform": {},
+    "collectCoverageFrom": [
+      "src/normalize.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "lines": 100,
+        "branches": 100,
+        "functions": 100,
+        "statements": 100
+      }
+    }
   },
   "devDependencies": {
     "jest": "^30.5.2"

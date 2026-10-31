@@ -5,3 +5,4 @@ package-lock.json
 docs/design
 client/public
 tests/fixtures
+server/data/dictionary/*.txt

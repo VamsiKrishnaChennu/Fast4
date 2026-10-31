@@ -1,0 +1,9 @@
+# Curated first names (international, with many Indian names). Commas or new lines separate entries.
+Aarav, Aarti, Abdul, Abhay, Abhishek, Aditi, Aditya, Ahmed, Aisha, Ajay, Akash, Akira, Alejandro, Alexei, Ali, Amar, Amit, Amita, Ananya, Anil, Anita, Anjali, Ankit, Anwar, Arjun, Arun, Aryan, Asha, Ashok, Ayesha
+Bhavna, Bimal, Chandra, Chen, Chennu, Chitra, Deepak, Deepika, Devi, Dhruv, Diya, Divya, Dmitri, Elena, Esha, Farhan, Fatima, Gaurav, Gayatri, Girish, Gita, Gopal, Hamza, Hana, Hari, Harish, Hassan, Hina, Hiroshi
+Ibrahim, Indira, Ishaan, Isha, Jagdish, Jai, Jamal, Jaya, Jin, Jyoti, Kabir, Kamal, Kavita, Kiran, Kishore, Krishna, Kunal, Lakshmi, Lalit, Laila, Li, Mahesh, Malini, Manish, Mansi, Mei, Meera, Mehul, Mira, Mohan, Mohammed
+Mukesh, Nadia, Naveen, Neha, Nikhil, Nikita, Nisha, Omar, Pooja, Prakash, Pranav, Prasad, Priya, Rahul, Raj, Rajesh, Rakesh, Ramesh, Ravi, Rekha, Rohan, Rohit, Sachin, Sai, Sanjay, Sanjana, Sarita, Satish, Seema, Shanti
+Sheela, Shiva, Shreya, Siddharth, Sita, Sneha, Sunil, Suresh, Tanvi, Tariq, Uma, Usha, Vamsi, Varun, Vijay, Vikram, Vinay, Vishal, Yash, Yusuf, Zara, Zoya, Aiko, Akiko, Hiro, Yuki, Sakura, Kenji, Haruto, Wei, Ming, Xin, Yan
+Jun, Min, Soo, Hyun, Seo, Carlos, Diego, Fernando, Gabriela, Hugo, Isabella, Javier, Lucia, Mateo, Pablo, Sofia, Valentina, Pierre, Camille, Chloe, Giovanni, Giulia, Luca, Marco, Hans, Greta, Klaus, Lars, Ingrid, Olga, Natasha
+Ivan, Svetlana, Layla, Zainab, Khalid, Mustafa, Noor, Samira, Kwame, Amara, Chinedu, Ngozi, Thabo, Tara, Tina, Tom, Sam, Sara, Sarah, Maya, Mia, Leo, Liam, Noah, Emma, Olivia, Ava, Ben, Bella, Chris, Carl, Cy, Dev, Eva
+Alex, Adam, Amy, Ana, Anna, Abel, Ann, Ben, Cat, Dan, Don, Ed, Eli, Gus, Hal, Ian, Jack, Jon, Ken, Lee, Max, Nick, Pat, Ray, Rob, Sid, Tim, Val, Will, Zane

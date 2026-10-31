@@ -21,9 +21,10 @@
     "format:check": "prettier --check .",
     "test": "npm test --workspace shared --workspace server --workspace client",
     "test:e2e": "npm run build && playwright test --config e2e/playwright.config.js",
-    "dictionary:build": "echo \"dictionary:build arrives in Phase 3\" && exit 1",
-    "dictionary:seed": "echo \"dictionary:seed arrives in Phase 3\" && exit 1",
-    "prepare": "husky || true"
+    "dictionary:build": "node server/scripts/buildDictionary.js",
+    "dictionary:seed": "node server/scripts/seedDictionary.js",
+    "prepare": "husky || true",
+    "judge:evaluate": "node server/scripts/judgeEvaluate.js"
   },
   "lint-staged": {
     "*.{js,jsx,mjs,cjs}": [

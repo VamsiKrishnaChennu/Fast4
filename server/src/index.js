@@ -6,6 +6,7 @@ import { createApp } from './app.js';
 import { connectWithRetry, disconnectDb, isDbConnected } from './config/db.js';
 import { EnvError, loadEnv, loadEnvFile } from './config/env.js';
 import { createLogger } from './config/logger.js';
+import { createDictionaryService } from './services/dictionaryService.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 loadEnvFile(path.join(here, '..', '.env'));
@@ -26,11 +27,17 @@ const clientDist = path.join(here, '..', '..', 'client', 'dist');
 
 async function main() {
   await connectWithRetry({ uri: env.MONGODB_URI, isProduction: env.isProduction, logger });
+  const dictionary = createDictionaryService();
+  await dictionary.init();
+  logger.info({ words: dictionary.counts() }, 'dictionary loaded');
 
   const app = createApp({
     env,
     logger,
-    readinessChecks: [{ name: 'database', check: isDbConnected }],
+    readinessChecks: [
+      { name: 'database', check: isDbConnected },
+      { name: 'dictionary', check: () => dictionary.isReady() },
+    ],
     clientDist: existsSync(clientDist) ? clientDist : undefined,
   });
   const server = http.createServer(app);

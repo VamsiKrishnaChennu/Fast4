@@ -1,0 +1,1610 @@
+{
+  "name": [
+    {
+      "word": "sam",
+      "expected": "valid"
+    },
+    {
+      "word": "priya",
+      "expected": "valid"
+    },
+    {
+      "word": "arjun",
+      "expected": "valid"
+    },
+    {
+      "word": "fatima",
+      "expected": "valid"
+    },
+    {
+      "word": "hiroshi",
+      "expected": "valid"
+    },
+    {
+      "word": "olga",
+      "expected": "valid"
+    },
+    {
+      "word": "mateo",
+      "expected": "valid"
+    },
+    {
+      "word": "chloe",
+      "expected": "valid"
+    },
+    {
+      "word": "amara",
+      "expected": "valid"
+    },
+    {
+      "word": "kwame",
+      "expected": "valid"
+    },
+    {
+      "word": "zainab",
+      "expected": "valid"
+    },
+    {
+      "word": "ananya",
+      "expected": "valid"
+    },
+    {
+      "word": "rohan",
+      "expected": "valid"
+    },
+    {
+      "word": "sofia",
+      "expected": "valid"
+    },
+    {
+      "word": "liam",
+      "expected": "valid"
+    },
+    {
+      "word": "noah",
+      "expected": "valid"
+    },
+    {
+      "word": "emma",
+      "expected": "valid"
+    },
+    {
+      "word": "olivia",
+      "expected": "valid"
+    },
+    {
+      "word": "ava",
+      "expected": "valid"
+    },
+    {
+      "word": "mia",
+      "expected": "valid"
+    },
+    {
+      "word": "leo",
+      "expected": "valid"
+    },
+    {
+      "word": "diya",
+      "expected": "valid"
+    },
+    {
+      "word": "aarav",
+      "expected": "valid"
+    },
+    {
+      "word": "vikram",
+      "expected": "valid"
+    },
+    {
+      "word": "meera",
+      "expected": "valid"
+    },
+    {
+      "word": "kavita",
+      "expected": "valid"
+    },
+    {
+      "word": "ibrahim",
+      "expected": "valid"
+    },
+    {
+      "word": "yusuf",
+      "expected": "valid"
+    },
+    {
+      "word": "layla",
+      "expected": "valid"
+    },
+    {
+      "word": "giulia",
+      "expected": "valid"
+    },
+    {
+      "word": "lars",
+      "expected": "valid"
+    },
+    {
+      "word": "ingrid",
+      "expected": "valid"
+    },
+    {
+      "word": "svetlana",
+      "expected": "valid"
+    },
+    {
+      "word": "dmitri",
+      "expected": "valid"
+    },
+    {
+      "word": "carlos",
+      "expected": "valid"
+    },
+    {
+      "word": "pablo",
+      "expected": "valid"
+    },
+    {
+      "word": "valentina",
+      "expected": "valid"
+    },
+    {
+      "word": "pierre",
+      "expected": "valid"
+    },
+    {
+      "word": "camille",
+      "expected": "valid"
+    },
+    {
+      "word": "hans",
+      "expected": "valid"
+    },
+    {
+      "word": "greta",
+      "expected": "valid"
+    },
+    {
+      "word": "thabo",
+      "expected": "valid"
+    },
+    {
+      "word": "ngozi",
+      "expected": "valid"
+    },
+    {
+      "word": "chinedu",
+      "expected": "valid"
+    },
+    {
+      "word": "akira",
+      "expected": "valid"
+    },
+    {
+      "word": "sakura",
+      "expected": "valid"
+    },
+    {
+      "word": "wei",
+      "expected": "valid"
+    },
+    {
+      "word": "mei",
+      "expected": "valid"
+    },
+    {
+      "word": "jin",
+      "expected": "valid"
+    },
+    {
+      "word": "hyun",
+      "expected": "valid"
+    },
+    {
+      "word": "xqzvt",
+      "expected": "invalid"
+    },
+    {
+      "word": "asdfgh",
+      "expected": "invalid"
+    },
+    {
+      "word": "wxyzq",
+      "expected": "invalid"
+    },
+    {
+      "word": "zzzz",
+      "expected": "invalid"
+    },
+    {
+      "word": "qwerty",
+      "expected": "invalid"
+    },
+    {
+      "word": "blorptown",
+      "expected": "invalid"
+    },
+    {
+      "word": "fnargle",
+      "expected": "invalid"
+    },
+    {
+      "word": "zxcvb",
+      "expected": "invalid"
+    },
+    {
+      "word": "plorbo",
+      "expected": "invalid"
+    },
+    {
+      "word": "grunkle",
+      "expected": "invalid"
+    },
+    {
+      "word": "spatula",
+      "expected": "invalid"
+    },
+    {
+      "word": "keyboard",
+      "expected": "invalid"
+    },
+    {
+      "word": "mattress",
+      "expected": "invalid"
+    },
+    {
+      "word": "tractor",
+      "expected": "invalid"
+    },
+    {
+      "word": "staircase",
+      "expected": "invalid"
+    },
+    {
+      "word": "blanket",
+      "expected": "invalid"
+    },
+    {
+      "word": "pencil",
+      "expected": "invalid"
+    },
+    {
+      "word": "bottle",
+      "expected": "invalid"
+    },
+    {
+      "word": "fridge",
+      "expected": "invalid"
+    },
+    {
+      "word": "window",
+      "expected": "invalid"
+    },
+    {
+      "word": "chair",
+      "expected": "invalid"
+    },
+    {
+      "word": "kitchen",
+      "expected": "invalid"
+    },
+    {
+      "word": "sandwich",
+      "expected": "invalid"
+    },
+    {
+      "word": "hospital",
+      "expected": "invalid"
+    },
+    {
+      "word": "calendar",
+      "expected": "invalid"
+    },
+    {
+      "word": "bicycle",
+      "expected": "invalid"
+    },
+    {
+      "word": "umbrella",
+      "expected": "invalid"
+    },
+    {
+      "word": "violin",
+      "expected": "invalid"
+    },
+    {
+      "word": "ladder",
+      "expected": "invalid"
+    },
+    {
+      "word": "scissors",
+      "expected": "invalid"
+    },
+    {
+      "word": "kettle",
+      "expected": "invalid"
+    },
+    {
+      "word": "bucket",
+      "expected": "invalid"
+    },
+    {
+      "word": "compass",
+      "expected": "invalid"
+    },
+    {
+      "word": "envelope",
+      "expected": "invalid"
+    },
+    {
+      "word": "helmet",
+      "expected": "invalid"
+    },
+    {
+      "word": "magnet",
+      "expected": "invalid"
+    },
+    {
+      "word": "notebook",
+      "expected": "invalid"
+    },
+    {
+      "word": "ribbon",
+      "expected": "invalid"
+    },
+    {
+      "word": "telescope",
+      "expected": "invalid"
+    },
+    {
+      "word": "toothbrush",
+      "expected": "invalid"
+    },
+    {
+      "word": "trumpet",
+      "expected": "invalid"
+    },
+    {
+      "word": "wallet",
+      "expected": "invalid"
+    },
+    {
+      "word": "whistle",
+      "expected": "invalid"
+    },
+    {
+      "word": "lantern",
+      "expected": "invalid"
+    },
+    {
+      "word": "teapot",
+      "expected": "invalid"
+    },
+    {
+      "word": "hammer",
+      "expected": "invalid"
+    },
+    {
+      "word": "pillow",
+      "expected": "invalid"
+    },
+    {
+      "word": "mirror",
+      "expected": "invalid"
+    },
+    {
+      "word": "lamp",
+      "expected": "invalid"
+    },
+    {
+      "word": "quickly",
+      "expected": "invalid"
+    }
+  ],
+  "place": [
+    {
+      "word": "paris",
+      "expected": "valid"
+    },
+    {
+      "word": "london",
+      "expected": "valid"
+    },
+    {
+      "word": "tokyo",
+      "expected": "valid"
+    },
+    {
+      "word": "canada",
+      "expected": "valid"
+    },
+    {
+      "word": "kerala",
+      "expected": "valid"
+    },
+    {
+      "word": "sirsi",
+      "expected": "valid"
+    },
+    {
+      "word": "nile",
+      "expected": "valid"
+    },
+    {
+      "word": "everest",
+      "expected": "valid"
+    },
+    {
+      "word": "sahara",
+      "expected": "valid"
+    },
+    {
+      "word": "delhi",
+      "expected": "valid"
+    },
+    {
+      "word": "mumbai",
+      "expected": "valid"
+    },
+    {
+      "word": "texas",
+      "expected": "valid"
+    },
+    {
+      "word": "france",
+      "expected": "valid"
+    },
+    {
+      "word": "japan",
+      "expected": "valid"
+    },
+    {
+      "word": "brazil",
+      "expected": "valid"
+    },
+    {
+      "word": "amazon",
+      "expected": "valid"
+    },
+    {
+      "word": "alps",
+      "expected": "valid"
+    },
+    {
+      "word": "himalayas",
+      "expected": "valid"
+    },
+    {
+      "word": "ganges",
+      "expected": "valid"
+    },
+    {
+      "word": "bangalore",
+      "expected": "valid"
+    },
+    {
+      "word": "chennai",
+      "expected": "valid"
+    },
+    {
+      "word": "hyderabad",
+      "expected": "valid"
+    },
+    {
+      "word": "california",
+      "expected": "valid"
+    },
+    {
+      "word": "florida",
+      "expected": "valid"
+    },
+    {
+      "word": "sydney",
+      "expected": "valid"
+    },
+    {
+      "word": "berlin",
+      "expected": "valid"
+    },
+    {
+      "word": "madrid",
+      "expected": "valid"
+    },
+    {
+      "word": "rome",
+      "expected": "valid"
+    },
+    {
+      "word": "cairo",
+      "expected": "valid"
+    },
+    {
+      "word": "lagos",
+      "expected": "valid"
+    },
+    {
+      "word": "nairobi",
+      "expected": "valid"
+    },
+    {
+      "word": "lima",
+      "expected": "valid"
+    },
+    {
+      "word": "oslo",
+      "expected": "valid"
+    },
+    {
+      "word": "vienna",
+      "expected": "valid"
+    },
+    {
+      "word": "prague",
+      "expected": "valid"
+    },
+    {
+      "word": "dublin",
+      "expected": "valid"
+    },
+    {
+      "word": "geneva",
+      "expected": "valid"
+    },
+    {
+      "word": "kyoto",
+      "expected": "valid"
+    },
+    {
+      "word": "osaka",
+      "expected": "valid"
+    },
+    {
+      "word": "seoul",
+      "expected": "valid"
+    },
+    {
+      "word": "beijing",
+      "expected": "valid"
+    },
+    {
+      "word": "jakarta",
+      "expected": "valid"
+    },
+    {
+      "word": "manila",
+      "expected": "valid"
+    },
+    {
+      "word": "hanoi",
+      "expected": "valid"
+    },
+    {
+      "word": "bali",
+      "expected": "valid"
+    },
+    {
+      "word": "sicily",
+      "expected": "valid"
+    },
+    {
+      "word": "iceland",
+      "expected": "valid"
+    },
+    {
+      "word": "greenland",
+      "expected": "valid"
+    },
+    {
+      "word": "tasmania",
+      "expected": "valid"
+    },
+    {
+      "word": "mysore",
+      "expected": "valid"
+    },
+    {
+      "word": "xqzvt",
+      "expected": "invalid"
+    },
+    {
+      "word": "asdfgh",
+      "expected": "invalid"
+    },
+    {
+      "word": "wxyzq",
+      "expected": "invalid"
+    },
+    {
+      "word": "zzzz",
+      "expected": "invalid"
+    },
+    {
+      "word": "qwerty",
+      "expected": "invalid"
+    },
+    {
+      "word": "blorptown",
+      "expected": "invalid"
+    },
+    {
+      "word": "fnargle",
+      "expected": "invalid"
+    },
+    {
+      "word": "zxcvb",
+      "expected": "invalid"
+    },
+    {
+      "word": "plorbo",
+      "expected": "invalid"
+    },
+    {
+      "word": "grunkle",
+      "expected": "invalid"
+    },
+    {
+      "word": "spatula",
+      "expected": "invalid"
+    },
+    {
+      "word": "keyboard",
+      "expected": "invalid"
+    },
+    {
+      "word": "mattress",
+      "expected": "invalid"
+    },
+    {
+      "word": "tractor",
+      "expected": "invalid"
+    },
+    {
+      "word": "staircase",
+      "expected": "invalid"
+    },
+    {
+      "word": "blanket",
+      "expected": "invalid"
+    },
+    {
+      "word": "pencil",
+      "expected": "invalid"
+    },
+    {
+      "word": "bottle",
+      "expected": "invalid"
+    },
+    {
+      "word": "fridge",
+      "expected": "invalid"
+    },
+    {
+      "word": "window",
+      "expected": "invalid"
+    },
+    {
+      "word": "chair",
+      "expected": "invalid"
+    },
+    {
+      "word": "kitchen",
+      "expected": "invalid"
+    },
+    {
+      "word": "sandwich",
+      "expected": "invalid"
+    },
+    {
+      "word": "hospital",
+      "expected": "invalid"
+    },
+    {
+      "word": "calendar",
+      "expected": "invalid"
+    },
+    {
+      "word": "bicycle",
+      "expected": "invalid"
+    },
+    {
+      "word": "umbrella",
+      "expected": "invalid"
+    },
+    {
+      "word": "violin",
+      "expected": "invalid"
+    },
+    {
+      "word": "ladder",
+      "expected": "invalid"
+    },
+    {
+      "word": "scissors",
+      "expected": "invalid"
+    },
+    {
+      "word": "kettle",
+      "expected": "invalid"
+    },
+    {
+      "word": "bucket",
+      "expected": "invalid"
+    },
+    {
+      "word": "compass",
+      "expected": "invalid"
+    },
+    {
+      "word": "envelope",
+      "expected": "invalid"
+    },
+    {
+      "word": "helmet",
+      "expected": "invalid"
+    },
+    {
+      "word": "magnet",
+      "expected": "invalid"
+    },
+    {
+      "word": "notebook",
+      "expected": "invalid"
+    },
+    {
+      "word": "ribbon",
+      "expected": "invalid"
+    },
+    {
+      "word": "telescope",
+      "expected": "invalid"
+    },
+    {
+      "word": "toothbrush",
+      "expected": "invalid"
+    },
+    {
+      "word": "trumpet",
+      "expected": "invalid"
+    },
+    {
+      "word": "wallet",
+      "expected": "invalid"
+    },
+    {
+      "word": "whistle",
+      "expected": "invalid"
+    },
+    {
+      "word": "lantern",
+      "expected": "invalid"
+    },
+    {
+      "word": "teapot",
+      "expected": "invalid"
+    },
+    {
+      "word": "hammer",
+      "expected": "invalid"
+    },
+    {
+      "word": "pillow",
+      "expected": "invalid"
+    },
+    {
+      "word": "mirror",
+      "expected": "invalid"
+    },
+    {
+      "word": "lamp",
+      "expected": "invalid"
+    },
+    {
+      "word": "quickly",
+      "expected": "invalid"
+    }
+  ],
+  "animal": [
+    {
+      "word": "tiger",
+      "expected": "valid"
+    },
+    {
+      "word": "lion",
+      "expected": "valid"
+    },
+    {
+      "word": "elephant",
+      "expected": "valid"
+    },
+    {
+      "word": "axolotl",
+      "expected": "valid"
+    },
+    {
+      "word": "pangolin",
+      "expected": "valid"
+    },
+    {
+      "word": "narwhal",
+      "expected": "valid"
+    },
+    {
+      "word": "quokka",
+      "expected": "valid"
+    },
+    {
+      "word": "platypus",
+      "expected": "valid"
+    },
+    {
+      "word": "wolf",
+      "expected": "valid"
+    },
+    {
+      "word": "fox",
+      "expected": "valid"
+    },
+    {
+      "word": "horse",
+      "expected": "valid"
+    },
+    {
+      "word": "cow",
+      "expected": "valid"
+    },
+    {
+      "word": "snake",
+      "expected": "valid"
+    },
+    {
+      "word": "eagle",
+      "expected": "valid"
+    },
+    {
+      "word": "shark",
+      "expected": "valid"
+    },
+    {
+      "word": "dolphin",
+      "expected": "valid"
+    },
+    {
+      "word": "penguin",
+      "expected": "valid"
+    },
+    {
+      "word": "giraffe",
+      "expected": "valid"
+    },
+    {
+      "word": "zebra",
+      "expected": "valid"
+    },
+    {
+      "word": "kangaroo",
+      "expected": "valid"
+    },
+    {
+      "word": "koala",
+      "expected": "valid"
+    },
+    {
+      "word": "panda",
+      "expected": "valid"
+    },
+    {
+      "word": "sloth",
+      "expected": "valid"
+    },
+    {
+      "word": "otter",
+      "expected": "valid"
+    },
+    {
+      "word": "beaver",
+      "expected": "valid"
+    },
+    {
+      "word": "badger",
+      "expected": "valid"
+    },
+    {
+      "word": "meerkat",
+      "expected": "valid"
+    },
+    {
+      "word": "okapi",
+      "expected": "valid"
+    },
+    {
+      "word": "tapir",
+      "expected": "valid"
+    },
+    {
+      "word": "lemur",
+      "expected": "valid"
+    },
+    {
+      "word": "gecko",
+      "expected": "valid"
+    },
+    {
+      "word": "iguana",
+      "expected": "valid"
+    },
+    {
+      "word": "cobra",
+      "expected": "valid"
+    },
+    {
+      "word": "python",
+      "expected": "valid"
+    },
+    {
+      "word": "salmon",
+      "expected": "valid"
+    },
+    {
+      "word": "trout",
+      "expected": "valid"
+    },
+    {
+      "word": "lobster",
+      "expected": "valid"
+    },
+    {
+      "word": "octopus",
+      "expected": "valid"
+    },
+    {
+      "word": "jellyfish",
+      "expected": "valid"
+    },
+    {
+      "word": "butterfly",
+      "expected": "valid"
+    },
+    {
+      "word": "beetle",
+      "expected": "valid"
+    },
+    {
+      "word": "spider",
+      "expected": "valid"
+    },
+    {
+      "word": "scorpion",
+      "expected": "valid"
+    },
+    {
+      "word": "hedgehog",
+      "expected": "valid"
+    },
+    {
+      "word": "mongoose",
+      "expected": "valid"
+    },
+    {
+      "word": "chameleon",
+      "expected": "valid"
+    },
+    {
+      "word": "flamingo",
+      "expected": "valid"
+    },
+    {
+      "word": "toucan",
+      "expected": "valid"
+    },
+    {
+      "word": "ostrich",
+      "expected": "valid"
+    },
+    {
+      "word": "vulture",
+      "expected": "valid"
+    },
+    {
+      "word": "xqzvt",
+      "expected": "invalid"
+    },
+    {
+      "word": "asdfgh",
+      "expected": "invalid"
+    },
+    {
+      "word": "wxyzq",
+      "expected": "invalid"
+    },
+    {
+      "word": "zzzz",
+      "expected": "invalid"
+    },
+    {
+      "word": "qwerty",
+      "expected": "invalid"
+    },
+    {
+      "word": "blorptown",
+      "expected": "invalid"
+    },
+    {
+      "word": "fnargle",
+      "expected": "invalid"
+    },
+    {
+      "word": "zxcvb",
+      "expected": "invalid"
+    },
+    {
+      "word": "plorbo",
+      "expected": "invalid"
+    },
+    {
+      "word": "grunkle",
+      "expected": "invalid"
+    },
+    {
+      "word": "spatula",
+      "expected": "invalid"
+    },
+    {
+      "word": "keyboard",
+      "expected": "invalid"
+    },
+    {
+      "word": "mattress",
+      "expected": "invalid"
+    },
+    {
+      "word": "tractor",
+      "expected": "invalid"
+    },
+    {
+      "word": "staircase",
+      "expected": "invalid"
+    },
+    {
+      "word": "blanket",
+      "expected": "invalid"
+    },
+    {
+      "word": "pencil",
+      "expected": "invalid"
+    },
+    {
+      "word": "bottle",
+      "expected": "invalid"
+    },
+    {
+      "word": "fridge",
+      "expected": "invalid"
+    },
+    {
+      "word": "window",
+      "expected": "invalid"
+    },
+    {
+      "word": "chair",
+      "expected": "invalid"
+    },
+    {
+      "word": "kitchen",
+      "expected": "invalid"
+    },
+    {
+      "word": "sandwich",
+      "expected": "invalid"
+    },
+    {
+      "word": "hospital",
+      "expected": "invalid"
+    },
+    {
+      "word": "calendar",
+      "expected": "invalid"
+    },
+    {
+      "word": "bicycle",
+      "expected": "invalid"
+    },
+    {
+      "word": "umbrella",
+      "expected": "invalid"
+    },
+    {
+      "word": "violin",
+      "expected": "invalid"
+    },
+    {
+      "word": "ladder",
+      "expected": "invalid"
+    },
+    {
+      "word": "scissors",
+      "expected": "invalid"
+    },
+    {
+      "word": "kettle",
+      "expected": "invalid"
+    },
+    {
+      "word": "bucket",
+      "expected": "invalid"
+    },
+    {
+      "word": "compass",
+      "expected": "invalid"
+    },
+    {
+      "word": "envelope",
+      "expected": "invalid"
+    },
+    {
+      "word": "helmet",
+      "expected": "invalid"
+    },
+    {
+      "word": "magnet",
+      "expected": "invalid"
+    },
+    {
+      "word": "notebook",
+      "expected": "invalid"
+    },
+    {
+      "word": "ribbon",
+      "expected": "invalid"
+    },
+    {
+      "word": "telescope",
+      "expected": "invalid"
+    },
+    {
+      "word": "toothbrush",
+      "expected": "invalid"
+    },
+    {
+      "word": "trumpet",
+      "expected": "invalid"
+    },
+    {
+      "word": "wallet",
+      "expected": "invalid"
+    },
+    {
+      "word": "whistle",
+      "expected": "invalid"
+    },
+    {
+      "word": "lantern",
+      "expected": "invalid"
+    },
+    {
+      "word": "teapot",
+      "expected": "invalid"
+    },
+    {
+      "word": "hammer",
+      "expected": "invalid"
+    },
+    {
+      "word": "pillow",
+      "expected": "invalid"
+    },
+    {
+      "word": "mirror",
+      "expected": "invalid"
+    },
+    {
+      "word": "lamp",
+      "expected": "invalid"
+    },
+    {
+      "word": "quickly",
+      "expected": "invalid"
+    }
+  ],
+  "thing": [
+    {
+      "word": "table",
+      "expected": "valid"
+    },
+    {
+      "word": "spoon",
+      "expected": "valid"
+    },
+    {
+      "word": "chair",
+      "expected": "valid"
+    },
+    {
+      "word": "umbrella",
+      "expected": "valid"
+    },
+    {
+      "word": "sitar",
+      "expected": "valid"
+    },
+    {
+      "word": "bicycle",
+      "expected": "valid"
+    },
+    {
+      "word": "window",
+      "expected": "valid"
+    },
+    {
+      "word": "bottle",
+      "expected": "valid"
+    },
+    {
+      "word": "pencil",
+      "expected": "valid"
+    },
+    {
+      "word": "calendar",
+      "expected": "valid"
+    },
+    {
+      "word": "fridge",
+      "expected": "valid"
+    },
+    {
+      "word": "violin",
+      "expected": "valid"
+    },
+    {
+      "word": "piano",
+      "expected": "valid"
+    },
+    {
+      "word": "guitar",
+      "expected": "valid"
+    },
+    {
+      "word": "lamp",
+      "expected": "valid"
+    },
+    {
+      "word": "clock",
+      "expected": "valid"
+    },
+    {
+      "word": "mirror",
+      "expected": "valid"
+    },
+    {
+      "word": "blanket",
+      "expected": "valid"
+    },
+    {
+      "word": "pillow",
+      "expected": "valid"
+    },
+    {
+      "word": "ladder",
+      "expected": "valid"
+    },
+    {
+      "word": "hammer",
+      "expected": "valid"
+    },
+    {
+      "word": "scissors",
+      "expected": "valid"
+    },
+    {
+      "word": "kettle",
+      "expected": "valid"
+    },
+    {
+      "word": "bucket",
+      "expected": "valid"
+    },
+    {
+      "word": "basket",
+      "expected": "valid"
+    },
+    {
+      "word": "candle",
+      "expected": "valid"
+    },
+    {
+      "word": "compass",
+      "expected": "valid"
+    },
+    {
+      "word": "envelope",
+      "expected": "valid"
+    },
+    {
+      "word": "helmet",
+      "expected": "valid"
+    },
+    {
+      "word": "jacket",
+      "expected": "valid"
+    },
+    {
+      "word": "keyboard",
+      "expected": "valid"
+    },
+    {
+      "word": "magnet",
+      "expected": "valid"
+    },
+    {
+      "word": "necklace",
+      "expected": "valid"
+    },
+    {
+      "word": "notebook",
+      "expected": "valid"
+    },
+    {
+      "word": "ribbon",
+      "expected": "valid"
+    },
+    {
+      "word": "saucer",
+      "expected": "valid"
+    },
+    {
+      "word": "telescope",
+      "expected": "valid"
+    },
+    {
+      "word": "thermos",
+      "expected": "valid"
+    },
+    {
+      "word": "toothbrush",
+      "expected": "valid"
+    },
+    {
+      "word": "trumpet",
+      "expected": "valid"
+    },
+    {
+      "word": "vase",
+      "expected": "valid"
+    },
+    {
+      "word": "wallet",
+      "expected": "valid"
+    },
+    {
+      "word": "whistle",
+      "expected": "valid"
+    },
+    {
+      "word": "zipper",
+      "expected": "valid"
+    },
+    {
+      "word": "hourglass",
+      "expected": "valid"
+    },
+    {
+      "word": "lantern",
+      "expected": "valid"
+    },
+    {
+      "word": "teapot",
+      "expected": "valid"
+    },
+    {
+      "word": "stapler",
+      "expected": "valid"
+    },
+    {
+      "word": "radio",
+      "expected": "valid"
+    },
+    {
+      "word": "blender",
+      "expected": "valid"
+    },
+    {
+      "word": "xqzvt",
+      "expected": "invalid"
+    },
+    {
+      "word": "asdfgh",
+      "expected": "invalid"
+    },
+    {
+      "word": "wxyzq",
+      "expected": "invalid"
+    },
+    {
+      "word": "zzzz",
+      "expected": "invalid"
+    },
+    {
+      "word": "qwerty",
+      "expected": "invalid"
+    },
+    {
+      "word": "blorptown",
+      "expected": "invalid"
+    },
+    {
+      "word": "fnargle",
+      "expected": "invalid"
+    },
+    {
+      "word": "zxcvb",
+      "expected": "invalid"
+    },
+    {
+      "word": "plorbo",
+      "expected": "invalid"
+    },
+    {
+      "word": "grunkle",
+      "expected": "invalid"
+    },
+    {
+      "word": "quickly",
+      "expected": "invalid"
+    },
+    {
+      "word": "swiftly",
+      "expected": "invalid"
+    },
+    {
+      "word": "happily",
+      "expected": "invalid"
+    },
+    {
+      "word": "slowly",
+      "expected": "invalid"
+    },
+    {
+      "word": "loudly",
+      "expected": "invalid"
+    },
+    {
+      "word": "softly",
+      "expected": "invalid"
+    },
+    {
+      "word": "brightly",
+      "expected": "invalid"
+    },
+    {
+      "word": "boldly",
+      "expected": "invalid"
+    },
+    {
+      "word": "kindly",
+      "expected": "invalid"
+    },
+    {
+      "word": "lazily",
+      "expected": "invalid"
+    },
+    {
+      "word": "neatly",
+      "expected": "invalid"
+    },
+    {
+      "word": "noisily",
+      "expected": "invalid"
+    },
+    {
+      "word": "oddly",
+      "expected": "invalid"
+    },
+    {
+      "word": "politely",
+      "expected": "invalid"
+    },
+    {
+      "word": "quietly",
+      "expected": "invalid"
+    },
+    {
+      "word": "rudely",
+      "expected": "invalid"
+    },
+    {
+      "word": "safely",
+      "expected": "invalid"
+    },
+    {
+      "word": "sadly",
+      "expected": "invalid"
+    },
+    {
+      "word": "sharply",
+      "expected": "invalid"
+    },
+    {
+      "word": "shyly",
+      "expected": "invalid"
+    },
+    {
+      "word": "warmly",
+      "expected": "invalid"
+    },
+    {
+      "word": "wildly",
+      "expected": "invalid"
+    },
+    {
+      "word": "wisely",
+      "expected": "invalid"
+    },
+    {
+      "word": "never",
+      "expected": "invalid"
+    },
+    {
+      "word": "always",
+      "expected": "invalid"
+    },
+    {
+      "word": "often",
+      "expected": "invalid"
+    },
+    {
+      "word": "very",
+      "expected": "invalid"
+    },
+    {
+      "word": "quite",
+      "expected": "invalid"
+    },
+    {
+      "word": "rather",
+      "expected": "invalid"
+    },
+    {
+      "word": "happy",
+      "expected": "invalid"
+    },
+    {
+      "word": "angry",
+      "expected": "invalid"
+    },
+    {
+      "word": "beautiful",
+      "expected": "invalid"
+    },
+    {
+      "word": "tall",
+      "expected": "invalid"
+    },
+    {
+      "word": "short",
+      "expected": "invalid"
+    },
+    {
+      "word": "gentle",
+      "expected": "invalid"
+    },
+    {
+      "word": "clever",
+      "expected": "invalid"
+    },
+    {
+      "word": "brave",
+      "expected": "invalid"
+    },
+    {
+      "word": "monday",
+      "expected": "invalid"
+    },
+    {
+      "word": "sunday",
+      "expected": "invalid"
+    },
+    {
+      "word": "tuesday",
+      "expected": "invalid"
+    }
+  ]
+}

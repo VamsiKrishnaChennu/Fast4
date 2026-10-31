@@ -41,3 +41,12 @@
 ## Desktop web layout (after Phase 2)
 
 - Every Phase 2 screen now fits the window on desktop with no scrollbar (see DECISIONS, "Desktop web layout"). Verified at 1366x650, 1280x620 and 1920x940 in light and dark. Phone layout unchanged. This applies to all later phases.
+
+## Phase 3 notes
+
+- Built: shared `normalizeAnswer`, `formatCheck`, `matchKey` and `lookupCandidates` (100% covered); `DictionaryEntry` model, `dictionaryService` (in-memory sets, add, remove, counts, ready), idempotent seeder, `validationService` (100% covered), `judgeService` (Wikidata and Free Dictionary API checks with caching, coalescing, a 2-request limit per source, 429 back-off, one overall timeout, mocked-internet tests), build, seed and evaluate scripts, `/ready` now needs the dictionary, 400 judge samples.
+- Tests: shared 62, server 187 (coverage 97% lines, 90% branches).
+- **Open item 1 (owner, needs internet):** run `npm run dictionary:build` to add the Wikidata places (currently 1,022 starter places, target 10,000+) and SSA names, then commit. See `docs/DICTIONARY_SOURCES.md`.
+- **Open item 2 (owner, needs internet):** run `npm run judge:evaluate` and fill in `docs/JUDGE_RESULTS.md`. The Wikidata class ids are unverified until then. The word-check logic is covered by tests with a fake internet, but it has never talked to the real services.
+- Seeding about 46,000 words into a real MongoDB is a one-off `npm run dictionary:seed` (it was too slow to finish on the slower stand-in database used in the build sandbox, but is fast on MongoDB).
+- The judge cache is in memory for now; Phase 8 adds the MongoDB `JudgeCache` collection.
