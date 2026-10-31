@@ -6,9 +6,15 @@ import hpp from 'hpp';
 import pinoHttp from 'pino-http';
 import { createErrorHandler } from './middleware/errorHandler.js';
 import { notFound } from './middleware/notFound.js';
-import { createApiLimiter } from './middleware/rateLimit.js';
+import { createAuth } from './middleware/auth.js';
+import { createApiLimiter, createAuthLimiter } from './middleware/rateLimit.js';
 import { requestId } from './middleware/requestId.js';
+import { createAuthController } from './controllers/authController.js';
 import { healthRoutes } from './routes/health.js';
+import { authRoutes } from './routes/auth.js';
+import { createAuthService } from './services/authService.js';
+import { createEmailProvider } from './services/emailService.js';
+import { createTokenService } from './services/tokenService.js';
 import { metaRoutes } from './routes/meta.js';
 import { serveClient } from './static.js';
 
@@ -26,9 +32,19 @@ function socketOrigins(appOrigin) {
  * @param {Array<{ name: string, check: Function }>} [options.readinessChecks]
  * @param {string} [options.clientDist] absolute path to client/dist; omitted in development
  * @param {{ limit?: number, windowMs?: number }} [options.apiLimit]
+ * @param {{ limit?: number, windowMs?: number }} [options.authLimit]
+ * @param {{ send: Function }} [options.emailProvider] defaults to the provider named by EMAIL_PROVIDER
  * @returns {import('express').Express}
  */
-export function createApp({ env, logger, readinessChecks = [], clientDist, apiLimit }) {
+export function createApp({
+  env,
+  logger,
+  readinessChecks = [],
+  clientDist,
+  apiLimit,
+  authLimit,
+  emailProvider = createEmailProvider({ env, logger }),
+}) {
   const app = express();
   app.disable('x-powered-by');
   if (env.isProduction) app.set('trust proxy', 1);
@@ -81,6 +97,17 @@ export function createApp({ env, logger, readinessChecks = [], clientDist, apiLi
   app.use('/api', createApiLimiter(apiLimit));
   app.use('/api', healthRoutes(readinessChecks));
   app.use('/api', metaRoutes(env));
+
+  const tokenService = createTokenService(env);
+  const authService = createAuthService({ env, tokenService, emailProvider, logger });
+  app.use(
+    '/api',
+    authRoutes({
+      controller: createAuthController({ authService, env }),
+      auth: createAuth({ tokenService }),
+      authLimiter: createAuthLimiter(authLimit),
+    }),
+  );
   // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
   // BEFORE the single-page-app fallback below.
 

@@ -33,3 +33,31 @@ export const LIMITS = {
 };
 
 export const SINGLE_ROUND_OPTIONS = [5, 10, 15, 20];
+
+export const AUTH = {
+  NICKNAME_MIN: 3,
+  NICKNAME_MAX: 20,
+  PASSWORD_MIN: 8,
+  PASSWORD_MAX: 72,
+  RESET_TOKEN_MINUTES: 30,
+  MAX_SESSIONS: 10,
+};
+
+/** Avatar colours chosen at signup: the four board colours plus eight more. */
+export const AVATAR_COLORS = [
+  '#2F66F5',
+  '#1FA463',
+  '#FFC247',
+  '#E8473F',
+  '#8B5CF6',
+  '#EC4899',
+  '#F97316',
+  '#14B8A6',
+  '#4F46E5',
+  '#84CC16',
+  '#06B6D4',
+  '#64748B',
+];
+
+/** Nicknames that cannot be used (compared after removing spaces, digits and underscores). */
+export const RESERVED_NICKNAMES = ['admin', 'support', 'moderator', 'staff', 'fastfour', 'system'];
