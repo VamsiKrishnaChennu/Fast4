@@ -13,6 +13,8 @@ export default [
       'docs/design/**',
       'client/public/**',
       'server/tests/fixtures/**',
+      'playwright-report/**',
+      'test-results/**',
     ],
   },
   js.configs.recommended,
@@ -43,6 +45,10 @@ export default [
   {
     files: ['**/tests/**/*.{js,jsx}'],
     languageOptions: { globals: { ...globals.jest, ...globals.vitest } },
+  },
+  {
+    files: ['e2e/**/*.js'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
   {
     files: ['client/vite.config.js'],

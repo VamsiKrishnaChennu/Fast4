@@ -14,6 +14,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [status, setStatus] = useState('loading');
+  const [loggedOut, setLoggedOut] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -51,6 +52,7 @@ export function AuthProvider({ children }) {
     const next = await fn(payload);
     setUser(next);
     setStatus('authed');
+    setLoggedOut(false);
     return next;
   }, []);
 
@@ -58,18 +60,20 @@ export function AuthProvider({ children }) {
     () => ({
       user,
       status,
+      loggedOut,
       login: (payload) => signIn(authApi.login, payload),
       signup: (payload) => signIn(authApi.signup, payload),
       async logout() {
         try {
           await authApi.logout();
         } finally {
+          setLoggedOut(true);
           setUser(null);
           setStatus('anon');
         }
       },
     }),
-    [user, status, signIn],
+    [user, status, loggedOut, signIn],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

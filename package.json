@@ -20,7 +20,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "npm test --workspace shared --workspace server --workspace client",
-    "test:e2e": "echo \"e2e tests arrive in Phase 5\" && exit 0",
+    "test:e2e": "npm run build && playwright test --config e2e/playwright.config.js",
     "dictionary:build": "echo \"dictionary:build arrives in Phase 3\" && exit 1",
     "dictionary:seed": "echo \"dictionary:seed arrives in Phase 3\" && exit 1",
     "prepare": "husky || true"
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@playwright/test": "^1.64.1",
     "concurrently": "^10.0.6",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",

@@ -219,6 +219,11 @@ describe('log in and log out', () => {
     await user.click(await screen.findByRole('button', { name: 'Log out' }));
     expect(await screen.findByText('Welcome back')).toBeInTheDocument();
     expect(localStorage.getItem('ff-session')).toBeNull();
+
+    await user.type(screen.getByLabelText('Email or phone'), 'maya@example.com');
+    await user.type(screen.getByLabelText('Password'), 'Test1234');
+    await user.click(screen.getByRole('button', { name: 'Log in' }));
+    expect(await screen.findByText('Ready, Maya?')).toBeInTheDocument();
   });
 
   test('the password can be shown and hidden', async () => {

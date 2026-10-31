@@ -17,11 +17,14 @@ function Splash() {
 
 /** Signed-in pages. Sends visitors to log in and remembers where they wanted to go. */
 export function ProtectedRoute() {
-  const { status } = useAuth();
+  const { status, loggedOut } = useAuth();
   const location = useLocation();
   if (status === 'loading') return <Splash />;
-  if (status === 'anon')
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (status === 'anon') {
+    // After an explicit log out the next login starts at Home, not on the page they left.
+    const state = loggedOut ? undefined : { from: location.pathname };
+    return <Navigate to="/login" replace state={state} />;
+  }
   return <Outlet />;
 }
 

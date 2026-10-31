@@ -31,3 +31,5 @@ Put these in `server/.env` for local work and in the host's secrets screen for s
 | TEST_ROUND_SECONDS                                     | tests only                  |                                   | Shortens rounds; honored only when NODE_ENV is `test`                                 |
 
 Client (`client/.env`, optional): `VITE_API_URL` (leave empty for same origin) and `VITE_SENTRY_DSN`. These are public by design; never put secrets in `VITE_` settings.
+
+Tests only (never set in production): `TEST_MONGODB_URI` (base URI without a database name, for example `mongodb://127.0.0.1:27017`) makes the server tests and end-to-end tests use that database server instead of downloading an in-memory MongoDB. `PLAYWRIGHT_CHROMIUM_PATH` points the end-to-end tests at an existing Chromium.

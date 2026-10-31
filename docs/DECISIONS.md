@@ -20,3 +20,16 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **.env files** are git-ignored (`.env`, `.env.*`) and kept only on the local machine and in host secrets.
 - **No `.env.example` files** (owner's decision, 2026-10-31). The playbooks and project guardrails asked for them; the setting names, defaults and meanings are documented in `docs/ENV.md` instead (names only, no values that are secret).
 - **Phase 1 sandbox limit:** the build sandbox cannot download the MongoDB binary, so database-backed integration tests run in CI.
+
+## 2026-10-31 (Phase 2)
+
+- **Sessions collection.** Refresh sessions live in their own `Session` collection (userId, jti, expiresAt) instead of an array on the user. Rotation deletes the old session atomically, so a reused or simultaneous refresh with the same token fails. At most 10 sessions per account (oldest dropped); expired ones are pruned at login. No TTL index is used (kept portable).
+- **Password reset.** Token is 32 random bytes, only its SHA-256 hash is stored on the user, valid 30 minutes, single use. A successful reset changes the password, bumps `tokenVersion` (all access tokens die) and deletes every session. `POST /auth/forgot` always answers 204, and sending happens in the background so timing does not reveal whether the email exists. Accounts with no email (phone only) get no email and are told to contact support.
+- **Rate limits.** The strict 10 per 15 minutes limit applies to signup, login, forgot and reset. Refresh, logout and me use the general API limit, because refresh runs on every page load and several players can share one IP.
+- **Session hint.** The client stores a harmless flag (`ff-session`) after a successful sign in. Without it an anonymous visitor makes no refresh request (no console error on first load). The access token itself is never stored.
+- **After logout** the next login goes to Home, not to the page the player left.
+- **CSP.** The theme-before-paint script is a separate file (`/theme-init.js`) because the strict CSP blocks inline scripts.
+- **Mongoose `sanitizeFilter`** is on in production and in tests. Server filters that use `$` operators must wrap them in `mongoose.trusted(...)`.
+- **Avatar palette:** 12 colours, in the order of the approved design (yellow, blue, green, red, navy, purple) plus six more.
+- **Privacy follow-up (Phase 12):** the privacy policy and Data safety form must list Google (Gmail SMTP) as the processor of password reset emails.
+- **Test database in the build sandbox.** MongoDB's binary cannot be downloaded there, so I ran the database tests against FerretDB (set `TEST_MONGODB_URI=mongodb://127.0.0.1:27018`). CI and normal machines use the real MongoDB through mongodb-memory-server.
