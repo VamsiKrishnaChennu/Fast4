@@ -15,7 +15,7 @@ try {
   env = loadEnv();
 } catch (err) {
   if (err instanceof EnvError) {
-    process.stderr.write(`${err.message}\nSee server/.env.example.\n`);
+    process.stderr.write(`${err.message}\nSet it in server/.env (see docs/ENV.md).\n`);
     process.exit(1);
   }
   throw err;
