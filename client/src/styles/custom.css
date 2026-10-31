@@ -569,3 +569,255 @@
 .ff-board .qdot {
   fill: var(--ff-token-text);
 }
+
+/* ===== Shared helpers (phone layout values, unchanged) ===== */
+.ff-formcol {
+  display: flex;
+  flex-direction: column;
+}
+.ff-title--xl {
+  font-size: 34px;
+}
+.ff-title--lg {
+  font-size: 30px;
+}
+.ff-title--md {
+  font-size: 28px;
+}
+.ff-title--sm {
+  font-size: 24px;
+}
+.ff-lead {
+  font-size: 16px;
+  padding: 0 8px;
+}
+.ff-home__sub {
+  padding: 0 12px;
+  margin-bottom: 22px;
+}
+.ff-desktop-only {
+  display: none;
+}
+
+/* ===== Desktop web: every screen fits the window, no scrollbars =====
+   Applies from 900px wide. Phones and tablets keep the layout above.
+   In fit mode (window at least 600px tall) the page never scrolls. Shorter windows fall back
+   to normal scrolling so nothing becomes unreachable. */
+@media (min-width: 900px) {
+  .ff-desktop-only {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ff-page {
+    max-width: 1080px;
+    padding: 32px 48px;
+    position: relative;
+    justify-content: center;
+  }
+  .ff-page--narrow {
+    max-width: 480px;
+  }
+  .ff-page--wide {
+    max-width: 1080px;
+  }
+  .ff-grow {
+    flex: 0 0 auto;
+  }
+  .ff-spacer {
+    display: none;
+  }
+  .ff-center {
+    text-align: center;
+  }
+
+  /* Two-column grid: picture on the left, content on the right */
+  .ff-grid2 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 72px;
+    align-content: center;
+    align-items: center;
+    row-gap: 0;
+  }
+  .ff-grid2 > * {
+    grid-column: 2;
+  }
+  .ff-grid2--form {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    column-gap: 56px;
+  }
+  .ff-contents-lg {
+    display: contents;
+  }
+  .ff-page .ff-g-head {
+    text-align: left;
+    position: absolute;
+    top: 28px;
+    left: 48px;
+    right: 48px;
+  }
+  .ff-page--nav .ff-g-head {
+    left: max(48px, calc((100vw - 96px - 1080px) / 2));
+    right: max(48px, calc((100vw - 96px - 1080px) / 2));
+  }
+  .ff-g-art {
+    grid-column: 1 !important;
+    grid-row: 1 / span 12;
+    align-self: center;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .ff-g-art .ff-board {
+    width: min(100%, 44vh);
+    height: auto;
+  }
+  .ff-g-main {
+    text-align: left;
+  }
+  .ff-page--wide .ff-grid2 > *:not(.ff-g-art) {
+    text-align: left;
+  }
+  .ff-page--wide .ff-grid2 .ff-center {
+    text-align: left;
+  }
+  .ff-grid2 .ff-title {
+    font-size: clamp(30px, 5.6vh, 46px);
+    margin-top: 0;
+  }
+  .ff-grid2 .ff-g-art .ff-title {
+    text-align: center;
+    margin-top: 20px;
+  }
+  .ff-page--wide .ff-grid2 > .ff-g-art,
+  .ff-g-art .ff-lead {
+    text-align: center;
+  }
+  .ff-lead,
+  .ff-lead-sm {
+    font-size: 17px;
+    padding: 0;
+  }
+  .ff-home__sub {
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  .ff-legal {
+    text-align: left;
+    margin-top: 14px;
+  }
+
+  /* Back button sits in the top-left corner; headings are in the content */
+  .ff-topbar {
+    position: absolute;
+    top: 24px;
+    left: 40px;
+    margin: 0;
+  }
+  .ff-topbar__title {
+    display: none;
+  }
+  .ff-page--narrow .ff-topbar {
+    left: 0;
+  }
+
+  /* Signup: nickname and email or phone side by side */
+  .ff-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    align-items: start;
+  }
+  .ff-row2 .ff-field,
+  .ff-field {
+    margin-bottom: 12px;
+  }
+
+  /* Compact controls */
+  .ff-input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .ff-btn {
+    min-height: 52px;
+  }
+  .ff-segment {
+    margin-bottom: 8px;
+  }
+  .ff-swatches {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  .ff-swatch {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    flex: 0 0 34px;
+  }
+  .ff-check {
+    min-height: 0;
+    padding: 4px 0;
+  }
+  .ff-alert {
+    margin-bottom: 12px;
+  }
+
+  /* Home: the play cards and stats stay compact */
+  .ff-play {
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+  .ff-stats {
+    margin-top: 4px;
+  }
+
+  /* Navigation moves from the bottom to a rail on the left */
+  .ff-nav {
+    top: 0;
+    right: auto;
+    width: 96px;
+    border-top: 0;
+    border-right: 1px solid var(--ff-line);
+    padding-bottom: 0;
+  }
+  .ff-nav__inner {
+    max-width: none;
+    height: 100%;
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 8px;
+  }
+  .ff-nav__item {
+    min-height: 72px;
+    border-radius: 16px;
+    margin: 0 8px;
+  }
+  .ff-nav__item:hover {
+    background: var(--ff-segment-bg);
+  }
+  .ff-page--nav {
+    max-width: none;
+    margin: 0 0 0 96px;
+    padding: 32px max(48px, calc((100vw - 96px - 1080px) / 2));
+  }
+}
+
+@media (min-width: 900px) and (min-height: 600px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+  .ff-page {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .ff-page--nav {
+    min-height: 0;
+  }
+}

@@ -37,3 +37,7 @@
 - Client: Welcome, Sign up, Log in, Forgot password, Reset password, Home shell with bottom tabs, a minimal Profile (name, dark mode switch, log out), silent session restore, axios refresh interceptor (parallel requests share one refresh), route guards, light and dark themes, theme applied before first paint (`client/public/theme-init.js`).
 - Tests: shared 11, server 98 (auth integration tests run against a real database), client 40 (coverage 96%), end-to-end 9 scenarios on desktop and a 360 px phone viewport (sign up, log out and in, phone sign up, duplicate nickname, wrong password, protected route, forgot/reset password, dark mode, layout and console checks, 44 px touch targets).
 - Known gaps (planned): Terms and Privacy links lead to a "Coming soon" page until Phase 12; Ranks, Solo and Group are placeholders until Phases 5 to 9; Forgot password, Check your email and Reset password screens are new designs built from the existing tokens and not yet in the design PDFs; email and phone are not verified (Phase 2 of the product, off by default); a real Gmail send has not been exercised from the build sandbox (needs your app password in `server/.env`).
+
+## Desktop web layout (after Phase 2)
+
+- Every Phase 2 screen now fits the window on desktop with no scrollbar (see DECISIONS, "Desktop web layout"). Verified at 1366x650, 1280x620 and 1920x940 in light and dark. Phone layout unchanged. This applies to all later phases.

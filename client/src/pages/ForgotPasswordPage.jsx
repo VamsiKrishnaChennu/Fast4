@@ -52,7 +52,7 @@ export default function ForgotPasswordPage() {
 
   if (sentTo) {
     return (
-      <main className="ff-page">
+      <main className="ff-page ff-page--narrow">
         <TopBar title={S.forgot.title} to="/login" />
         <div className="ff-grow ff-center" style={{ paddingTop: 32 }}>
           <div className="ff-hero" style={{ color: 'var(--ff-link)' }}>
@@ -70,21 +70,16 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="ff-page">
+    <main className="ff-page ff-page--wide">
       <TopBar title={S.forgot.title} to="/login" />
-      <form
-        onSubmit={onSubmit}
-        noValidate
-        className="ff-grow"
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <div className="ff-hero" style={{ marginTop: 0 }}>
+      <form onSubmit={onSubmit} noValidate className="ff-grow ff-formcol ff-grid2">
+        <div className="ff-hero ff-g-art" style={{ marginTop: 0 }}>
           <BoardLogo size={96} />
         </div>
-        <h2 className="ff-title ff-center" style={{ fontSize: 28, marginTop: 0 }}>
+        <h2 className="ff-title ff-title--md ff-center" style={{ marginTop: 0 }}>
           {S.forgot.heading}
         </h2>
-        <p className="ff-muted ff-center" style={{ marginBottom: 24 }}>
+        <p className="ff-muted ff-center ff-lead-sm" style={{ marginBottom: 24 }}>
           {S.forgot.sub}
         </p>
         {formError && (

@@ -33,3 +33,11 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Avatar palette:** 12 colours, in the order of the approved design (yellow, blue, green, red, navy, purple) plus six more.
 - **Privacy follow-up (Phase 12):** the privacy policy and Data safety form must list Google (Gmail SMTP) as the processor of password reset emails.
 - **Test database in the build sandbox.** MongoDB's binary cannot be downloaded there, so I ran the database tests against FerretDB (set `TEST_MONGODB_URI=mongodb://127.0.0.1:27018`). CI and normal machines use the real MongoDB through mongodb-memory-server.
+
+## 2026-10-31 (Desktop web layout, standing rule for all phases)
+
+- **Rule (owner):** on desktop web, every screen fits the browser window with no scrollbar. Home, for example, shows everything at once. The phone layout is approved and must not change.
+- **How it works:** from 900 px wide the app uses a desktop layout: pages become two columns (picture or board on the left, content on the right), the back button sits in the top-left corner, the bottom tabs become a 96 px rail on the left, and controls are slightly more compact. In "fit mode" (window at least 600 px tall) the page itself never scrolls. A shorter window falls back to normal scrolling so nothing is unreachable. Phones and tablets under 900 px keep the phone layout.
+- **Building blocks (client/src/styles/custom.css):** `ff-grid2` (two-column grid), `ff-g-art` (left column), `ff-g-head` (top-left header), `ff-g-main` (right column), `ff-contents-lg` (flatten a wrapper on desktop), `ff-desktop-only`, `ff-page--wide` and `ff-page--narrow`. New screens use these, and any screen that cannot fit is split or compacted rather than scrolled.
+- **Checks:** the end-to-end suite measures that no page or document scrolls at 1366x650, 1280x620 and 1920x940 in light and dark, including the sign-up form with every error showing. Long lists that must scroll (leaderboards, chat, history) scroll inside their own panel, never the page.
+- Signup, Welcome, Log in, Forgot password, Home and Profile were reworked for desktop; Reset password and the placeholder pages use a centred narrow card.

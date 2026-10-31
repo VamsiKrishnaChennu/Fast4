@@ -168,7 +168,8 @@ test('no page scrolls sideways at 360px and the console stays clean', async ({ p
   expect(errors).toEqual([]);
 });
 
-test('touch targets are at least 44px', async ({ page }) => {
+test('touch targets are at least 44px', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'Touch target size is a phone rule; desktop uses compact controls.');
   await page.goto('/signup');
   for (const locator of [
     page.getByRole('button', { name: 'Create account' }),
@@ -180,5 +181,50 @@ test('touch targets are at least 44px', async ({ page }) => {
     const box = await locator.boundingBox();
     expect(box.width).toBeGreaterThanOrEqual(44);
     expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test.describe('desktop web fits the window with no scrollbar', () => {
+  test.skip(({ isMobile }) => isMobile, 'Desktop layout only.');
+  const sizes = [
+    { width: 1366, height: 650 },
+    { width: 1280, height: 620 },
+    { width: 1920, height: 940 },
+  ];
+
+  for (const size of sizes) {
+    test(`${size.width}x${size.height}`, async ({ page }) => {
+      await page.setViewportSize(size);
+      const noScroll = async (label) => {
+        const m = await page.evaluate(() => {
+          const el = document.querySelector('.ff-page');
+          return {
+            doc: document.documentElement.scrollHeight - window.innerHeight,
+            side: document.documentElement.scrollWidth - window.innerWidth,
+            page: el ? el.scrollHeight - el.clientHeight : 0,
+          };
+        });
+        expect(m, label).toEqual({ doc: 0, side: 0, page: 0 });
+      };
+      for (const path of ['/', '/login', '/forgot-password', '/signup', '/nowhere']) {
+        await page.goto(path);
+        await page.waitForLoadState('networkidle');
+        await noScroll(path);
+      }
+      await page.goto('/signup');
+      await page.getByRole('button', { name: 'Create account' }).click();
+      await noScroll('signup with every error showing');
+
+      const nickname = await signUp(page);
+      await expect(page.getByText(`Ready, ${nickname}?`)).toBeVisible();
+      await noScroll('home');
+      for (const name of ['Ranks', 'Profile']) {
+        await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name }).click();
+        await page.waitForLoadState('networkidle');
+        await noScroll(name);
+      }
+      await page.getByRole('switch', { name: 'Dark mode' }).click();
+      await noScroll('profile in dark mode');
+    });
   }
 });

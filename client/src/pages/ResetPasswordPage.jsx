@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
   if (state === 'done' || state === 'bad') {
     const done = state === 'done';
     return (
-      <main className="ff-page">
+      <main className="ff-page ff-page--narrow">
         <TopBar title={S.reset.title} to="/login" />
         <div className="ff-grow ff-center" style={{ paddingTop: 32 }}>
           <div className="ff-hero" style={{ color: done ? 'var(--ff-place)' : 'var(--ff-thing)' }}>
@@ -64,17 +64,10 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main className="ff-page">
+    <main className="ff-page ff-page--narrow">
       <TopBar title={S.reset.title} to="/login" />
-      <form
-        onSubmit={onSubmit}
-        noValidate
-        className="ff-grow"
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <h2 className="ff-title ff-center" style={{ fontSize: 28 }}>
-          {S.reset.heading}
-        </h2>
+      <form onSubmit={onSubmit} noValidate className="ff-grow ff-formcol">
+        <h2 className="ff-title ff-title--md ff-center">{S.reset.heading}</h2>
         <div style={{ height: 16 }} />
         {formError && (
           <p className="ff-alert" role="alert">

@@ -15,13 +15,13 @@ export default function ProfilePage() {
     year: 'numeric',
   });
   return (
-    <main className="ff-page ff-page--nav">
-      <h1 className="ff-wordmark" style={{ fontSize: 28 }}>
+    <main className="ff-page ff-page--nav ff-grid2">
+      <h1 className="ff-wordmark ff-g-head" style={{ fontSize: 28 }}>
         {S.profile.title}
       </h1>
-      <div className="ff-center" style={{ margin: '16px 0 24px' }}>
+      <div className="ff-center ff-g-art" style={{ margin: '16px 0 24px' }}>
         <Avatar nickname={user.nickname} color={user.avatarColor} size={96} />
-        <h2 className="ff-title" style={{ fontSize: 24, margin: '12px 0 2px' }}>
+        <h2 className="ff-title ff-title--sm" style={{ margin: '12px 0 2px' }}>
           {user.nickname}
         </h2>
         <p className="ff-muted" style={{ fontSize: 14, fontWeight: 600 }}>

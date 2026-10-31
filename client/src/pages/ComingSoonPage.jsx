@@ -4,7 +4,7 @@ import { S } from '../utils/strings.js';
 
 export default function ComingSoonPage() {
   return (
-    <main className="ff-page ff-center" style={{ justifyContent: 'center' }}>
+    <main className="ff-page ff-page--narrow ff-center" style={{ justifyContent: 'center' }}>
       <div className="ff-hero">
         <BoardLogo size={120} />
       </div>

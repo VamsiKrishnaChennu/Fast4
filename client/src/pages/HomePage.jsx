@@ -7,7 +7,7 @@ import { S } from '../utils/strings.js';
 
 function PlayCard({ to, icon, title, sub, color, depth }) {
   return (
-    <Link to={to} className="ff-play" style={{ '--btn-bg': color, '--btn-depth': depth }}>
+    <Link to={to} className="ff-play ff-g-main" style={{ '--btn-bg': color, '--btn-depth': depth }}>
       <span className="ff-play__icon">
         <Icon name={icon} size={26} />
       </span>
@@ -23,23 +23,22 @@ export default function HomePage() {
   const { user } = useAuth();
   const stats = user.stats ?? {};
   return (
-    <main className="ff-page ff-page--nav">
-      <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <main className="ff-page ff-page--nav ff-grid2">
+      <header
+        className="ff-g-head"
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+      >
         <h1 className="ff-wordmark">{S.appName}</h1>
         <Link to="/profile" aria-label={S.nav.profile}>
           <Avatar nickname={user.nickname} color={user.avatarColor} size={44} />
         </Link>
       </header>
-      <div className="ff-center" style={{ paddingTop: 12 }}>
-        <div className="ff-hero">
+      <div className="ff-center ff-contents-lg" style={{ paddingTop: 12 }}>
+        <div className="ff-hero ff-g-art">
           <BoardLogo size={220} />
         </div>
-        <h2 className="ff-title" style={{ fontSize: 30 }}>
-          {S.home.greeting(user.nickname)}
-        </h2>
-        <p className="ff-muted" style={{ padding: '0 12px', marginBottom: 22 }}>
-          {S.home.sub}
-        </p>
+        <h2 className="ff-title ff-title--lg ff-g-main">{S.home.greeting(user.nickname)}</h2>
+        <p className="ff-muted ff-g-main ff-home__sub">{S.home.sub}</p>
       </div>
       <PlayCard
         to="/single"
@@ -57,7 +56,7 @@ export default function HomePage() {
         color="var(--ff-red)"
         depth="var(--ff-red-depth)"
       />
-      <div className="ff-stats">
+      <div className="ff-stats ff-g-main">
         <div className="ff-stat">
           <div className="ff-stat__value">{stats.bestSingleScore ?? 0}</div>
           <div className="ff-stat__label">{S.home.bestScore}</div>

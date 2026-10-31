@@ -41,21 +41,16 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="ff-page">
+    <main className="ff-page ff-page--wide">
       <TopBar title={S.login.title} to="/" />
-      <form
-        onSubmit={onSubmit}
-        noValidate
-        className="ff-grow"
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <div className="ff-hero" style={{ marginTop: 0 }}>
+      <form onSubmit={onSubmit} noValidate className="ff-grow ff-formcol ff-grid2">
+        <div className="ff-hero ff-g-art" style={{ marginTop: 0 }}>
           <BoardLogo size={112} />
         </div>
-        <h2 className="ff-title ff-center" style={{ fontSize: 30, marginTop: 0 }}>
+        <h2 className="ff-title ff-title--lg ff-center" style={{ marginTop: 0 }}>
           {S.login.welcome}
         </h2>
-        <p className="ff-muted ff-center" style={{ marginBottom: 24 }}>
+        <p className="ff-muted ff-center ff-lead-sm" style={{ marginBottom: 24 }}>
           {S.login.sub}
         </p>
         {formError && (

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AVATAR_COLORS, signupSchema } from '@fastfour/shared';
 import { readApiError } from '../api/axiosClient.js';
+import BoardLogo from '../components/common/BoardLogo.jsx';
 import AvatarPicker from '../components/common/AvatarPicker.jsx';
 import Button from '../components/common/Button.jsx';
 import PasswordStrength from '../components/common/PasswordStrength.jsx';
@@ -79,56 +80,62 @@ export default function SignupPage() {
         };
 
   return (
-    <main className="ff-page">
+    <main className="ff-page ff-page--wide">
       <TopBar title={S.signup.title} to="/" />
-      <form
-        onSubmit={onSubmit}
-        noValidate
-        className="ff-grow"
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
+      <form onSubmit={onSubmit} noValidate className="ff-grow ff-formcol ff-grid2 ff-grid2--form">
+        <div className="ff-g-art ff-desktop-only ff-center">
+          <BoardLogo size={200} />
+          <h2 className="ff-title ff-title--xl" style={{ whiteSpace: 'pre-line' }}>
+            {S.welcome.title}
+          </h2>
+          <p className="ff-muted ff-lead">{S.welcome.sub}</p>
+        </div>
         {formError && (
           <p className="ff-alert" role="alert">
             {formError}
           </p>
         )}
-        <TextField
-          label={S.signup.nickname}
-          value={nickname}
-          onChange={(e) => {
-            setNickname(e.target.value);
-            clear('nickname');
-          }}
-          error={errors.nickname}
-          help={S.signup.nicknameHelp}
-          autoComplete="nickname"
-          autoCapitalize="words"
-          maxLength={20}
-        />
-        <span className="ff-label">{S.signup.signUpWith}</span>
-        <SegmentedControl
-          label={S.signup.signUpWith}
-          value={mode}
-          onChange={(m) => {
-            setMode(m);
-            setContact('');
-            setErrors((e) => ({ ...e, email: undefined, phone: undefined }));
-          }}
-          options={[
-            { value: 'email', label: S.signup.email },
-            { value: 'phone', label: S.signup.phone },
-          ]}
-        />
-        <TextField
-          aria-label={mode === 'email' ? S.signup.email : S.signup.phone}
-          value={contact}
-          onChange={(e) => {
-            setContact(e.target.value);
-            clear(mode);
-          }}
-          error={errors[mode]}
-          {...contactField}
-        />
+        <div className="ff-row2">
+          <TextField
+            label={S.signup.nickname}
+            value={nickname}
+            onChange={(e) => {
+              setNickname(e.target.value);
+              clear('nickname');
+            }}
+            error={errors.nickname}
+            help={S.signup.nicknameHelp}
+            autoComplete="nickname"
+            autoCapitalize="words"
+            maxLength={20}
+          />
+          <div>
+            <span className="ff-label">{S.signup.signUpWith}</span>
+            <SegmentedControl
+              label={S.signup.signUpWith}
+              value={mode}
+              onChange={(m) => {
+                setMode(m);
+                setContact('');
+                setErrors((e) => ({ ...e, email: undefined, phone: undefined }));
+              }}
+              options={[
+                { value: 'email', label: S.signup.email },
+                { value: 'phone', label: S.signup.phone },
+              ]}
+            />
+            <TextField
+              aria-label={mode === 'email' ? S.signup.email : S.signup.phone}
+              value={contact}
+              onChange={(e) => {
+                setContact(e.target.value);
+                clear(mode);
+              }}
+              error={errors[mode]}
+              {...contactField}
+            />
+          </div>
+        </div>
         <TextField
           label={S.signup.password}
           type="password"
