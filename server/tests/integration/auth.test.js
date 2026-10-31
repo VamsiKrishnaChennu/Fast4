@@ -274,6 +274,18 @@ describe('refresh and logout', () => {
     expect(await Session.countDocuments()).toBe(10);
   });
 
+  test('expired sessions are removed at the next login', async () => {
+    const first = await signup();
+    await Session.updateOne(
+      { userId: first.body.user.id },
+      { expiresAt: new Date(Date.now() - 1000) },
+    );
+    await request(app)
+      .post('/api/auth/login')
+      .send({ identifier: 'maya@example.com', password: PASSWORD });
+    expect(await Session.countDocuments()).toBe(1);
+  });
+
   test('needs a cookie', async () => {
     const res = await request(app).post('/api/auth/refresh');
     expect(res.status).toBe(401);

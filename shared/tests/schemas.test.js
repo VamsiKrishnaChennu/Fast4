@@ -35,7 +35,7 @@ describe('signupSchema', () => {
   });
 
   test('only palette colours are allowed', () => {
-    expect(signupSchema.safeParse({ ...base, avatarColor: '#2F66F5' }).success).toBe(true);
+    expect(signupSchema.safeParse({ ...base, avatarColor: '#FFC247' }).success).toBe(true);
     expect(signupSchema.safeParse({ ...base, avatarColor: '#000000' }).success).toBe(false);
   });
 });

@@ -16,6 +16,8 @@ export async function startTestDb() {
     memory = await MongoMemoryServer.create();
     uri = `${memory.getUri()}${dbName}`;
   }
+  // Same safety setting as production (see config/db.js), so tests catch filters it would break.
+  mongoose.set('sanitizeFilter', true);
   await mongoose.connect(uri);
   await Promise.all(Object.values(mongoose.models).map((m) => m.init()));
 }

@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 import { Filter } from 'bad-words';
 import { AUTH, RESERVED_NICKNAMES } from '@fastfour/shared';
 import { Session } from '../models/Session.js';
@@ -60,13 +61,17 @@ export function createAuthService({ env, tokenService, emailProvider, logger }) 
     const all = await Session.find({ userId }).sort({ createdAt: 1 }).select('_id').lean();
     const extra = all.length - AUTH.MAX_SESSIONS;
     if (extra > 0) {
-      await Session.deleteMany({ _id: { $in: all.slice(0, extra).map((x) => x._id) } });
+      const stale = all.slice(0, extra).map((x) => x._id);
+      await Session.deleteMany({ _id: mongoose.trusted({ $in: stale }) });
     }
   }
 
   async function startSession(user) {
     const refresh = tokenService.signRefresh(user);
-    await Session.deleteMany({ userId: user._id, expiresAt: { $lt: new Date() } });
+    await Session.deleteMany({
+      userId: user._id,
+      expiresAt: mongoose.trusted({ $lt: new Date() }),
+    });
     await addSession(user._id, refresh);
     return { accessToken: tokenService.signAccess(user), refreshToken: refresh.token };
   }

@@ -43,12 +43,13 @@ export const AUTH = {
   MAX_SESSIONS: 10,
 };
 
-/** Avatar colours chosen at signup: the four board colours plus eight more. */
+/** Avatar colours chosen at signup, in the order of the approved design, plus six more. */
 export const AVATAR_COLORS = [
+  '#FFC247',
   '#2F66F5',
   '#1FA463',
-  '#FFC247',
   '#E8473F',
+  '#1B2250',
   '#8B5CF6',
   '#EC4899',
   '#F97316',
@@ -56,7 +57,6 @@ export const AVATAR_COLORS = [
   '#4F46E5',
   '#84CC16',
   '#06B6D4',
-  '#64748B',
 ];
 
 /** Nicknames that cannot be used (compared after removing spaces, digits and underscores). */
