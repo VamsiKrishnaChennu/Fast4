@@ -5,7 +5,7 @@
 | 0. Bootstrap                                                           | done (see notes) |
 | 1. Server foundation                                                   | not started      |
 | 2. Authentication (includes forgot/reset password)                     | not started      |
-| 3. Dictionary and validation                                           | not started      |
+| 3. Dictionary and validation                                           | done (see notes) |
 | 4. Scoring engine                                                      | not started      |
 | 5. Single-player mode                                                  | not started      |
 | 6. Rooms and lobby                                                     | not started      |
@@ -47,6 +47,6 @@
 - Built: shared `normalizeAnswer`, `formatCheck`, `matchKey` and `lookupCandidates` (100% covered); `DictionaryEntry` model, `dictionaryService` (in-memory sets, add, remove, counts, ready), idempotent seeder, `validationService` (100% covered), `judgeService` (Wikidata and Free Dictionary API checks with caching, coalescing, a 2-request limit per source, 429 back-off, one overall timeout, mocked-internet tests), build, seed and evaluate scripts, `/ready` now needs the dictionary, 400 judge samples.
 - Tests: shared 62, server 187 (coverage 97% lines, 90% branches).
 - **Open item 1 (done by owner, 1 Nov 2026):** `npm run dictionary:build` was run on the laptop and the lists committed; places grew from 1,022 starter entries to about 200,000 from Wikidata. See `docs/DICTIONARY_SOURCES.md`.
-- **Open item 2 (owner, needs internet):** run 1 of `npm run judge:evaluate` is recorded in `docs/JUDGE_RESULTS.md`: names pass (98.9%), the other three categories need run 2 with the improved script. The Wikidata class ids are unverified until then. The word-check logic is covered by tests with a fake internet, but it has never talked to the real services.
+- **Open item 2 (closed, 1 Nov 2026):** after five live runs all four categories meet the targets (see `docs/JUDGE_RESULTS.md`). Tests: server 204.
 - Seeding about 46,000 words into a real MongoDB is a one-off `npm run dictionary:seed` (it was too slow to finish on the slower stand-in database used in the build sandbox, but is fast on MongoDB).
 - The judge cache is in memory for now; Phase 8 adds the MongoDB `JudgeCache` collection.

@@ -1,6 +1,6 @@
 # Word-check accuracy results
 
-**Status: four runs done on 1 Nov 2026 (owner's laptop). Name and place pass. Animal and thing missed in run 4; the cause for things is a Free Dictionary API HTML 404 glitch, now handled as inconclusive. Run 5 is needed (see below).** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
+**Status: five runs done on 1 Nov 2026 (owner's laptop). All four categories pass the targets (run 5: animal 96.5% / 3.0% wrong, thing 100% / 0.0% wrong). Phase 3 accuracy item closed.** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
 
 ## How to run it
 
@@ -81,15 +81,17 @@ Notes after run 3:
 - An HTML (non-JSON) 404 from the dictionary API is now **inconclusive**. Only the API's own JSON not-found counts as invalid. The same rule applies to the animal second opinion, so a broken reply can no longer turn a real animal into "invalid".
 - The animal query also follows "subclass of" links up to Animalia (group names such as eagle, cow).
 
-### Run 5 (to do)
+### Run 5 (owner's laptop, 1 Nov 2026)
 
-```
-git pull
-npm run judge:evaluate -- --category=animal --verbose
-npm run judge:evaluate -- --category=thing --verbose
-```
+| Category | Samples | Right | Wrong | Inconclusive | Failed | Correct of definitive % | Wrong % |
+|---|---|---|---|---|---|---|---|
+| animal | 100 | 82 | 3 | 15 | 0 | 96.5 | 3.0 |
+| thing | 100 | 85 | 0 | 15 | 0 | 100.0 | 0.0 |
 
-Targets: at least 90% correct on definitive results and under 5% definitively wrong. For things, the words hit by the HTML 404 will now show as inconclusive, which is the intended safe result.
+- Both meet the targets (at least 90% correct, under 5% wrong). Name (run 4) and place (run 3) already passed, so **all four categories pass**.
+- Animal wrong: kangaroo and mongoose (real animals judged invalid), helmet (judged valid; its dictionary meaning mentions an animal word). A challenge costs nothing when it fails, so these are accepted as known limits.
+- Thing: the 15 inconclusive words are the ones the dictionary API answers with an HTML 404. They are never wrongly overturned.
+- `judge:probe` for cow and eagle now returns valid.
 
 ## What to tune if a category misses the target
 

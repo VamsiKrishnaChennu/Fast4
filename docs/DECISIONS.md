@@ -73,3 +73,7 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 
 - The Free Dictionary API returns an HTML "ERROR 404" page for some real words (window, piano). **Change to the Final decision "404 = invalid":** only the API's JSON "No Definitions Found" 404 is invalid; any other 404 is inconclusive (a failed challenge, never a wrong overturn). Animals use the same rule for the dictionary second opinion, and the animal query also follows "subclass of" links to Animalia.
 - Still open for the owner: whether to add a second source for things (for example an exact Wikidata label match) so these words become definitive instead of inconclusive.
+
+## 2026-11-01 (word-check accuracy accepted)
+
+- Run 5 passed for animal and thing; all categories meet the Development Playbook 8.5 targets. Known limits: kangaroo and mongoose are wrongly rejected as animals, helmet is accepted. The thing check leaves some real nouns inconclusive (HTML 404 from the dictionary API). No second source was added.
