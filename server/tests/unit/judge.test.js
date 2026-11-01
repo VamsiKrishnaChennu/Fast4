@@ -63,7 +63,7 @@ describe('names, places and animals through Wikidata', () => {
       result: 'valid',
       source: 'wikidata',
     });
-    expect(net.calls[1].url.searchParams.get('query')).toContain('Q2221906');
+    expect(net.calls[1].url.searchParams.get('query')).toContain('wdt:P625');
   });
 
   test('a place name that only a person has is invalid', async () => {
@@ -395,5 +395,60 @@ describe('requests', () => {
       await createJudgeService({ env: off, fetchImpl: net.fetchImpl }).check('name', 'sam'),
     ).toEqual({ result: 'inconclusive', source: 'none' });
     expect(net.fetchImpl).not.toHaveBeenCalled();
+  });
+});
+
+describe('diagnostics', () => {
+  test('errors say why: timeout, network, http status and paused source', async () => {
+    const reason = async (search) => {
+      const net = internet({ search });
+      try {
+        await judge(net).check('name', 'sam');
+      } catch (err) {
+        return err.reason;
+      }
+      return null;
+    };
+    expect(await reason(() => json({}, 429))).toBe('http 429');
+    expect(await reason(() => json({}, 503))).toBe('http 503');
+    expect(await reason(() => json({}, 403))).toBe('http 403');
+    expect(
+      await reason(() => {
+        throw new Error('offline');
+      }),
+    ).toBe('network');
+    expect(
+      await reason(() => {
+        throw Object.assign(new Error('x'), { name: 'AbortError' });
+      }),
+    ).toBe('timeout');
+    const net = internet({ dict: () => json({}, 429) });
+    const service = judge(net);
+    await service.check('thing', 'a').catch(() => {});
+    await expect(service.check('thing', 'b')).rejects.toMatchObject({
+      reason: 'dictionaryapi paused after http 429',
+    });
+  });
+
+  test('the debug hook sees every request and the candidate counts', async () => {
+    const events = [];
+    const net = internet({
+      search: () => json({ search: [hit('Q1', 'Sam'), hit('Q2', 'Samuel')] }),
+      sparql: yes,
+    });
+    await judge(net, { debug: (e) => events.push(e) }).check('name', 'sam');
+    expect(events.map((e) => e.step ?? e.source)).toEqual(['wikidata', 'candidates', 'wikidata']);
+    expect(events[1]).toMatchObject({ hits: 2, matching: 1 });
+    expect(events[0].status).toBe(200);
+    const failing = [];
+    const bad = internet({
+      search: () => {
+        throw new Error('offline');
+      },
+    });
+    await judge(bad, { debug: (e) => failing.push(e) })
+      .check('name', 'sam')
+      .catch(() => {});
+    expect(failing[0]).toMatchObject({ error: 'Error' });
   });
 });

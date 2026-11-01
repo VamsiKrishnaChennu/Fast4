@@ -10,7 +10,6 @@ export const WIKIDATA_CLASSES = {
   maleGivenName: { id: 'Q12308941', label: 'male given name' },
   femaleGivenName: { id: 'Q11879590', label: 'female given name' },
   unisexGivenName: { id: 'Q3409032', label: 'unisex given name' },
-  geographicLocation: { id: 'Q2221906', label: 'geographic location' },
   animalia: { id: 'Q729', label: 'Animalia' },
 };
 
@@ -81,9 +80,10 @@ function createLimiter(limit) {
  * @param {typeof fetch} [deps.fetchImpl]
  * @param {ReturnType<typeof createMemoryJudgeCache>} [deps.cache]
  * @param {() => number} [deps.now]
+ * @param {(event: object) => void} [deps.debug] receives one event per request (source, url, status) and candidate counts
  * @returns {{ check: (category: string, word: string) => Promise<{ result: 'valid' | 'invalid' | 'inconclusive', source: string }> }}
  */
-export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.now }) {
+export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.now, debug }) {
   const store = cache ?? createMemoryJudgeCache(now);
   const inflight = new Map();
   const limiters = { wikidata: createLimiter(2), dictionaryapi: createLimiter(2) };
@@ -94,21 +94,39 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
   };
 
   async function request(source, url, signal) {
-    if (now() < blockedUntil[source]) throw new JudgeUnavailableError();
+    if (now() < blockedUntil[source]) {
+      throw new JudgeUnavailableError(undefined, `${source} paused after http 429`);
+    }
     return limiters[source](async () => {
-      let response;
-      try {
-        response = await fetchImpl(url, { headers, signal });
-      } catch {
-        throw new JudgeUnavailableError();
+      // One quick retry for a network failure or a server error; never for 429 or after the timeout.
+      for (let attempt = 1; ; attempt += 1) {
+        let response;
+        try {
+          response = await fetchImpl(url, { headers, signal });
+        } catch (err) {
+          debug?.({ source, url: String(url), error: err.name });
+          const timedOut = signal?.aborted || err.name === 'AbortError';
+          if (attempt === 1 && !timedOut) {
+            await new Promise((resolve) => setTimeout(resolve, 250));
+            continue;
+          }
+          throw new JudgeUnavailableError(undefined, timedOut ? 'timeout' : 'network');
+        }
+        debug?.({ source, url: String(url), status: response.status });
+        if (response.status === 429) {
+          const wait = Number(response.headers?.get?.('retry-after')) || 2;
+          blockedUntil[source] = now() + wait * 1000;
+          throw new JudgeUnavailableError(undefined, 'http 429');
+        }
+        if (response.status >= 500) {
+          if (attempt === 1 && !signal?.aborted) {
+            await new Promise((resolve) => setTimeout(resolve, 250));
+            continue;
+          }
+          throw new JudgeUnavailableError(undefined, `http ${response.status}`);
+        }
+        return response;
       }
-      if (response.status === 429) {
-        const wait = Number(response.headers?.get?.('retry-after')) || 2;
-        blockedUntil[source] = now() + wait * 1000;
-        throw new JudgeUnavailableError();
-      }
-      if (response.status >= 500) throw new JudgeUnavailableError();
-      return response;
     });
   }
 
@@ -123,18 +141,25 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
       format: 'json',
     }).toString();
     const response = await request('wikidata', url, signal);
-    if (!response.ok) throw new JudgeUnavailableError();
+    if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
     const body = await response.json();
-    return (body.search ?? [])
-      .filter((item) => normalizeAnswer(item.match?.text ?? item.label) === word)
-      .map((item) => item.id);
+    const found = (body.search ?? []).filter(
+      (item) => normalizeAnswer(item.match?.text ?? item.label) === word,
+    );
+    debug?.({
+      source: 'wikidata',
+      step: 'candidates',
+      hits: (body.search ?? []).length,
+      matching: found.length,
+    });
+    return found.map((item) => item.id);
   }
 
   async function wikidataMatches(ids, query, signal) {
     const url = new URL(env.WIKIDATA_SPARQL_URL);
     url.search = new URLSearchParams({ query, format: 'json' }).toString();
     const response = await request('wikidata', url, signal);
-    if (!response.ok) throw new JudgeUnavailableError();
+    if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
     const body = await response.json();
     return (body.results?.bindings ?? []).length > 0;
   }
@@ -145,10 +170,14 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
   const queries = {
     name: (ids) =>
       `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } VALUES ?class { ${classValues(NAME_CLASSES)} } ?item wdt:P31/wdt:P279* ?class . } LIMIT 1`,
+    // A place has map coordinates, a country, or sits inside an administrative area. These are single
+    // lookups on the candidates, unlike a walk through the whole "geographic location" class tree,
+    // which Wikidata often cannot finish in time.
     place: (ids) =>
-      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } ?item wdt:P31/wdt:P279* wd:${WIKIDATA_CLASSES.geographicLocation.id} . } LIMIT 1`,
+      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } { ?item wdt:P625 ?x } UNION { ?item wdt:P17 ?x } UNION { ?item wdt:P131 ?x } } LIMIT 1`,
+    // An animal has a chain of parent taxa that ends at Animalia.
     animal: (ids) =>
-      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } { ?item wdt:P171* wd:${WIKIDATA_CLASSES.animalia.id} } UNION { ?item wdt:P31/wdt:P279* wd:${WIKIDATA_CLASSES.animalia.id} } } LIMIT 1`,
+      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } ?item wdt:P171+ wd:${WIKIDATA_CLASSES.animalia.id} . } LIMIT 1`,
   };
 
   async function viaWikidata(category, word, signal) {
@@ -162,7 +191,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     const url = `${env.DICTIONARY_API_URL.replace(/\/$/, '')}/${encodeURIComponent(word)}`;
     const response = await request('dictionaryapi', url, signal);
     if (response.status === 404) return { status: 404, entries: [] };
-    if (!response.ok) throw new JudgeUnavailableError();
+    if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
     const entries = await response.json();
     return { status: 200, entries: Array.isArray(entries) ? entries : [] };
   }
@@ -199,7 +228,10 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
       return await run(category, word, controller.signal);
     } catch (err) {
       if (err instanceof JudgeUnavailableError) throw err;
-      throw new JudgeUnavailableError();
+      throw new JudgeUnavailableError(
+        undefined,
+        err?.name === 'AbortError' ? 'timeout' : 'unexpected',
+      );
     } finally {
       clearTimeout(timer);
     }

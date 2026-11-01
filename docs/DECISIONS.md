@@ -51,3 +51,8 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Word check built early.** `judgeService` is fully implemented in Phase 3 (the accuracy spike needs it). It uses an in-memory cache until Phase 8 adds the MongoDB cache. Back-off: HTTP 429 blocks that source for the `Retry-After` time (2 seconds by default).
 - **Wikidata class ids** (given name Q202444, male Q12308941, female Q11879590, unisex Q3409032, geographic location Q2221906, Animalia Q729) are from memory and are verified by the first step of `npm run judge:evaluate`.
 - **`/ready`** now requires the database and a loaded dictionary with words in all four categories.
+
+## 2026-11-01 (word-check accuracy run 1)
+
+- The first live run showed the word check fails when asked too fast: HTTP 429 or timeouts, and the 2 second back-off then failed every following word. The evaluate script now paces itself and retries. In production, challenges are rare and one at a time per room, so the back-off is acceptable, but it must be watched in the logs (`JudgeUnavailableError.reason` records timeout, network or http status).
+- The Wikidata place and animal queries were made lighter (single lookups instead of walking the whole class tree). The Wikidata class id for "geographic location" is no longer used.

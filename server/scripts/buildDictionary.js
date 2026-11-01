@@ -5,16 +5,16 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Filter } from 'bad-words';
 import { normalizeAnswer } from '@fastfour/shared';
 import { parseBlocklist } from './lib/blocklist.js';
+import { createProfanityCheck } from './lib/profanity.js';
 import { descendants, lemmasOf, loadWordnet } from './lib/wordnet.js';
 import { fetchNltkNames, fetchSsaNames, fetchWikidataPlaces } from './lib/sources.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(here, '..', 'data', 'dictionary');
 const require = createRequire(import.meta.url);
-const profanity = new Filter();
+const isProfane = createProfanityCheck();
 const log = (message) => process.stdout.write(`${message}\n`);
 
 /** Reads a curated list: new lines or commas separate entries, lines starting with # are notes. */
@@ -44,7 +44,7 @@ function clean(words) {
   for (const word of words) {
     const normalized = normalizeAnswer(word);
     if (normalized.length < 2 || normalized.length > 30) continue;
-    if (profanity.isProfane(normalized.replace(/-/g, ' '))) continue;
+    if (isProfane(normalized)) continue;
     out.add(normalized);
   }
   return [...out].sort();

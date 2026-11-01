@@ -38,41 +38,79 @@ if (!idsOk) {
 const samples = JSON.parse(
   await readFile(path.join(here, '..', 'tests', 'fixtures', 'judge-samples.json'), 'utf8'),
 );
-const judge = createJudgeService({ env: { ...env, JUDGE_ENABLED: true } });
-const rows = [];
+const delay = Number(process.argv.find((a) => a.startsWith('--delay='))?.split('=')[1] ?? 1200);
+const verbose = process.argv.includes('--verbose');
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+let trace = [];
+const judge = createJudgeService({
+  env: { ...env, JUDGE_ENABLED: true },
+  debug: (event) => trace.push(event),
+});
 
-out('\nStep 2: running the samples (this takes a few minutes)');
+/** Asks the service, waiting and trying again when the source is busy (rate limited or timing out). */
+async function ask(category, word) {
+  let last;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      return await judge.check(category, word);
+    } catch (err) {
+      last = err;
+      await sleep(3000 * 2 ** attempt);
+    }
+  }
+  throw last;
+}
+
+const rows = [];
+out(
+  `\nStep 2: running the samples, one word every ${delay} ms (about ${Math.round((400 * (delay + 600)) / 60000)} minutes for all 400)`,
+);
 for (const category of Object.keys(samples)) {
   if (only && only !== category) continue;
   const tally = { correct: 0, wrong: 0, inconclusive: 0, errors: 0 };
+  const reasons = {};
   const wrongWords = [];
   for (const { word, expected } of samples[category]) {
+    trace = [];
+    let note = '';
     try {
-      const { result } = await judge.check(category, word);
-      if (result === 'inconclusive') tally.inconclusive += 1;
-      else if (result === expected) tally.correct += 1;
+      const { result } = await ask(category, word);
+      if (result === 'inconclusive') {
+        tally.inconclusive += 1;
+        note = `inconclusive (expected ${expected})`;
+      } else if (result === expected) tally.correct += 1;
       else {
         tally.wrong += 1;
         wrongWords.push(`${word} (expected ${expected})`);
+        note = `WRONG: judged ${result}, expected ${expected}`;
       }
-    } catch {
+    } catch (err) {
       tally.errors += 1;
+      reasons[err.reason ?? 'unknown'] = (reasons[err.reason ?? 'unknown'] ?? 0) + 1;
+      note = `ERROR: ${err.reason ?? 'unknown'}`;
     }
+    if (verbose && note) {
+      out(`  [${category}] ${word}: ${note}`);
+      for (const event of trace) out(`      ${JSON.stringify(event).slice(0, 260)}`);
+    }
+    await sleep(delay);
   }
   const definitive = tally.correct + tally.wrong;
   rows.push({
     category,
     total: samples[category].length,
     ...tally,
+    reasons,
     accuracy: definitive ? ((100 * tally.correct) / definitive).toFixed(1) : 'n/a',
     wrongRate: ((100 * tally.wrong) / samples[category].length).toFixed(1),
     wrongWords,
   });
+  out(`  ${category} done`);
 }
 
 out('\nResults (target: accuracy 90% or more on definitive results, under 5% definitively wrong)');
 out(
-  '\nCopy the four lines below over the four empty rows (lines 22 to 25) of the table in docs/JUDGE_RESULTS.md:\n',
+  '\nCopy the lines below over the empty rows (lines 22 to 25) of the table in docs/JUDGE_RESULTS.md:\n',
 );
 for (const r of rows) {
   const cells = [
@@ -87,6 +125,14 @@ for (const r of rows) {
   ];
   out(`| ${cells.join(' | ')} |`);
 }
-out('\nWords judged wrong (mention these on the "Notes after the run" line, line 27):');
-for (const r of rows)
-  out(`  ${r.category}: ${r.wrongWords.length ? r.wrongWords.join(', ') : 'none'}`);
+out(
+  '\nWords judged wrong, and why any lookups failed (put these on the "Notes after the run" line, line 27):',
+);
+for (const r of rows) {
+  out(
+    `  ${r.category}: wrong = ${r.wrongWords.length ? r.wrongWords.join(', ') : 'none'}; errors = ${Object.keys(r.reasons).length ? JSON.stringify(r.reasons) : 'none'}`,
+  );
+}
+out(
+  '\nTip: add --verbose to see every word that was wrong, inconclusive or failed, with the requests behind it. Example: npm run judge:evaluate -- --category=place --verbose',
+);

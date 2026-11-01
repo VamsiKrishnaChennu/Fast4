@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Filter } from 'bad-words';
 import { LETTER_POOL, normalizeAnswer } from '@fastfour/shared';
+import { createProfanityCheck } from '../../scripts/lib/profanity.js';
 import { createValidationService } from '../../src/services/validationService.js';
 
 const dir = path.join(
@@ -48,8 +48,8 @@ describe('the committed word lists', () => {
   });
 
   test.each(Object.keys(FILES))('%s list has no profanity', (category) => {
-    const filter = new Filter();
-    expect(words[category].filter((w) => filter.isProfane(w.replace(/-/g, ' ')))).toEqual([]);
+    const isProfane = createProfanityCheck();
+    expect(words[category].filter((w) => isProfane(w))).toEqual([]);
   });
 
   test.each(Object.keys(FILES))('%s list has words for every playable letter', (category) => {
