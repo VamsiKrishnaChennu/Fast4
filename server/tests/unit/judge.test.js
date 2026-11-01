@@ -488,3 +488,70 @@ describe('best matches only and wait times', () => {
     expect(paused.retryAfterMs).toBeGreaterThan(0);
   });
 });
+
+describe('animals get a dictionary second opinion', () => {
+  const aMammal = [
+    {
+      meanings: [
+        { partOfSpeech: 'noun', definitions: [{ definition: 'A large carnivorous mammal.' }] },
+      ],
+    },
+  ];
+
+  test('Wikidata invalid but the dictionary calls it a mammal: valid', async () => {
+    const net = internet({
+      search: () => json({ search: [hit('Q1', 'Wolf')] }),
+      dict: () => json(aMammal),
+    });
+    expect(await judge(net).check('animal', 'wolf')).toEqual({
+      result: 'valid',
+      source: 'dictionaryapi',
+    });
+  });
+
+  test('Wikidata invalid and no animal word in the dictionary: invalid', async () => {
+    const net = internet({
+      search: () => json({ search: [hit('Q1', 'Table')] }),
+      dict: () => json(noun),
+    });
+    expect(await judge(net).check('animal', 'table')).toEqual({
+      result: 'invalid',
+      source: 'wikidata',
+    });
+  });
+
+  test('Wikidata invalid and the dictionary has no entry: invalid', async () => {
+    const net = internet({ search: () => json({ search: [hit('Q1', 'Zork')] }) });
+    expect(await judge(net).check('animal', 'zork')).toEqual({
+      result: 'invalid',
+      source: 'wikidata',
+    });
+  });
+
+  test('names and animals look at ten candidates, places at three', async () => {
+    const many = Array.from({ length: 12 }, (_, i) => hit(`Q${100 + i}`, 'Wolf'));
+    const ask = async (category) => {
+      const net = internet({ search: () => json({ search: many }), dict: () => json({}, 404) });
+      await judge(net).check(category, 'wolf');
+      const query = net.calls
+        .find((c) => c.url.hostname === 'query.wikidata.org')
+        .url.searchParams.get('query');
+      return (query.match(/wd:Q1\d\d\b/g) ?? []).length;
+    };
+    expect(await ask('name')).toBe(10);
+    expect(await ask('animal')).toBe(10);
+    expect(await ask('place')).toBe(3);
+  });
+
+  test('the dictionary step reports which parts of speech it saw', async () => {
+    const events = [];
+    const net = internet({
+      dict: () => json([{ meanings: [{ partOfSpeech: 'verb' }, { partOfSpeech: 'adjective' }] }]),
+    });
+    await judge(net, { debug: (e) => events.push(e) }).check('thing', 'happy');
+    expect(events.find((e) => e.step === 'meanings')).toMatchObject({
+      entries: 1,
+      partsOfSpeech: ['verb', 'adjective'],
+    });
+  });
+});

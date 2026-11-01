@@ -1,6 +1,6 @@
 # Word-check accuracy results
 
-**Status: two runs done on 1 Nov 2026 (owner's laptop). Name passes. Place and thing were measured but miss the target, animal could not be measured; fixes are in and run 3 is needed (see below).** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
+**Status: three runs done on 1 Nov 2026 (owner's laptop). Name (run 1) and place (run 3) pass. Animal and thing miss the target; fixes for animal are in, and the Free Dictionary API behaviour for things is still unexplained. Run 4 is needed (see below).** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
 
 ## How to run it
 
@@ -42,27 +42,42 @@ Notes after run 2:
 - **Animal: not measured.** 75 lookups timed out and 11 were paused after HTTP 429. The animal question (walk up the parent-taxon chain) is too slow for the 6 second limit as written.
 - **Thing: 88% accurate, 12% wrong, below target.** The 4 invalid words judged valid (quite, beautiful, short, brave) have genuine noun meanings in a dictionary, so those samples were ambiguous and have been replaced. The 8 valid words judged invalid (table, window, bottle, piano, guitar, clock, mirror, envelope) are the same ones as run 1 and are everyday nouns, so the Free Dictionary API itself seems to answer "not found" or "no noun" for them. This is still unexplained; the raw reply for one of them is needed (see below).
 
-### What changed after runs 1 and 2
+### Run 3 (1 Nov 2026, owner's laptop, after the place and animal fixes)
 
-- The evaluate script waits between words (1.2 s), waits as long as a busy service asks (Retry-After) and retries, counts failures by reason, and with `--verbose` prints every wrong, inconclusive or failed word with the requests behind it.
-- The word-check service retries once on a network failure or server error, only examines the three best-matching Wikidata candidates, and every failure carries a reason.
-- **Place:** now needs the candidate to be an instance of a place class (geographic location, administrative territorial entity, human settlement, geographic region, geographical feature, body of water, landform, territorial entity, country, sovereign state) or of a subclass up to three steps away. These are fixed lookups, not an open-ended walk. The class ids are checked against their labels by step 1 of the evaluate script.
-- **Animal:** the parent-taxon question now carries Wikidata's "walk forward from the candidate" hint (`hint:gearing "forward"`) so it climbs the chain instead of searching every animal.
-- **Samples:** `quite`, `beautiful`, `short` and `brave` (real noun meanings) were replaced by unambiguous adverbs in the thing sample.
+| Category | Words | Correct | Wrong | Inconclusive | Errors | Accuracy % | Wrong % of all |
+| -------- | ----- | ------- | ----- | ------------ | ------ | ---------- | -------------- |
+| place    | 100   | 82      | 3     | 15           | 0      | 96.5       | 3.0            |
+| animal   | 100   | 74      | 18    | 8            | 0      | 80.4       | 18.0           |
+| thing    | 100   | 93      | 7     | 0            | 0      | 93.0       | 7.0            |
 
-### Run 3 (to do)
+Notes after run 3:
 
-1. See what the dictionary API really says about one of the failing things. In PowerShell:
+- **Place: passes** (96.5% accurate, 3.0% wrong). The 3 "wrong" words (blanket, sandwich, magnet) are real places (Blanket in Texas, Sandwich in Kent), so the samples were ambiguous; they were replaced for future runs. 15 inconclusive are mostly nonsense words with no Wikidata match, which is the intended outcome.
+- **Animal: fails** (80.4% accurate, 18.0% wrong). Seventeen real animals were judged invalid (elephant, wolf, cow, eagle, dolphin, kangaroo, otter, badger, cobra, salmon, trout, jellyfish, butterfly, mongoose, chameleon, flamingo, vulture): Wikidata's best three hits for a common name are often not the animal itself, and with only three candidates the real one was missed. `spatula` is the name of a genus of ducks, so it is a genuinely valid animal word; the sample was replaced.
+- **Thing: accuracy passes, definitive errors do not** (93.0% accurate, but 7.0% wrong against a limit of 5%). `table` is now correct, so the Free Dictionary API is inconsistent, not simply missing words. The 7 still wrong (window, bottle, piano, guitar, clock, mirror, envelope) are everyday nouns judged invalid. The raw replies are still needed to say why.
+- **Name** was last measured in run 1 (98.9%). The candidate window changed since, so it needs a re-run.
+
+### What changed after runs 1 to 3
+
+- The evaluate script waits between words (1.2 s), waits as long as a busy service asks (Retry-After) and retries, counts failures by reason, and with `--verbose` prints every wrong, inconclusive or failed word with the requests behind it. `npm run judge:probe -- <category> <word>` shows the full story for a single word.
+- The word-check service retries once on a network failure or server error, and every failure carries a reason.
+- **Place:** a place must be an instance of a place class (geographic location, administrative territorial entity, human settlement, geographic region, geographical feature, body of water, landform, territorial entity, country, sovereign state) or of a subclass up to three fixed steps away, and only the three best Wikidata matches are examined.
+- **Animal:** the family-tree question carries Wikidata's forward-walk hint; names and animals now examine the ten best matches; and when Wikidata does not confirm an animal, the dictionary gets a say: a meaning that mentions mammal, bird, fish, insect and so on makes it valid.
+- **Samples:** words that really are places, animals or have noun meanings were replaced (blanket, sandwich, magnet, spatula, quite, beautiful, short, brave).
+
+### Run 4 (to do)
+
+1. See what the dictionary API says about one of the failing things (it prints the HTTP status, the start of the reply and the parts of speech found):
 
 ```
-curl.exe -s https://api.dictionaryapi.dev/api/v2/entries/en/table
-curl.exe -s -o NUL -w "%{http_code}" https://api.dictionaryapi.dev/api/v2/entries/en/window
+npm run judge:probe -- thing window
+npm run judge:probe -- thing piano
 ```
 
-2. Re-run, one category at a time, and send back the output:
+2. Re-run the categories and send back the output:
 
 ```
-npm run judge:evaluate -- --category=place --verbose
+npm run judge:evaluate -- --category=name
 npm run judge:evaluate -- --category=animal --verbose
 npm run judge:evaluate -- --category=thing --verbose
 ```

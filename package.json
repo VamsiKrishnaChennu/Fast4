@@ -24,7 +24,8 @@
     "dictionary:build": "node server/scripts/buildDictionary.js",
     "dictionary:seed": "node server/scripts/seedDictionary.js",
     "prepare": "husky || true",
-    "judge:evaluate": "node server/scripts/judgeEvaluate.js"
+    "judge:evaluate": "node server/scripts/judgeEvaluate.js",
+    "judge:probe": "node server/scripts/judgeProbe.js"
   },
   "lint-staged": {
     "*.{js,jsx,mjs,cjs}": [

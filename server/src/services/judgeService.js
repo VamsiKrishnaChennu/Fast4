@@ -24,8 +24,12 @@ export const WIKIDATA_CLASSES = {
   sovereignState: { id: 'Q3624078', label: 'sovereign state' },
 };
 
-/** Only the best matches are examined: a common word like "kitchen" also names obscure villages. */
-const MAX_CANDIDATES = 3;
+/**
+ * How many of the best-matching Wikidata items are examined. Places look at only three, because a common
+ * word like "kitchen" also names obscure villages. Names and animals look at ten, because the item for
+ * "wolf" or "elephant" is often not among the first three hits.
+ */
+const MAX_CANDIDATES = { name: 10, place: 3, animal: 10 };
 
 const NAME_CLASSES = ['givenName', 'maleGivenName', 'femaleGivenName', 'unisexGivenName'];
 const PLACE_CLASSES = [
@@ -160,7 +164,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     });
   }
 
-  async function wikidataCandidates(word, signal) {
+  async function wikidataCandidates(category, word, signal) {
     const url = new URL(env.WIKIDATA_API_URL);
     url.search = new URLSearchParams({
       action: 'wbsearchentities',
@@ -182,7 +186,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
       hits: (body.search ?? []).length,
       matching: found.length,
     });
-    return found.slice(0, MAX_CANDIDATES).map((item) => item.id);
+    return found.slice(0, MAX_CANDIDATES[category]).map((item) => item.id);
   }
 
   async function wikidataMatches(ids, query, signal) {
@@ -211,7 +215,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
   };
 
   async function viaWikidata(category, word, signal) {
-    const ids = await wikidataCandidates(word, signal);
+    const ids = await wikidataCandidates(category, word, signal);
     if (ids.length === 0) return { result: 'inconclusive', source: 'wikidata' };
     const fits = await wikidataMatches(ids, queries[category](ids), signal);
     return { result: fits ? 'valid' : 'invalid', source: 'wikidata' };
@@ -222,8 +226,17 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     const response = await request('dictionaryapi', url, signal);
     if (response.status === 404) return { status: 404, entries: [] };
     if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
-    const entries = await response.json();
-    return { status: 200, entries: Array.isArray(entries) ? entries : [] };
+    const body = await response.json();
+    const entries = Array.isArray(body) ? body : [];
+    debug?.({
+      source: 'dictionaryapi',
+      step: 'meanings',
+      entries: entries.length,
+      partsOfSpeech: [
+        ...new Set(entries.flatMap((e) => (e.meanings ?? []).map((m) => m.partOfSpeech))),
+      ],
+    });
+    return { status: 200, entries };
   }
 
   const nounCount = (entries) =>
@@ -244,11 +257,13 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
       return { result: valid ? 'valid' : 'invalid', source: 'dictionaryapi' };
     }
     const wiki = await viaWikidata(category, word, signal);
-    if (category !== 'animal' || wiki.result !== 'inconclusive') return wiki;
+    if (category !== 'animal' || wiki.result === 'valid') return wiki;
+    // Animals get a second opinion whenever Wikidata did not confirm: the item for a common name
+    // such as "wolf" is not always among the best hits, but its dictionary meaning says "mammal".
     const { status, entries } = await viaDictionary(word, signal);
     if (status === 200 && hasAnimalWord(entries))
       return { result: 'valid', source: 'dictionaryapi' };
-    return { result: 'inconclusive', source: 'dictionaryapi' };
+    return wiki.result === 'invalid' ? wiki : { result: 'inconclusive', source: 'dictionaryapi' };
   }
 
   async function checkUncached(category, word) {

@@ -62,3 +62,9 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Place rule** changed from "has coordinates, a country or an administrative parent" (too loose: 30% of everyday words passed) to "instance of a place class or a subclass within three steps". Only the three best Wikidata matches are examined.
 - **Animal rule** uses the forward-walk hint to finish inside the time limit.
 - **Open question for the owner (thing):** the Free Dictionary API says "not found" for some ordinary nouns (table, window, bottle, piano, guitar, clock, mirror, envelope). If run 3 confirms it, a challenge against such a word would wrongly remove it. Options to decide then: (a) treat "not found" as inconclusive so a challenge against a word the local dictionary accepts cannot overturn it on the API's word alone, (b) add a second source for things, or (c) accept the risk. (a) is the safe default.
+
+## 2026-11-01 (word-check accuracy run 3)
+
+- Place passes the accuracy target. Names passed in run 1.
+- **Animals** now examine ten candidates (not three) and get a dictionary second opinion when Wikidata does not confirm the animal. This extends the playbook, which only used the dictionary when Wikidata was inconclusive. It trades a small risk of accepting a non-animal whose dictionary meaning mentions an animal word for far fewer wrongly rejected real animals.
+- Things remain open, see the entry from run 2.

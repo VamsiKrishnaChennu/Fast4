@@ -663,7 +663,7 @@
       "expected": "invalid"
     },
     {
-      "word": "blanket",
+      "word": "colander",
       "expected": "invalid"
     },
     {
@@ -691,7 +691,7 @@
       "expected": "invalid"
     },
     {
-      "word": "sandwich",
+      "word": "wheelbarrow",
       "expected": "invalid"
     },
     {
@@ -743,7 +743,7 @@
       "expected": "invalid"
     },
     {
-      "word": "magnet",
+      "word": "xylophone",
       "expected": "invalid"
     },
     {
@@ -1045,7 +1045,7 @@
       "expected": "invalid"
     },
     {
-      "word": "spatula",
+      "word": "colander",
       "expected": "invalid"
     },
     {
