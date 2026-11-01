@@ -67,13 +67,13 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 
 - Place passes the accuracy target. Names passed in run 1.
 - **Animals** now examine ten candidates (not three) and get a dictionary second opinion when Wikidata does not confirm the animal. This extends the playbook, which only used the dictionary when Wikidata was inconclusive. It trades a small risk of accepting a non-animal whose dictionary meaning mentions an animal word for far fewer wrongly rejected real animals.
-- Things remain open, see the entry from run 2.
+- Things were resolved in run 4 and run 5 (see below).
 
 ## 2026-11-01 (word-check accuracy run 4)
 
 - The Free Dictionary API returns an HTML "ERROR 404" page for some real words (window, piano). **Change to the Final decision "404 = invalid":** only the API's JSON "No Definitions Found" 404 is invalid; any other 404 is inconclusive (a failed challenge, never a wrong overturn). Animals use the same rule for the dictionary second opinion, and the animal query also follows "subclass of" links to Animalia.
-- Still open for the owner: whether to add a second source for things (for example an exact Wikidata label match) so these words become definitive instead of inconclusive.
+- Second source for things: decided not to add one (see the entry below).
 
 ## 2026-11-01 (word-check accuracy accepted)
 
-- Run 5 passed for animal and thing; all categories meet the Development Playbook 8.5 targets. Known limits: kangaroo and mongoose are wrongly rejected as animals, helmet is accepted. The thing check leaves some real nouns inconclusive (HTML 404 from the dictionary API). No second source was added.
+- Run 5 passed for animal and thing; all categories meet the Development Playbook 8.5 targets. Known limits: kangaroo and mongoose are wrongly rejected as animals, helmet is accepted. The thing check leaves some real nouns inconclusive (HTML 404 from the dictionary API). **No second source for things:** the dictionary API already gives 100% accuracy on definitive results; a Wikidata label check would add a new rule and a new failure mode (Wikidata lists many non-nouns and proper names as labels) to rescue words that are only inconclusive, which already leaves the verdict unchanged and costs the challenger nothing. Not worth the added design.

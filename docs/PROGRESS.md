@@ -6,7 +6,7 @@
 | 1. Server foundation                                                   | not started      |
 | 2. Authentication (includes forgot/reset password)                     | not started      |
 | 3. Dictionary and validation                                           | done (see notes) |
-| 4. Scoring engine                                                      | not started      |
+| 4. Scoring engine                                                      | done (see notes) |
 | 5. Single-player mode                                                  | not started      |
 | 6. Rooms and lobby                                                     | not started      |
 | 7. Group game engine                                                   | not started      |
@@ -50,3 +50,10 @@
 - **Open item 2 (closed, 1 Nov 2026):** after five live runs all four categories meet the targets (see `docs/JUDGE_RESULTS.md`). Tests: server 204.
 - Seeding about 46,000 words into a real MongoDB is a one-off `npm run dictionary:seed` (it was too slow to finish on the slower stand-in database used in the build sandbox, but is fast on MongoDB).
 - The judge cache is in memory for now; Phase 8 adds the MongoDB `JudgeCache` collection.
+
+## Phase 4 notes
+
+- Built: `server/src/services/scoringService.js`, pure functions with no I/O and no input mutation: `scoreRound` (group scoring by matchKey, unique 10 / shared 5, per-player unique count), `findBonusWinner` (earliest finisher with four valid answers, ties by finishOrder, never for players who did not press Done), `scoreSingleRound` (10 per valid answer, time bonus ceil(remaining/6) capped at 10 only when all four are valid), `rankPlayers` (total, unique answers, bonuses, fewer failed challenges, then shared competition rank 1,1,3 with `isWinner`) and `compareSingleScores` (total, then lower total time).
+- matchKey folding already lives in `shared/src/normalize.js` (Phase 3); scoring takes the matchKey stored on each valid answer.
+- Tests: `server/tests/unit/scoring.test.js` has every table from the Testing Playbook 3.5 to 3.7, including the exact Ana 25 / Ben 30 / Cy 20 example. Coverage of `scoringService.js` is 100% and enforced by the Jest threshold. Server total: 248 tests.
+- Challenge-driven recomputation (Phase 8) just calls `scoreRound` again with the changed verdicts.
