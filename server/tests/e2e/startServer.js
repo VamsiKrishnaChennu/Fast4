@@ -11,6 +11,7 @@ import { loadEnv } from '../../src/config/env.js';
 import { createLogger } from '../../src/config/logger.js';
 import { isDbConnected } from '../../src/config/db.js';
 import { createMemoryEmailProvider } from '../../src/services/emailService.js';
+import { fixtureDictionary } from '../helpers/fixtures.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const port = Number(process.env.E2E_PORT ?? 4100);
@@ -41,6 +42,7 @@ const app = createApp({
   readinessChecks: [{ name: 'database', check: isDbConnected }],
   clientDist: path.join(root, 'client', 'dist'),
   emailProvider,
+  dictionary: fixtureDictionary(),
   authLimit: { limit: 1000 },
   apiLimit: { limit: 10000 },
 });

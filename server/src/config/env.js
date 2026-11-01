@@ -57,6 +57,7 @@ const schema = z
     SENTRY_DSN: z.string().optional(),
     APP_VERSION: z.string().default('dev'),
     TEST_ROUND_SECONDS: z.coerce.number().int().min(1).optional(),
+    TEST_LETTER_REVEAL_MS: z.coerce.number().int().min(0).optional(),
   })
   .superRefine((env, ctx) => {
     const need = (name, when, why) => {
@@ -124,6 +125,11 @@ export function loadEnv(source = process.env) {
         ? env.TEST_ROUND_SECONDS
         : LIMITS.ROUND_SECONDS,
     TEST_ROUND_SECONDS: undefined,
+    LETTER_REVEAL_MS:
+      env.NODE_ENV === 'test' && env.TEST_LETTER_REVEAL_MS !== undefined
+        ? env.TEST_LETTER_REVEAL_MS
+        : LIMITS.LETTER_REVEAL_MS,
+    TEST_LETTER_REVEAL_MS: undefined,
     isProduction: production,
   };
 }

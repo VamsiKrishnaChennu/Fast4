@@ -237,6 +237,13 @@ describe('scoreSingleRound', () => {
     expect(scoreSingleRound({ answers, secondsUsed }).roundScore).toBe(expected);
   });
 
+  test('a shorter round scales the bonus the same way', () => {
+    expect(scoreSingleRound({ answers: four, secondsUsed: 5, roundSeconds: 10 }).timeBonus).toBe(5);
+    expect(scoreSingleRound({ answers: four, secondsUsed: 0, roundSeconds: 10 }).timeBonus).toBe(
+      10,
+    );
+  });
+
   test('all blank scores 0', () => {
     const answers = Object.fromEntries(CATEGORIES.map((c) => [c, { verdict: 'blank' }]));
     expect(scoreSingleRound({ answers, secondsUsed: 10 })).toEqual({

@@ -38,6 +38,7 @@ async function main() {
       { name: 'database', check: isDbConnected },
       { name: 'dictionary', check: () => dictionary.isReady() },
     ],
+    dictionary,
     clientDist: existsSync(clientDist) ? clientDist : undefined,
   });
   const server = http.createServer(app);

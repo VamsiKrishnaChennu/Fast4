@@ -11,9 +11,16 @@ const json = (body, status = 200, headers = {}) =>
     status,
     headers: { 'content-type': 'application/json', ...headers },
   });
-const notFound = () => json({ title: 'No Definitions Found', message: 'Sorry pal, we could not find definitions.' }, 404);
+const notFound = () =>
+  json(
+    { title: 'No Definitions Found', message: 'Sorry pal, we could not find definitions.' },
+    404,
+  );
 const htmlNotFound = () =>
-  new Response('<html><body><h5>ERROR 404!!!</h5><p>Sorry,that page does not exist</p></body></html>', { status: 404, headers: { 'content-type': 'text/html' } });
+  new Response(
+    '<html><body><h5>ERROR 404!!!</h5><p>Sorry,that page does not exist</p></body></html>',
+    { status: 404, headers: { 'content-type': 'text/html' } },
+  );
 const hit = (id, text) => ({ id, label: text, match: { type: 'label', text } });
 
 /** Fake internet: pass handlers for the three services. */
@@ -540,7 +547,10 @@ describe('animals get a dictionary second opinion', () => {
   });
 
   test('animal: Wikidata miss plus an HTML 404 is inconclusive', async () => {
-    const net = internet({ search: () => json({ search: [hit('Q1', 'Zork')] }), dict: () => htmlNotFound() });
+    const net = internet({
+      search: () => json({ search: [hit('Q1', 'Zork')] }),
+      dict: () => htmlNotFound(),
+    });
     expect(await judge(net).check('animal', 'zork')).toMatchObject({ result: 'inconclusive' });
   });
 

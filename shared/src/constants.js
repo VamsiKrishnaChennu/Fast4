@@ -27,6 +27,7 @@ export const LIMITS = {
   JUDGE_TIMEOUT_MS: 6000,
   REJOIN_GRACE_SECONDS: 60,
   LETTER_REVEAL_MS: 4000,
+  SUBMIT_GRACE_MS: 1500,
   ROUND_RESULT_SECONDS: 10,
   AGE_MIN: 13,
   REPORT_REASONS: ['harassment', 'hate', 'sexual', 'spam', 'cheating', 'other'],

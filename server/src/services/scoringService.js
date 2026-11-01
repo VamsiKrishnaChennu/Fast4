@@ -83,18 +83,19 @@ export function scoreRound(submissions) {
  * Single-player scoring for one round.
  * 10 per valid answer; when all four are valid, a time bonus of ceil(remaining / 6), at most 10.
  * @param {{answers: Record<string, {verdict: string}>, secondsUsed: number}} round secondsUsed is
- *   the time between the letter appearing and Done (60 or more when the timer ran out).
+ *   the time between writing starting and Done (the full round when the timer ran out); roundSeconds
+ *   defaults to 60 and only differs in tests.
  * @returns {{answerPoints: number, validCount: number, timeBonus: number, roundScore: number}}
  */
-export function scoreSingleRound({ answers, secondsUsed }) {
+export function scoreSingleRound({ answers, secondsUsed, roundSeconds = LIMITS.ROUND_SECONDS }) {
   const validCount = CATEGORIES.filter((c) => isValid(answers?.[c])).length;
   const answerPoints = validCount * SCORING.SINGLE_VALID;
   let timeBonus = 0;
   if (validCount === CATEGORIES.length) {
-    const remaining = Math.max(0, LIMITS.ROUND_SECONDS - secondsUsed);
+    const remaining = Math.max(0, roundSeconds - secondsUsed);
     timeBonus = Math.min(
       SCORING.SINGLE_TIME_BONUS_MAX,
-      Math.ceil(remaining / (LIMITS.ROUND_SECONDS / SCORING.SINGLE_TIME_BONUS_MAX)),
+      Math.ceil(remaining / (roundSeconds / SCORING.SINGLE_TIME_BONUS_MAX)),
     );
   }
   return { answerPoints, validCount, timeBonus, roundScore: answerPoints + timeBonus };

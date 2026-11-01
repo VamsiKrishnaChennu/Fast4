@@ -270,7 +270,8 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     // Animals get a second opinion whenever Wikidata did not confirm: the item for a common name
     // such as "wolf" is not always among the best hits, but its dictionary meaning says "mammal".
     const { status, entries, definite } = await viaDictionary(word, signal);
-    if (status === 200 && hasAnimalWord(entries)) return { result: 'valid', source: 'dictionaryapi' };
+    if (status === 200 && hasAnimalWord(entries))
+      return { result: 'valid', source: 'dictionaryapi' };
     // "Not an animal" needs real evidence from the dictionary too, never just a broken reply.
     if (wiki.result === 'invalid' && definite) return wiki;
     return { result: 'inconclusive', source: 'dictionaryapi' };

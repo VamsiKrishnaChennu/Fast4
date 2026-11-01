@@ -12,6 +12,11 @@ import { requestId } from './middleware/requestId.js';
 import { createAuthController } from './controllers/authController.js';
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth.js';
+import { singleRoutes } from './routes/single.js';
+import { createSingleController } from './controllers/singleController.js';
+import { createLeaderboardService } from './services/leaderboardService.js';
+import { createSinglePlayerService } from './services/singlePlayerService.js';
+import { createValidationService } from './services/validationService.js';
 import { createAuthService } from './services/authService.js';
 import { createEmailProvider } from './services/emailService.js';
 import { createTokenService } from './services/tokenService.js';
@@ -34,6 +39,9 @@ function socketOrigins(appOrigin) {
  * @param {{ limit?: number, windowMs?: number }} [options.apiLimit]
  * @param {{ limit?: number, windowMs?: number }} [options.authLimit]
  * @param {{ send: Function }} [options.emailProvider] defaults to the provider named by EMAIL_PROVIDER
+ * @param {{ has: Function }} [options.dictionary] the word lists; the single-player API is mounted only when given
+ * @param {{ now: () => number }} [options.clock] time source for games; tests pass a fake
+ * @param {Function} [options.pickLetter] letter chooser for games; tests pass a fixed sequence
  * @returns {import('express').Express}
  */
 export function createApp({
@@ -44,6 +52,9 @@ export function createApp({
   apiLimit,
   authLimit,
   emailProvider = createEmailProvider({ env, logger }),
+  dictionary,
+  clock,
+  pickLetter,
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -108,6 +119,24 @@ export function createApp({
       authLimiter: createAuthLimiter(authLimit),
     }),
   );
+  if (dictionary) {
+    const leaderboard = createLeaderboardService({ clock });
+    const single = createSinglePlayerService({
+      validation: createValidationService({ dictionary }),
+      clock,
+      roundSeconds: env.ROUND_SECONDS,
+      revealMs: env.LETTER_REVEAL_MS,
+      pickLetter,
+      leaderboard,
+    });
+    app.use(
+      '/api',
+      singleRoutes({
+        controller: createSingleController({ single, leaderboard }),
+        auth: createAuth({ tokenService }),
+      }),
+    );
+  }
   // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
   // BEFORE the single-page-app fallback below.
 

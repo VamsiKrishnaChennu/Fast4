@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AUTH, AVATAR_COLORS } from './constants.js';
+import { AUTH, AVATAR_COLORS, CATEGORIES, SINGLE_ROUND_OPTIONS } from './constants.js';
 
 export const nicknameSchema = z
   .string()
@@ -58,5 +58,48 @@ export const resetSchema = z
   .object({
     token: z.string().min(20).max(200),
     password: passwordSchema,
+  })
+  .strict();
+
+const objectId = z.string().regex(/^[a-f0-9]{24}$/i, 'Not a valid id.');
+
+export const gameIdParamsSchema = z.object({ id: objectId }).strict();
+
+export const roundParamsSchema = z
+  .object({ id: objectId, index: z.coerce.number().int().min(0).max(99) })
+  .strict();
+
+export const singleCreateSchema = z
+  .object({
+    rounds: z
+      .number()
+      .int()
+      .refine((n) => SINGLE_ROUND_OPTIONS.includes(n), {
+        message: `Choose ${SINGLE_ROUND_OPTIONS.join(', ')} rounds.`,
+      }),
+  })
+  .strict();
+
+export const singleSubmitSchema = z
+  .object({
+    answers: z
+      .object(Object.fromEntries(CATEGORIES.map((c) => [c, z.string().max(100).default('')])))
+      .strict(),
+  })
+  .strict();
+
+export const LEADERBOARD_PERIODS = ['daily', 'weekly', 'all'];
+
+export const singleLeaderboardQuerySchema = z
+  .object({
+    period: z.enum(LEADERBOARD_PERIODS).default('all'),
+    rounds: z.coerce
+      .number()
+      .int()
+      .refine((n) => SINGLE_ROUND_OPTIONS.includes(n), {
+        message: 'Choose 5, 10, 15 or 20 rounds.',
+      })
+      .default(10),
+    limit: z.coerce.number().int().min(1).max(100).default(50),
   })
   .strict();
