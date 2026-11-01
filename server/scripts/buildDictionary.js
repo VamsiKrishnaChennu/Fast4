@@ -50,15 +50,15 @@ function clean(words) {
   return [...out].sort();
 }
 
-let blocked;
-
 async function write(file, words) {
   await writeFile(path.join(OUT, file), `${words.join('\n')}\n`);
   log(`${file}: ${words.length} words`);
 }
 
 await mkdir(OUT, { recursive: true });
-blocked = parseBlocklist(await readFile(path.join(OUT, 'starter', 'blocked.txt'), 'utf8'));
+const blockedWords = parseBlocklist(
+  await readFile(path.join(OUT, 'starter', 'blocked.txt'), 'utf8'),
+);
 
 log('Names');
 const ssa = await attempt('SSA baby names', () => fetchSsaNames());
@@ -66,7 +66,7 @@ const nltk = await attempt('NLTK names list', fetchNltkNames);
 const names = clean([...ssa, ...nltk, ...(await starter('names.txt'))]);
 await write(
   'names.txt',
-  names.filter((w) => !blocked.name.has(w)),
+  names.filter((w) => !blockedWords.name.has(w)),
 );
 
 log('Places');
@@ -77,7 +77,7 @@ const wikidata = await attempt('Wikidata places', () => fetchWikidataPlaces(log)
 const places = clean([...countryNames, ...wikidata, ...(await starter('places.txt'))]);
 await write(
   'places.txt',
-  places.filter((w) => !blocked.place.has(w)),
+  places.filter((w) => !blockedWords.place.has(w)),
 );
 
 log('Animals and things (WordNet)');
@@ -88,7 +88,7 @@ const animalLemmas = lemmasOf(graph, animalSet);
 const animals = clean([...animalLemmas, ...(await starter('animals.txt'))]);
 await write(
   'animals.txt',
-  animals.filter((w) => !blocked.animal.has(w)),
+  animals.filter((w) => !blockedWords.animal.has(w)),
 );
 
 const excluded = new Set([
@@ -109,6 +109,6 @@ const things = clean([...lemmasOf(graph, thingOffsets), ...(await starter('thing
 );
 await write(
   'things.txt',
-  things.filter((w) => !blocked.thing.has(w)),
+  things.filter((w) => !blockedWords.thing.has(w)),
 );
 log('Done. Review the files, then commit them. Sources are listed in docs/DICTIONARY_SOURCES.md.');
