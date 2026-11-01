@@ -71,11 +71,22 @@ for (const category of Object.keys(samples)) {
 }
 
 out('\nResults (target: accuracy 90% or more on definitive results, under 5% definitively wrong)');
-out('category | words | correct | wrong | inconclusive | errors | accuracy % | wrong % of all');
+out(
+  '\nCopy the four lines below over the four empty rows (lines 22 to 25) of the table in docs/JUDGE_RESULTS.md:\n',
+);
 for (const r of rows) {
-  out(
-    `${r.category} | ${r.total} | ${r.correct} | ${r.wrong} | ${r.inconclusive} | ${r.errors} | ${r.accuracy} | ${r.wrongRate}`,
-  );
-  if (r.wrongWords.length) out(`  wrong: ${r.wrongWords.join(', ')}`);
+  const cells = [
+    r.category,
+    r.total,
+    r.correct,
+    r.wrong,
+    r.inconclusive,
+    r.errors,
+    r.accuracy,
+    r.wrongRate,
+  ];
+  out(`| ${cells.join(' | ')} |`);
 }
-out('\nCopy this table into docs/JUDGE_RESULTS.md.');
+out('\nWords judged wrong (mention these on the "Notes after the run" line, line 27):');
+for (const r of rows)
+  out(`  ${r.category}: ${r.wrongWords.length ? r.wrongWords.join(', ') : 'none'}`);
