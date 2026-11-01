@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Filter } from 'bad-words';
 import { normalizeAnswer } from '@fastfour/shared';
+import { parseBlocklist } from './lib/blocklist.js';
 import { descendants, lemmasOf, loadWordnet } from './lib/wordnet.js';
 import { fetchNltkNames, fetchSsaNames, fetchWikidataPlaces } from './lib/sources.js';
 
@@ -49,18 +50,24 @@ function clean(words) {
   return [...out].sort();
 }
 
+let blocked;
+
 async function write(file, words) {
   await writeFile(path.join(OUT, file), `${words.join('\n')}\n`);
   log(`${file}: ${words.length} words`);
 }
 
 await mkdir(OUT, { recursive: true });
+blocked = parseBlocklist(await readFile(path.join(OUT, 'starter', 'blocked.txt'), 'utf8'));
 
 log('Names');
 const ssa = await attempt('SSA baby names', () => fetchSsaNames());
 const nltk = await attempt('NLTK names list', fetchNltkNames);
 const names = clean([...ssa, ...nltk, ...(await starter('names.txt'))]);
-await write('names.txt', names);
+await write(
+  'names.txt',
+  names.filter((w) => !blocked.name.has(w)),
+);
 
 log('Places');
 const countries = require('world-countries');
@@ -68,7 +75,10 @@ const countryNames = countries.flatMap((c) => [c.name.common, ...(c.capital ?? [
 log(`  world-countries: ${countryNames.length} entries`);
 const wikidata = await attempt('Wikidata places', () => fetchWikidataPlaces(log));
 const places = clean([...countryNames, ...wikidata, ...(await starter('places.txt'))]);
-await write('places.txt', places);
+await write(
+  'places.txt',
+  places.filter((w) => !blocked.place.has(w)),
+);
 
 log('Animals and things (WordNet)');
 const dictDir = path.join(path.dirname(require.resolve('wordnet-db/package.json')), 'dict');
@@ -76,7 +86,10 @@ const { graph, root } = await loadWordnet(dictDir);
 const animalSet = descendants(graph, root('animal'));
 const animalLemmas = lemmasOf(graph, animalSet);
 const animals = clean([...animalLemmas, ...(await starter('animals.txt'))]);
-await write('animals.txt', animals);
+await write(
+  'animals.txt',
+  animals.filter((w) => !blocked.animal.has(w)),
+);
 
 const excluded = new Set([
   ...animalSet,
@@ -94,5 +107,8 @@ const things = clean([...lemmasOf(graph, thingOffsets), ...(await starter('thing
     !blocked.has(word) ||
     ['apple', 'bat', 'seal', 'crane', 'cricket', 'jaguar', 'mercury'].includes(word),
 );
-await write('things.txt', things);
+await write(
+  'things.txt',
+  things.filter((w) => !blocked.thing.has(w)),
+);
 log('Done. Review the files, then commit them. Sources are listed in docs/DICTIONARY_SOURCES.md.');

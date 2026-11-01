@@ -18,6 +18,7 @@ The local dictionary judges every answer instantly. The four lists live in `serv
 - Every line is normalized with `normalizeAnswer` (a to z, space, hyphen, apostrophe), one or two words, 2 to 30 characters.
 - Entries are de-duplicated, sorted, and run through the `bad-words` profanity filter.
 - Typing a plural also works: the validator tries the singular forms of the last word ("tigers" finds "tiger", "horses" finds "horse").
+- To keep a word out for good, add a line such as `animal: animal` to `server/data/dictionary/starter/blocked.txt`; it is applied on every build. Removing a line by hand from a `.txt` file works until the next build regenerates the file.
 - The curated lists in `server/data/dictionary/starter/` can be edited by hand. Commas or new lines separate entries, and lines starting with `#` are notes.
 
 ## Licenses

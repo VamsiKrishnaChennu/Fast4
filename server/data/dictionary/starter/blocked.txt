@@ -1,0 +1,3 @@
+# Words to remove from the generated lists, so they stay out after every `npm run dictionary:build`.
+# One per line as "category: word". Categories: name, place, animal, thing.
+animal: animal
