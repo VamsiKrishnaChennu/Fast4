@@ -11,9 +11,35 @@ export const WIKIDATA_CLASSES = {
   femaleGivenName: { id: 'Q11879590', label: 'female given name' },
   unisexGivenName: { id: 'Q3409032', label: 'unisex given name' },
   animalia: { id: 'Q729', label: 'Animalia' },
+  // Broad classes that every kind of place sits under, within three steps of "instance of".
+  geographicLocation: { id: 'Q2221906', label: 'geographic location' },
+  administrativeEntity: { id: 'Q56061', label: 'administrative territorial entity' },
+  humanSettlement: { id: 'Q486972', label: 'human settlement' },
+  geographicRegion: { id: 'Q82794', label: 'geographic region' },
+  geographicalFeature: { id: 'Q618123', label: 'geographical feature' },
+  bodyOfWater: { id: 'Q15324', label: 'body of water' },
+  landform: { id: 'Q271669', label: 'landform' },
+  territorialEntity: { id: 'Q1496967', label: 'territorial entity' },
+  country: { id: 'Q6256', label: 'country' },
+  sovereignState: { id: 'Q3624078', label: 'sovereign state' },
 };
 
+/** Only the best matches are examined: a common word like "kitchen" also names obscure villages. */
+const MAX_CANDIDATES = 3;
+
 const NAME_CLASSES = ['givenName', 'maleGivenName', 'femaleGivenName', 'unisexGivenName'];
+const PLACE_CLASSES = [
+  'geographicLocation',
+  'administrativeEntity',
+  'humanSettlement',
+  'geographicRegion',
+  'geographicalFeature',
+  'bodyOfWater',
+  'landform',
+  'territorialEntity',
+  'country',
+  'sovereignState',
+];
 const ANIMAL_WORDS = [
   'animal',
   'mammal',
@@ -95,7 +121,11 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
 
   async function request(source, url, signal) {
     if (now() < blockedUntil[source]) {
-      throw new JudgeUnavailableError(undefined, `${source} paused after http 429`);
+      throw new JudgeUnavailableError(
+        undefined,
+        `${source} paused after http 429`,
+        blockedUntil[source] - now(),
+      );
     }
     return limiters[source](async () => {
       // One quick retry for a network failure or a server error; never for 429 or after the timeout.
@@ -116,7 +146,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
         if (response.status === 429) {
           const wait = Number(response.headers?.get?.('retry-after')) || 2;
           blockedUntil[source] = now() + wait * 1000;
-          throw new JudgeUnavailableError(undefined, 'http 429');
+          throw new JudgeUnavailableError(undefined, 'http 429', wait * 1000);
         }
         if (response.status >= 500) {
           if (attempt === 1 && !signal?.aborted) {
@@ -152,7 +182,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
       hits: (body.search ?? []).length,
       matching: found.length,
     });
-    return found.map((item) => item.id);
+    return found.slice(0, MAX_CANDIDATES).map((item) => item.id);
   }
 
   async function wikidataMatches(ids, query, signal) {
@@ -170,14 +200,14 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
   const queries = {
     name: (ids) =>
       `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } VALUES ?class { ${classValues(NAME_CLASSES)} } ?item wdt:P31/wdt:P279* ?class . } LIMIT 1`,
-    // A place has map coordinates, a country, or sits inside an administrative area. These are single
-    // lookups on the candidates, unlike a walk through the whole "geographic location" class tree,
-    // which Wikidata often cannot finish in time.
+    // A place is an instance of a place class, or of a subclass of one, up to three steps away. Fixed
+    // steps are cheap; an open-ended walk through the class tree often cannot finish in time.
     place: (ids) =>
-      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } { ?item wdt:P625 ?x } UNION { ?item wdt:P17 ?x } UNION { ?item wdt:P131 ?x } } LIMIT 1`,
-    // An animal has a chain of parent taxa that ends at Animalia.
+      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } VALUES ?class { ${classValues(PLACE_CLASSES)} } { ?item wdt:P31 ?class } UNION { ?item wdt:P31/wdt:P279 ?class } UNION { ?item wdt:P31/wdt:P279/wdt:P279 ?class } UNION { ?item wdt:P31/wdt:P279/wdt:P279/wdt:P279 ?class } } LIMIT 1`,
+    // An animal has a chain of parent taxa that ends at Animalia. The hint makes Wikidata walk upward
+    // from the candidate instead of downward through every animal.
     animal: (ids) =>
-      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } ?item wdt:P171+ wd:${WIKIDATA_CLASSES.animalia.id} . } LIMIT 1`,
+      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } ?item wdt:P171+ wd:${WIKIDATA_CLASSES.animalia.id} . hint:Prior hint:gearing "forward" . } LIMIT 1`,
   };
 
   async function viaWikidata(category, word, signal) {

@@ -1555,7 +1555,7 @@
       "expected": "invalid"
     },
     {
-      "word": "quite",
+      "word": "frequently",
       "expected": "invalid"
     },
     {
@@ -1571,7 +1571,7 @@
       "expected": "invalid"
     },
     {
-      "word": "beautiful",
+      "word": "gracefully",
       "expected": "invalid"
     },
     {
@@ -1579,7 +1579,7 @@
       "expected": "invalid"
     },
     {
-      "word": "short",
+      "word": "gently",
       "expected": "invalid"
     },
     {
@@ -1591,7 +1591,7 @@
       "expected": "invalid"
     },
     {
-      "word": "brave",
+      "word": "bravely",
       "expected": "invalid"
     },
     {

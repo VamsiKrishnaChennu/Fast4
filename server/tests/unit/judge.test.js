@@ -63,7 +63,7 @@ describe('names, places and animals through Wikidata', () => {
       result: 'valid',
       source: 'wikidata',
     });
-    expect(net.calls[1].url.searchParams.get('query')).toContain('wdt:P625');
+    expect(net.calls[1].url.searchParams.get('query')).toContain('Q2221906');
   });
 
   test('a place name that only a person has is invalid', async () => {
@@ -77,7 +77,9 @@ describe('names, places and animals through Wikidata', () => {
       result: 'valid',
       source: 'wikidata',
     });
-    expect(net.calls[1].url.searchParams.get('query')).toContain('Q729');
+    const animalQuery = net.calls[1].url.searchParams.get('query');
+    expect(animalQuery).toContain('Q729');
+    expect(animalQuery).toContain('hint:gearing "forward"');
   });
 
   test('an animal missing on Wikidata but described as one by the dictionary is valid', async () => {
@@ -450,5 +452,39 @@ describe('diagnostics', () => {
       .check('name', 'sam')
       .catch(() => {});
     expect(failing[0]).toMatchObject({ error: 'Error' });
+  });
+});
+
+describe('best matches only and wait times', () => {
+  test('only the three best matching candidates are examined', async () => {
+    const hits = ['Q11', 'Q12', 'Q13', 'Q14', 'Q15'].map((id) => hit(id, 'Kitchen'));
+    const net = internet({
+      search: () => json({ search: hits }),
+      sparql: () => json({ results: { bindings: [] } }),
+    });
+    await judge(net).check('place', 'kitchen');
+    const query = net.calls[1].url.searchParams.get('query');
+    expect(query).toContain('wd:Q11 wd:Q12 wd:Q13 }');
+    expect(query).not.toMatch(/wd:Q14\b/);
+  });
+
+  test('a place query reaches the class by at most three fixed steps, never an open-ended walk', async () => {
+    const net = internet({ search: () => json({ search: [hit('Q9', 'Sirsi')] }), sparql: yes });
+    await judge(net).check('place', 'sirsi');
+    const query = net.calls[1].url.searchParams.get('query');
+    expect(query).not.toMatch(/P279\*/);
+    expect(query).toContain('wdt:P31/wdt:P279/wdt:P279/wdt:P279');
+  });
+
+  test('a 429 tells how long to wait', async () => {
+    const net = internet({ dict: () => json({}, 429, { 'retry-after': '7' }) });
+    const err = await judge(net)
+      .check('thing', 'table')
+      .catch((e) => e);
+    expect(err.retryAfterMs).toBe(7000);
+    const paused = await judge(net)
+      .check('thing', 'chair')
+      .catch((e) => e);
+    expect(paused.retryAfterMs).toBeGreaterThan(0);
   });
 });

@@ -55,7 +55,7 @@ async function ask(category, word) {
       return await judge.check(category, word);
     } catch (err) {
       last = err;
-      await sleep(3000 * 2 ** attempt);
+      await sleep(Math.max(3000 * 2 ** attempt, (err.retryAfterMs ?? 0) + 500));
     }
   }
   throw last;

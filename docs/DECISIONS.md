@@ -56,3 +56,9 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 
 - The first live run showed the word check fails when asked too fast: HTTP 429 or timeouts, and the 2 second back-off then failed every following word. The evaluate script now paces itself and retries. In production, challenges are rare and one at a time per room, so the back-off is acceptable, but it must be watched in the logs (`JudgeUnavailableError.reason` records timeout, network or http status).
 - The Wikidata place and animal queries were made lighter (single lookups instead of walking the whole class tree). The Wikidata class id for "geographic location" is no longer used.
+
+## 2026-11-01 (word-check accuracy run 2)
+
+- **Place rule** changed from "has coordinates, a country or an administrative parent" (too loose: 30% of everyday words passed) to "instance of a place class or a subclass within three steps". Only the three best Wikidata matches are examined.
+- **Animal rule** uses the forward-walk hint to finish inside the time limit.
+- **Open question for the owner (thing):** the Free Dictionary API says "not found" for some ordinary nouns (table, window, bottle, piano, guitar, clock, mirror, envelope). If run 3 confirms it, a challenge against such a word would wrongly remove it. Options to decide then: (a) treat "not found" as inconclusive so a challenge against a word the local dictionary accepts cannot overturn it on the API's word alone, (b) add a second source for things, or (c) accept the risk. (a) is the safe default.
