@@ -11,13 +11,16 @@ const json = (body, status = 200, headers = {}) =>
     status,
     headers: { 'content-type': 'application/json', ...headers },
   });
+const notFound = () => json({ title: 'No Definitions Found', message: 'Sorry pal, we could not find definitions.' }, 404);
+const htmlNotFound = () =>
+  new Response('<html><body><h5>ERROR 404!!!</h5><p>Sorry,that page does not exist</p></body></html>', { status: 404, headers: { 'content-type': 'text/html' } });
 const hit = (id, text) => ({ id, label: text, match: { type: 'label', text } });
 
 /** Fake internet: pass handlers for the three services. */
 function internet({
   search = () => json({ search: [] }),
   sparql = () => json({ results: { bindings: [] } }),
-  dict = () => json({}, 404),
+  dict = () => notFound(),
 } = {}) {
   const calls = [];
   const fetchImpl = jest.fn(async (url, options) => {
@@ -154,6 +157,14 @@ describe('things through the dictionary API', () => {
   test('404 is invalid', async () => {
     expect(await judge(internet()).check('thing', 'blorf')).toEqual({
       result: 'invalid',
+      source: 'dictionaryapi',
+    });
+  });
+
+  test('an HTML 404 page from the service is inconclusive, not invalid', async () => {
+    const net = internet({ dict: () => htmlNotFound() });
+    expect(await judge(net).check('thing', 'window')).toEqual({
+      result: 'inconclusive',
       source: 'dictionaryapi',
     });
   });
@@ -528,10 +539,15 @@ describe('animals get a dictionary second opinion', () => {
     });
   });
 
+  test('animal: Wikidata miss plus an HTML 404 is inconclusive', async () => {
+    const net = internet({ search: () => json({ search: [hit('Q1', 'Zork')] }), dict: () => htmlNotFound() });
+    expect(await judge(net).check('animal', 'zork')).toMatchObject({ result: 'inconclusive' });
+  });
+
   test('names and animals look at ten candidates, places at three', async () => {
     const many = Array.from({ length: 12 }, (_, i) => hit(`Q${100 + i}`, 'Wolf'));
     const ask = async (category) => {
-      const net = internet({ search: () => json({ search: many }), dict: () => json({}, 404) });
+      const net = internet({ search: () => json({ search: many }), dict: () => notFound() });
       await judge(net).check(category, 'wolf');
       const query = net.calls
         .find((c) => c.url.hostname === 'query.wikidata.org')

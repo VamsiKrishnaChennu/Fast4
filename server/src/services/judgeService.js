@@ -10,7 +10,7 @@ export const WIKIDATA_CLASSES = {
   maleGivenName: { id: 'Q12308941', label: 'male given name' },
   femaleGivenName: { id: 'Q11879590', label: 'female given name' },
   unisexGivenName: { id: 'Q3409032', label: 'unisex given name' },
-  animalia: { id: 'Q729', label: 'Animalia' },
+  animalia: { id: 'Q729', label: 'animal', alsoLabeled: ['Animalia'] },
   // Broad classes that every kind of place sits under, within three steps of "instance of".
   geographicLocation: { id: 'Q2221906', label: 'geographic location' },
   administrativeEntity: { id: 'Q56061', label: 'administrative territorial entity' },
@@ -208,10 +208,11 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     // steps are cheap; an open-ended walk through the class tree often cannot finish in time.
     place: (ids) =>
       `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } VALUES ?class { ${classValues(PLACE_CLASSES)} } { ?item wdt:P31 ?class } UNION { ?item wdt:P31/wdt:P279 ?class } UNION { ?item wdt:P31/wdt:P279/wdt:P279 ?class } UNION { ?item wdt:P31/wdt:P279/wdt:P279/wdt:P279 ?class } } LIMIT 1`,
-    // An animal has a chain of parent taxa that ends at Animalia. The hint makes Wikidata walk upward
-    // from the candidate instead of downward through every animal.
+    // An animal has a chain of parent taxa that ends at Animalia, or (for group names such as "eagle")
+    // a chain of "subclass of" links that does. The hint makes Wikidata walk upward from the candidate
+    // instead of downward through every animal.
     animal: (ids) =>
-      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } ?item wdt:P171+ wd:${WIKIDATA_CLASSES.animalia.id} . hint:Prior hint:gearing "forward" . } LIMIT 1`,
+      `SELECT ?item WHERE { VALUES ?item { ${values(ids)} } { ?item wdt:P171+ wd:${WIKIDATA_CLASSES.animalia.id} . hint:Prior hint:gearing "forward" . } UNION { ?item wdt:P279+ wd:${WIKIDATA_CLASSES.animalia.id} . hint:Prior hint:gearing "forward" . } } LIMIT 1`,
   };
 
   async function viaWikidata(category, word, signal) {
@@ -224,7 +225,14 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
   async function viaDictionary(word, signal) {
     const url = `${env.DICTIONARY_API_URL.replace(/\/$/, '')}/${encodeURIComponent(word)}`;
     const response = await request('dictionaryapi', url, signal);
-    if (response.status === 404) return { status: 404, entries: [] };
+    if (response.status === 404) {
+      // The real service answers an unknown word with JSON saying "No Definitions Found". A plain
+      // HTML "page doesn't exist" 404 is the service failing, and says nothing about the word.
+      const text = await response.text().catch(() => '');
+      const definite = /no definitions found/i.test(text);
+      debug?.({ source: 'dictionaryapi', step: 'not_found', definite });
+      return { status: 404, entries: [], definite };
+    }
     if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
     const body = await response.json();
     const entries = Array.isArray(body) ? body : [];
@@ -236,7 +244,7 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
         ...new Set(entries.flatMap((e) => (e.meanings ?? []).map((m) => m.partOfSpeech))),
       ],
     });
-    return { status: 200, entries };
+    return { status: 200, entries, definite: true };
   }
 
   const nounCount = (entries) =>
@@ -252,7 +260,8 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
 
   async function run(category, word, signal) {
     if (category === 'thing') {
-      const { status, entries } = await viaDictionary(word, signal);
+      const { status, entries, definite } = await viaDictionary(word, signal);
+      if (status === 404 && !definite) return { result: 'inconclusive', source: 'dictionaryapi' };
       const valid = status === 200 && nounCount(entries) > 0;
       return { result: valid ? 'valid' : 'invalid', source: 'dictionaryapi' };
     }
@@ -260,10 +269,11 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     if (category !== 'animal' || wiki.result === 'valid') return wiki;
     // Animals get a second opinion whenever Wikidata did not confirm: the item for a common name
     // such as "wolf" is not always among the best hits, but its dictionary meaning says "mammal".
-    const { status, entries } = await viaDictionary(word, signal);
-    if (status === 200 && hasAnimalWord(entries))
-      return { result: 'valid', source: 'dictionaryapi' };
-    return wiki.result === 'invalid' ? wiki : { result: 'inconclusive', source: 'dictionaryapi' };
+    const { status, entries, definite } = await viaDictionary(word, signal);
+    if (status === 200 && hasAnimalWord(entries)) return { result: 'valid', source: 'dictionaryapi' };
+    // "Not an animal" needs real evidence from the dictionary too, never just a broken reply.
+    if (wiki.result === 'invalid' && definite) return wiki;
+    return { result: 'inconclusive', source: 'dictionaryapi' };
   }
 
   async function checkUncached(category, word) {

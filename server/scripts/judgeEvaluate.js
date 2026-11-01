@@ -14,7 +14,7 @@ const only = process.argv.find((a) => a.startsWith('--category='))?.split('=')[1
 
 out('Step 1: checking the Wikidata class ids');
 let idsOk = true;
-for (const { id, label } of Object.values(WIKIDATA_CLASSES)) {
+for (const { id, label, alsoLabeled = [] } of Object.values(WIKIDATA_CLASSES)) {
   const url = new URL(env.WIKIDATA_API_URL);
   url.search = new URLSearchParams({
     action: 'wbgetentities',
@@ -27,7 +27,7 @@ for (const { id, label } of Object.values(WIKIDATA_CLASSES)) {
     headers: { 'User-Agent': env.WIKIDATA_USER_AGENT ?? 'FastFour/1.0' },
   });
   const actual = (await response.json()).entities?.[id]?.labels?.en?.value ?? '(not found)';
-  const same = actual.toLowerCase() === label.toLowerCase();
+  const same = [label, ...alsoLabeled].some((l) => l.toLowerCase() === actual.toLowerCase());
   idsOk &&= same;
   out(`  ${id} expected "${label}", Wikidata says "${actual}" ${same ? 'OK' : 'MISMATCH'}`);
 }

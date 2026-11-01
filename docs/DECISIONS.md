@@ -68,3 +68,8 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - Place passes the accuracy target. Names passed in run 1.
 - **Animals** now examine ten candidates (not three) and get a dictionary second opinion when Wikidata does not confirm the animal. This extends the playbook, which only used the dictionary when Wikidata was inconclusive. It trades a small risk of accepting a non-animal whose dictionary meaning mentions an animal word for far fewer wrongly rejected real animals.
 - Things remain open, see the entry from run 2.
+
+## 2026-11-01 (word-check accuracy run 4)
+
+- The Free Dictionary API returns an HTML "ERROR 404" page for some real words (window, piano). **Change to the Final decision "404 = invalid":** only the API's JSON "No Definitions Found" 404 is invalid; any other 404 is inconclusive (a failed challenge, never a wrong overturn). Animals use the same rule for the dictionary second opinion, and the animal query also follows "subclass of" links to Animalia.
+- Still open for the owner: whether to add a second source for things (for example an exact Wikidata label match) so these words become definitive instead of inconclusive.

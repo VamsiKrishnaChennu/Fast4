@@ -1,6 +1,6 @@
 # Word-check accuracy results
 
-**Status: three runs done on 1 Nov 2026 (owner's laptop). Name (run 1) and place (run 3) pass. Animal and thing miss the target; fixes for animal are in, and the Free Dictionary API behaviour for things is still unexplained. Run 4 is needed (see below).** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
+**Status: four runs done on 1 Nov 2026 (owner's laptop). Name and place pass. Animal and thing missed in run 4; the cause for things is a Free Dictionary API HTML 404 glitch, now handled as inconclusive. Run 5 is needed (see below).** The build sandbox cannot reach Wikidata or api.dictionaryapi.dev, so this test has to run on a machine with internet access.
 
 ## How to run it
 
@@ -65,24 +65,31 @@ Notes after run 3:
 - **Animal:** the family-tree question carries Wikidata's forward-walk hint; names and animals now examine the ten best matches; and when Wikidata does not confirm an animal, the dictionary gets a say: a meaning that mentions mammal, bird, fish, insect and so on makes it valid.
 - **Samples:** words that really are places, animals or have noun meanings were replaced (blanket, sandwich, magnet, spatula, quite, beautiful, short, brave).
 
-### Run 4 (to do)
+### Run 4 (owner's laptop, 1 Nov 2026)
 
-1. See what the dictionary API says about one of the failing things (it prints the HTTP status, the start of the reply and the parts of speech found):
+| Category | Samples | Right | Wrong | Inconclusive | Failed | Correct of definitive % | Wrong % |
+|---|---|---|---|---|---|---|---|
+| name | 100 | 89 | 1 | 10 | 0 | 98.9 | 1.0 |
+| animal | 100 | 85 | 6 | 9 | 0 | 93.4 | 6.0 |
+| thing | 100 | 92 | 8 | 0 | 0 | 92.0 | 8.0 |
+
+- Name passes (wrong: hammer). Animal misses the wrong-rate limit (wrong: cow, eagle, kangaroo, cobra, mongoose, vulture). Thing misses it (wrong: table, window, bottle, piano, guitar, clock, mirror, envelope).
+- **Finding:** `npm run judge:probe -- thing window` and `thing piano` show that api.dictionaryapi.dev answers these real words with a plain HTML "ERROR 404" page, not the JSON "No Definitions Found". That is the service failing for those words, not a verdict about the word.
+
+### What changed after run 4
+
+- An HTML (non-JSON) 404 from the dictionary API is now **inconclusive**. Only the API's own JSON not-found counts as invalid. The same rule applies to the animal second opinion, so a broken reply can no longer turn a real animal into "invalid".
+- The animal query also follows "subclass of" links up to Animalia (group names such as eagle, cow).
+
+### Run 5 (to do)
 
 ```
-npm run judge:probe -- thing window
-npm run judge:probe -- thing piano
-```
-
-2. Re-run the categories and send back the output:
-
-```
-npm run judge:evaluate -- --category=name
+git pull
 npm run judge:evaluate -- --category=animal --verbose
 npm run judge:evaluate -- --category=thing --verbose
 ```
 
-Targets: at least 90% correct on definitive results and under 5% definitively wrong.
+Targets: at least 90% correct on definitive results and under 5% definitively wrong. For things, the words hit by the HTML 404 will now show as inconclusive, which is the intended safe result.
 
 ## What to tune if a category misses the target
 
