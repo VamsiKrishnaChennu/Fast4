@@ -77,3 +77,14 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 ## 2026-11-01 (word-check accuracy accepted)
 
 - Run 5 passed for animal and thing; all categories meet the Development Playbook 8.5 targets. Known limits: kangaroo and mongoose are wrongly rejected as animals, helmet is accepted. The thing check leaves some real nouns inconclusive (HTML 404 from the dictionary API). **No second source for things:** the dictionary API already gives 100% accuracy on definitive results; a Wikidata label check would add a new rule and a new failure mode (Wikidata lists many non-nouns and proper names as labels) to rescue words that are only inconclusive, which already leaves the verdict unchanged and costs the challenger nothing. Not worth the added design.
+
+## 2026-11-01 (Phase 5: single-player mode)
+
+- **Writing starts after the toss.** `rounds/next` returns the letter at once, but `startedAt` is "now + 4 seconds" (the toss) and `endsAt` is 60 seconds after that. The 60 seconds are never spent on the animation, and the time bonus is measured from `startedAt`. The playbook says the timer starts when the round is requested; this is the fairer reading of "the client runs the toss, then shows the letter".
+- **Daily and weekly ranks are rolling windows** (last 24 hours, last 7 days), so they do not depend on a time zone. The game over screen's "Today" figure is the rank in the daily window.
+- **Done needs four well-formed answers** (right first letter, 2 to 30 characters). When the timer runs out the screen sends whatever is typed, so a player can still score with partial answers.
+- **The next round starts by itself 6 seconds after the result card** (playbook section 15), and the Next round button skips the wait.
+- **Typed answers are kept in the browser tab** (sessionStorage) so a reload mid-round restores them. They are cleared with the tab; nothing is sent to the server until Done.
+- **Added `SUBMIT_GRACE_MS` (1500)** to the shared limits for the playbook's "accepted until endsAt + 1.5 s". Added test-only `TEST_LETTER_REVEAL_MS` next to `TEST_ROUND_SECONDS`; both are ignored unless `NODE_ENV` is test.
+- **Ranks use one flat index** `{ mode, status, settings.rounds, totalScore, totalTimeMs }` and a top-1,000 scan with one entry per player, instead of the playbook's `players.0.totalScore` index. The Ranks page ships with the Solo tab now; the Group tab says it arrives with group games (Phase 9).
+- **Reload mid-game:** a round whose deadline plus grace has passed is scored 0 the next time the game is read or a round is requested, so a player who walks away cannot hold a game open.

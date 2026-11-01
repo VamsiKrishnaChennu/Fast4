@@ -68,10 +68,10 @@ Notes after run 3:
 ### Run 4 (owner's laptop, 1 Nov 2026)
 
 | Category | Samples | Right | Wrong | Inconclusive | Failed | Correct of definitive % | Wrong % |
-|---|---|---|---|---|---|---|---|
-| name | 100 | 89 | 1 | 10 | 0 | 98.9 | 1.0 |
-| animal | 100 | 85 | 6 | 9 | 0 | 93.4 | 6.0 |
-| thing | 100 | 92 | 8 | 0 | 0 | 92.0 | 8.0 |
+| -------- | ------- | ----- | ----- | ------------ | ------ | ----------------------- | ------- |
+| name     | 100     | 89    | 1     | 10           | 0      | 98.9                    | 1.0     |
+| animal   | 100     | 85    | 6     | 9            | 0      | 93.4                    | 6.0     |
+| thing    | 100     | 92    | 8     | 0            | 0      | 92.0                    | 8.0     |
 
 - Name passes (wrong: hammer). Animal misses the wrong-rate limit (wrong: cow, eagle, kangaroo, cobra, mongoose, vulture). Thing misses it (wrong: table, window, bottle, piano, guitar, clock, mirror, envelope).
 - **Finding:** `npm run judge:probe -- thing window` and `thing piano` show that api.dictionaryapi.dev answers these real words with a plain HTML "ERROR 404" page, not the JSON "No Definitions Found". That is the service failing for those words, not a verdict about the word.
@@ -84,9 +84,9 @@ Notes after run 3:
 ### Run 5 (owner's laptop, 1 Nov 2026)
 
 | Category | Samples | Right | Wrong | Inconclusive | Failed | Correct of definitive % | Wrong % |
-|---|---|---|---|---|---|---|---|
-| animal | 100 | 82 | 3 | 15 | 0 | 96.5 | 3.0 |
-| thing | 100 | 85 | 0 | 15 | 0 | 100.0 | 0.0 |
+| -------- | ------- | ----- | ----- | ------------ | ------ | ----------------------- | ------- |
+| animal   | 100     | 82    | 3     | 15           | 0      | 96.5                    | 3.0     |
+| thing    | 100     | 85    | 0     | 15           | 0      | 100.0                   | 0.0     |
 
 - Both meet the targets (at least 90% correct, under 5% wrong). Name (run 4) and place (run 3) already passed, so **all four categories pass**.
 - Animal wrong: kangaroo and mongoose (real animals judged invalid), helmet (judged valid; its dictionary meaning mentions an animal word). A challenge costs nothing when it fails, so these are accepted as known limits.

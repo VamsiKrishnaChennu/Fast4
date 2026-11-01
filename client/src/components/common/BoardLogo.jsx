@@ -1,5 +1,8 @@
-/** The 2x2 category board with the "?" token. Colours follow the light or dark theme. */
-export default function BoardLogo({ size = 160 }) {
+/**
+ * The 2x2 category board. The centre token shows "?" at rest, or a letter when one is given.
+ * Colours follow the light or dark theme.
+ */
+export default function BoardLogo({ size = 160, letter }) {
   return (
     <svg
       className="ff-board"
@@ -51,15 +54,30 @@ export default function BoardLogo({ size = 160 }) {
       </g>
       <g transform="translate(110 110)">
         <circle className="token" r="47.5" strokeWidth="6" />
-        <path
-          className="q"
-          fill="none"
-          strokeWidth="11"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M-11,-12 C-11,-27 12,-27 12,-13 C12,-3 0,-3 0,9"
-        />
-        <circle className="qdot" cx="0" cy="25" r="6.5" />
+        {letter ? (
+          <text
+            className="letter"
+            x="0"
+            y="2"
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize="64"
+          >
+            {letter}
+          </text>
+        ) : (
+          <>
+            <path
+              className="q"
+              fill="none"
+              strokeWidth="11"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M-11,-12 C-11,-27 12,-27 12,-13 C12,-3 0,-3 0,9"
+            />
+            <circle className="qdot" cx="0" cy="25" r="6.5" />
+          </>
+        )}
       </g>
     </svg>
   );

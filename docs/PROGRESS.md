@@ -7,7 +7,7 @@
 | 2. Authentication (includes forgot/reset password)                     | not started      |
 | 3. Dictionary and validation                                           | done (see notes) |
 | 4. Scoring engine                                                      | done (see notes) |
-| 5. Single-player mode                                                  | not started      |
+| 5. Single-player mode                                                  | done (see notes) |
 | 6. Rooms and lobby                                                     | not started      |
 | 7. Group game engine                                                   | not started      |
 | 8. Challenges and appeals                                              | not started      |
@@ -57,3 +57,10 @@
 - matchKey folding already lives in `shared/src/normalize.js` (Phase 3); scoring takes the matchKey stored on each valid answer.
 - Tests: `server/tests/unit/scoring.test.js` has every table from the Testing Playbook 3.5 to 3.7, including the exact Ana 25 / Ben 30 / Cy 20 example. Coverage of `scoringService.js` is 100% and enforced by the Jest threshold. Server total: 248 tests.
 - Challenge-driven recomputation (Phase 8) just calls `scoreRound` again with the changed verdicts.
+
+## Phase 5 notes
+
+- Server: `Game`, `Round` and `Submission` models, `letterService` (random letter, never repeated in a game), `singlePlayerService` (create, next round, submit, resume, quit, finish with stats), `leaderboardService` (best game per player, daily/weekly/all), `/api/single/*` and `/api/leaderboards/single` routes with zod validation. Server tests: 307.
+- Client: Solo setup, letter toss, writing, round result, game over and leave popup built from the approved designs in light and dark, plus the Ranks page (Solo tab). Server-time countdown (`serverClock`, `useCountdown`), draft answers kept per round, auto-submit at zero, resume after reload. Client tests: 60.
+- End-to-end (Playwright, desktop and 360px phone): full 5-round game, summary, home best, ranks, reload resume, timer expiry, leave popup, no sideways scroll at 360px, and no page scrollbar at 1366x650, 1280x620 and 1920x940 in light and dark on every solo screen.
+- Not built yet: the Group tab of Ranks (Phase 9), the "How scoring works" popup (P16).

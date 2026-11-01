@@ -28,6 +28,11 @@
   --ff-bar-okay: #f59e0b;
   --ff-bar-good: #1fa463;
   --ff-focus: #2f66f5;
+  --ff-pill-ok-bg: #dcf3e6;
+  --ff-pill-ok-text: #11643d;
+  --ff-bonus-bg: #fff0c9;
+  --ff-bonus-text: #6a4a00;
+  --ff-gold-text: #1b2250;
   --ff-font-heading: 'Baloo 2', system-ui, sans-serif;
   --ff-font-text: 'Nunito', system-ui, sans-serif;
 }
@@ -60,6 +65,11 @@
   --ff-bar-okay: #e8b04a;
   --ff-bar-good: #24935b;
   --ff-focus: #8aa9ff;
+  --ff-pill-ok-bg: #1d3a38;
+  --ff-pill-ok-text: #8fe0b3;
+  --ff-bonus-bg: #3a3320;
+  --ff-bonus-text: #f4d98a;
+  --ff-gold-text: #121633;
 }
 
 html,

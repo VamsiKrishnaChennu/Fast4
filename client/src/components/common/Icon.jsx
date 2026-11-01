@@ -51,6 +51,20 @@ const PATHS = {
     </>
   ),
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
+  close: <path d="M6 6l12 12M18 6L6 18" />,
+  bolt: <path d="M13 2L5 13.5h6L10 22l8-11.5h-6L13 2z" />,
+  trophy: (
+    <>
+      <path d="M8 4h8v6a4 4 0 01-8 0V4z" />
+      <path d="M8 6H4v1a4 4 0 004 4M16 6h4v1a4 4 0 01-4 4M12 14v4M8 21h8" />
+    </>
+  ),
+  list: (
+    <>
+      <rect x="4" y="3.5" width="16" height="17" rx="3" />
+      <path d="M8 9h8M8 13h8M8 17h5" />
+    </>
+  ),
   inbox: (
     <>
       <path d="M3 13l2.5-7.5A2 2 0 017.4 4h9.2a2 2 0 011.9 1.5L21 13v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5z" />

@@ -12,6 +12,7 @@ import { createLogger } from '../../src/config/logger.js';
 import { isDbConnected } from '../../src/config/db.js';
 import { createMemoryEmailProvider } from '../../src/services/emailService.js';
 import { fixtureDictionary } from '../helpers/fixtures.js';
+import { letterSequence } from '../helpers/singleHelpers.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const port = Number(process.env.E2E_PORT ?? 4100);
@@ -34,6 +35,9 @@ const env = loadEnv({
   SUPPORT_EMAIL: 'support@example.com',
   APP_VERSION: 'e2e',
   CLIENT_ORIGIN: `http://localhost:${port}`,
+  // Short rounds and a short toss keep game tests fast. Honored only because NODE_ENV is test.
+  TEST_ROUND_SECONDS: '10',
+  TEST_LETTER_REVEAL_MS: '600',
 });
 const emailProvider = createMemoryEmailProvider();
 const app = createApp({
@@ -43,6 +47,8 @@ const app = createApp({
   clientDist: path.join(root, 'client', 'dist'),
   emailProvider,
   dictionary: fixtureDictionary(),
+  // Fixed letters so scores are predictable: T, C, S, A, B.
+  pickLetter: letterSequence(['T', 'C', 'S', 'A', 'B']),
   authLimit: { limit: 1000 },
   apiLimit: { limit: 10000 },
 });

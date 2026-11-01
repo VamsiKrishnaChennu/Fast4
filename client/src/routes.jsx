@@ -7,6 +7,9 @@ import LandingPage from './pages/LandingPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
+import RanksPage from './pages/RanksPage.jsx';
+import SingleGamePage from './pages/SingleGamePage.jsx';
+import SingleSetupPage from './pages/SingleSetupPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 
@@ -25,10 +28,11 @@ export default function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<TabsLayout />}>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/ranks" element={<ComingSoonPage />} />
+          <Route path="/ranks" element={<RanksPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
-        <Route path="/single" element={<ComingSoonPage />} />
+        <Route path="/single" element={<SingleSetupPage />} />
+        <Route path="/single/play/:gameId" element={<SingleGamePage />} />
         <Route path="/group" element={<ComingSoonPage />} />
       </Route>
       <Route path="/index.html" element={<Navigate to="/" replace />} />

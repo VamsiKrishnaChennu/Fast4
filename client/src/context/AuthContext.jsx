@@ -56,6 +56,15 @@ export function AuthProvider({ children }) {
     return next;
   }, []);
 
+  /** Reloads the user, for example after a game changed their stats. Stable across renders. */
+  const refreshUser = useCallback(async () => {
+    try {
+      setUser(await authApi.me());
+    } catch {
+      // Stale stats are harmless; the next page load fetches them again.
+    }
+  }, []);
+
   const value = useMemo(
     () => ({
       user,
@@ -63,6 +72,7 @@ export function AuthProvider({ children }) {
       loggedOut,
       login: (payload) => signIn(authApi.login, payload),
       signup: (payload) => signIn(authApi.signup, payload),
+      refreshUser,
       async logout() {
         try {
           await authApi.logout();
@@ -73,7 +83,7 @@ export function AuthProvider({ children }) {
         }
       },
     }),
-    [user, status, loggedOut, signIn],
+    [user, status, loggedOut, signIn, refreshUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
