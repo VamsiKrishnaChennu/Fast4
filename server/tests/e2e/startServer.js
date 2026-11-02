@@ -13,6 +13,9 @@ import { isDbConnected } from '../../src/config/db.js';
 import { createMemoryEmailProvider } from '../../src/services/emailService.js';
 import { fixtureDictionary } from '../helpers/fixtures.js';
 import { letterSequence } from '../helpers/singleHelpers.js';
+import { createRoomManager } from '../../src/services/roomManager.js';
+import { createTokenService } from '../../src/services/tokenService.js';
+import { createRealtime } from '../../src/sockets/realtime.js';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const port = Number(process.env.E2E_PORT ?? 4100);
@@ -40,6 +43,7 @@ const env = loadEnv({
   TEST_LETTER_REVEAL_MS: '600',
 });
 const emailProvider = createMemoryEmailProvider();
+const roomManager = createRoomManager();
 const app = createApp({
   env,
   logger: createLogger(env),
@@ -47,6 +51,7 @@ const app = createApp({
   clientDist: path.join(root, 'client', 'dist'),
   emailProvider,
   dictionary: fixtureDictionary(),
+  roomManager,
   // Fixed letters so scores are predictable: T, C, S, A, B.
   pickLetter: letterSequence(['T', 'C', 'S', 'A', 'B']),
   authLimit: { limit: 1000 },
@@ -56,4 +61,12 @@ const app = createApp({
 const outer = express();
 outer.get('/__e2e/outbox', (req, res) => res.json(emailProvider.outbox));
 outer.use(app);
-http.createServer(outer).listen(port);
+const server = http.createServer(outer);
+createRealtime({
+  httpServer: server,
+  env,
+  logger: createLogger(env),
+  tokenService: createTokenService(env),
+  roomManager,
+});
+server.listen(port);

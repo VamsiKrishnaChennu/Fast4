@@ -8,7 +8,7 @@
 | 3. Dictionary and validation                                           | done (see notes) |
 | 4. Scoring engine                                                      | done (see notes) |
 | 5. Single-player mode                                                  | done (see notes) |
-| 6. Rooms and lobby                                                     | not started      |
+| 6. Rooms and lobby                                                     | done (see notes) |
 | 7. Group game engine                                                   | not started      |
 | 8. Challenges and appeals                                              | not started      |
 | 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | not started      |
@@ -64,3 +64,10 @@
 - Client: Solo setup, letter toss, writing, round result, game over and leave popup built from the approved designs in light and dark, plus the Ranks page (Solo tab). Server-time countdown (`serverClock`, `useCountdown`), draft answers kept per round, auto-submit at zero, resume after reload. Client tests: 60.
 - End-to-end (Playwright, desktop and 360px phone): full 5-round game, summary, home best, ranks, reload resume, timer expiry, leave popup, no sideways scroll at 360px, and no page scrollbar at 1366x650, 1280x620 and 1920x940 in light and dark on every solo screen.
 - Not built yet: the Group tab of Ranks (Phase 9), the "How scoring works" popup (P16).
+
+## Phase 6 notes
+
+- Server: shared room constants, code generator and zod schemas; `Room` model; `roomManager` (create, join, leave, settings, kick, start, host transfer, 60 second grace, idle sweep, preview), `roomPersistence`, the authenticated Socket.IO server (`sockets/realtime.js`: token check, acknowledgements, validation, flood guard, shutdown notice) and `GET /api/rooms/:code`. Server tests: 393.
+- Client: `RealtimeContext` (connection, token refresh on expiry, time sync, room snapshot, actions), Play with friends (create steppers, join with the six-box code input and live preview), the lobby for host and players, the popups (room not found, cannot join, removed, opened somewhere else, room closed, settings, remove player, how scoring works) and the reconnecting banner. Client tests: 108.
+- End-to-end with several browsers: create, join by code, share link after log in, takeover by a second tab, kick, closed browser shown as reconnecting, settings edits, start; no sideways scroll at 360px; no page scrollbar at three desktop sizes in light and dark with an 8-player lobby (the player list scrolls inside its own panel).
+- Not built yet: lobby chat (Phase 9), the game itself (Phase 7). `game:start` locks the room and shows a placeholder.

@@ -51,6 +51,37 @@ const PATHS = {
     </>
   ),
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
+  copy: (
+    <>
+      <rect x="9" y="9" width="11" height="11" rx="2.5" />
+      <path d="M5 15V6a2 2 0 012-2h9" />
+    </>
+  ),
+  share: (
+    <>
+      <circle cx="18" cy="5.5" r="2.5" />
+      <circle cx="6" cy="12" r="2.5" />
+      <circle cx="18" cy="18.5" r="2.5" />
+      <path d="M8.2 10.8l7.6-4M8.2 13.2l7.6 4" />
+    </>
+  ),
+  crown: <path d="M4 18l-1.5-9 5 3.5L12 5l4.5 7.5 5-3.5L20 18H4zM4 21h16" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  minus: <path d="M5 12h14" />,
+  dots: (
+    <>
+      <circle cx="5" cy="12" r="1.4" />
+      <circle cx="12" cy="12" r="1.4" />
+      <circle cx="19" cy="12" r="1.4" />
+    </>
+  ),
+  flag: <path d="M6 21V4M6 5h11l-2 4 2 4H6" />,
+  warn: (
+    <>
+      <path d="M12 3.5L2.5 20h19L12 3.5z" />
+      <path d="M12 10v4.5M12 17.6v.1" />
+    </>
+  ),
   close: <path d="M6 6l12 12M18 6L6 18" />,
   bolt: <path d="M13 2L5 13.5h6L10 22l8-11.5h-6L13 2z" />,
   trophy: (

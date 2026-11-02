@@ -9,3 +9,8 @@ export function syncServerTime(serverNow) {
 
 /** @returns {number} the current time on the server's clock, in ms */
 export const serverNow = () => Date.now() + offsetMs;
+
+/** @param {number} ms how far the server's clock is ahead of this device's (negative when behind) */
+export function setServerOffset(ms) {
+  if (Number.isFinite(ms)) offsetMs = ms;
+}

@@ -2,12 +2,14 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, PublicOnlyRoute, TabsLayout } from './components/layout/RouteGuards.jsx';
 import ComingSoonPage from './pages/ComingSoonPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
+import GroupPage from './pages/GroupPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import RanksPage from './pages/RanksPage.jsx';
+import RoomPage from './pages/RoomPage.jsx';
 import SingleGamePage from './pages/SingleGamePage.jsx';
 import SingleSetupPage from './pages/SingleSetupPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
@@ -33,7 +35,8 @@ export default function AppRoutes() {
         </Route>
         <Route path="/single" element={<SingleSetupPage />} />
         <Route path="/single/play/:gameId" element={<SingleGamePage />} />
-        <Route path="/group" element={<ComingSoonPage />} />
+        <Route path="/group" element={<GroupPage />} />
+        <Route path="/room/:code" element={<RoomPage />} />
       </Route>
       <Route path="/index.html" element={<Navigate to="/" replace />} />
       <Route path="*" element={<NotFoundPage />} />

@@ -4,7 +4,14 @@ import { useEffect, useRef } from 'react';
  * A centred dialog over a dimmed page. Escape calls onClose (when given); focus moves into the
  * dialog and returns to where it was when the dialog closes.
  */
-export default function Modal({ title, onClose, children, icon, labelledBy = 'ff-modal-title' }) {
+export default function Modal({
+  title,
+  onClose,
+  children,
+  icon,
+  tone = 'red',
+  labelledBy = 'ff-modal-title',
+}) {
   const ref = useRef(null);
   useEffect(() => {
     const previous = document.activeElement;
@@ -29,7 +36,7 @@ export default function Modal({ title, onClose, children, icon, labelledBy = 'ff
         tabIndex={-1}
         ref={ref}
       >
-        {icon && <div className="ff-modal__icon">{icon}</div>}
+        {icon && <div className={`ff-modal__icon ff-modal__icon--${tone}`}>{icon}</div>}
         <h2 className="ff-modal__title" id={labelledBy}>
           {title}
         </h2>

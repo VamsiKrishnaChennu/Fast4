@@ -88,3 +88,16 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Added `SUBMIT_GRACE_MS` (1500)** to the shared limits for the playbook's "accepted until endsAt + 1.5 s". Added test-only `TEST_LETTER_REVEAL_MS` next to `TEST_ROUND_SECONDS`; both are ignored unless `NODE_ENV` is test.
 - **Ranks use one flat index** `{ mode, status, settings.rounds, totalScore, totalTimeMs }` and a top-1,000 scan with one entry per player, instead of the playbook's `players.0.totalScore` index. The Ranks page ships with the Solo tab now; the Group tab says it arrives with group games (Phase 9).
 - **Reload mid-game:** a round whose deadline plus grace has passed is scored 0 the next time the game is read or a round is requested, so a player who walks away cannot hold a game open.
+
+## 2026-11-02 (Phase 6: rooms and lobby)
+
+- **Rooms live in memory; MongoDB keeps a copy.** `roomManager` answers every request from memory. `roomPersistence` saves each change (best effort, never blocking) so rooms that were open when the server stopped are marked `abandoned` at start-up. The Room model has no TTL index: expired rooms (6 hours) are deleted by `purgeExpired` in the once-a-minute sweep, the same way expired sessions are removed in code. This also lets the tests run on the stand-in database, which has no TTL indexes.
+- **Grace period.** A dropped player keeps their seat for 60 seconds. After that, in the lobby they are removed (and the host role moves on); after the game started they are marked `left`, keep their place in the standings and cannot come back.
+- **A kicked player cannot rejoin that room** (`FORBIDDEN`). Added because without it a removed player could simply join again.
+- **A player is in one room at a time.** Creating or joining another room leaves the first (lobby), which keeps `findByUser` and reconnects unambiguous.
+- **Idle rooms.** The playbook says rooms with everyone disconnected are removed after 30 minutes. Because disconnected players are removed or marked left after 60 seconds, that rule would never trigger, so the sweep closes any room with no activity for 30 minutes and tells the players (`error:notice ROOM_CLOSED`).
+- **`GET /rooms/:code` also returns `rounds` and the first five players** (nickname and colour) for the join screen preview.
+- **`game:start` stops at the STARTING phase** until the game engine exists (Phase 7). Starting locks the room and shows a "Get ready!" screen.
+- **Chat is not in the lobby yet.** The player lobby design shows a chat panel; it arrives with the chat service in Phase 9. Until then the player lobby shows the avatar row, the settings line and the waiting bar.
+- **Round count is any whole number from 5 to 20** in rooms (the design's stepper), unlike solo, which offers 5, 10, 15 or 20.
+- **Server shutdown** sends `error:notice SERVER_RESTARTING` to everyone before closing.
