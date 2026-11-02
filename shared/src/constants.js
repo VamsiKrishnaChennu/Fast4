@@ -28,6 +28,8 @@ export const LIMITS = {
   REJOIN_GRACE_SECONDS: 60,
   LETTER_REVEAL_MS: 4000,
   SUBMIT_GRACE_MS: 1500,
+  ROOM_IDLE_MINUTES: 30,
+  ROOM_TTL_HOURS: 6,
   ROUND_RESULT_SECONDS: 10,
   AGE_MIN: 13,
   REPORT_REASONS: ['harassment', 'hate', 'sexual', 'spam', 'cheating', 'other'],
@@ -62,3 +64,8 @@ export const AVATAR_COLORS = [
 
 /** Nicknames that cannot be used (compared after removing spaces, digits and underscores). */
 export const RESERVED_NICKNAMES = ['admin', 'support', 'moderator', 'staff', 'fastfour', 'system'];
+
+/** Room codes: 6 characters, no 0, O, 1 or I so they are easy to read out loud. */
+export const ROOM_CODE = { ALPHABET: 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', LENGTH: 6 };
+
+export const ROOM_DEFAULTS = { maxPlayers: 8, rounds: 10 };

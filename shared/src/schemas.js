@@ -1,5 +1,12 @@
 import { z } from 'zod';
-import { AUTH, AVATAR_COLORS, CATEGORIES, SINGLE_ROUND_OPTIONS } from './constants.js';
+import {
+  AUTH,
+  AVATAR_COLORS,
+  CATEGORIES,
+  LIMITS,
+  ROOM_DEFAULTS,
+  SINGLE_ROUND_OPTIONS,
+} from './constants.js';
 
 export const nicknameSchema = z
   .string()
@@ -103,3 +110,27 @@ export const singleLeaderboardQuerySchema = z
     limit: z.coerce.number().int().min(1).max(100).default(50),
   })
   .strict();
+
+export const roomSettingsSchema = z
+  .object({
+    maxPlayers: z.number().int().min(LIMITS.PLAYERS_MIN).max(LIMITS.PLAYERS_MAX),
+    rounds: z.number().int().min(LIMITS.ROUNDS_MIN).max(LIMITS.ROUNDS_MAX),
+  })
+  .strict();
+
+/** room:create. Missing settings use the defaults. */
+export const roomCreateSchema = z.preprocess(
+  (value) => value ?? {},
+  z.object({ settings: roomSettingsSchema.default({ ...ROOM_DEFAULTS }) }).strict(),
+);
+
+export const roomJoinSchema = z.object({ code: z.string().trim().max(20) }).strict();
+
+export const roomUpdateSettingsSchema = z.object({ settings: roomSettingsSchema }).strict();
+
+export const roomKickSchema = z.object({ userId: objectId }).strict();
+
+/** Events that carry no data. Anything but an empty object (or nothing) is rejected. */
+export const emptyPayloadSchema = z.object({}).strict().default({});
+
+export const roomCodeParamsSchema = z.object({ code: z.string().trim().max(20) }).strict();

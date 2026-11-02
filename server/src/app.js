@@ -13,6 +13,7 @@ import { createAuthController } from './controllers/authController.js';
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth.js';
 import { singleRoutes } from './routes/single.js';
+import { roomRoutes } from './routes/rooms.js';
 import { createSingleController } from './controllers/singleController.js';
 import { createLeaderboardService } from './services/leaderboardService.js';
 import { createSinglePlayerService } from './services/singlePlayerService.js';
@@ -41,6 +42,7 @@ function socketOrigins(appOrigin) {
  * @param {{ send: Function }} [options.emailProvider] defaults to the provider named by EMAIL_PROVIDER
  * @param {{ has: Function }} [options.dictionary] the word lists; the single-player API is mounted only when given
  * @param {{ now: () => number }} [options.clock] time source for games; tests pass a fake
+ * @param {{ preview: Function }} [options.roomManager] live rooms; the room preview API is mounted only when given
  * @param {Function} [options.pickLetter] letter chooser for games; tests pass a fixed sequence
  * @returns {import('express').Express}
  */
@@ -55,6 +57,7 @@ export function createApp({
   dictionary,
   clock,
   pickLetter,
+  roomManager,
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -136,6 +139,9 @@ export function createApp({
         auth: createAuth({ tokenService }),
       }),
     );
+  }
+  if (roomManager) {
+    app.use('/api', roomRoutes({ roomManager, auth: createAuth({ tokenService }) }));
   }
   // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
   // BEFORE the single-page-app fallback below.
