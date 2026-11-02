@@ -84,7 +84,8 @@ test('play a whole 5-round game, see the summary, the home best and the ranks', 
   await expect(page.getByTestId('pb')).toBeVisible();
   await expect(page.getByText('points in 5 rounds')).toBeVisible();
   await expect(page.getByText('19/20')).toBeVisible();
-  await expect(page.getByText('#1', { exact: true })).toBeVisible();
+  // The e2e database is shared by every test, so the exact rank today depends on earlier games.
+  await expect(page.getByText(/^#\d+$/)).toBeVisible();
 
   await page.getByRole('button', { name: 'Back to home' }).click();
   await expect(page.getByText(`Ready, ${nickname}?`)).toBeVisible();
