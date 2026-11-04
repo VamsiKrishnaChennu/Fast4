@@ -1,53 +1,146 @@
 aardvark
 aardwolf
 abalone
+aberdeen angus
 abortus
+abramis brama
 abrocome
+abudefduf saxatilis
+abyssinian
+abyssinian cat
+acanthisitta chloris
 acanthocephalan
+acanthocybium solandri
+acanthophis antarcticus
 acanthopterygian
+acanthoscelides obtectus
+acanthurus chirurgus
 acarid
 acarine
 acarus
 accentor
+accipiter cooperii
+accipiter gentilis
+accipiter nisus
+accipitriformes
+acherontia atropos
+acheta assimilis
+acheta domestica
+achoerodus gouldii
+acinonyx jubatus
+acipenser huso
+acipenser transmontanus
 acorn barnacle
 acridid
+acridotheres tristis
+acris crepitans
+acris gryllus
+acrocephalus schoenobaenus
 acrodont
+actias luna
 actinia
 actinian
 actiniarian
 actinozoan
+actitis hypoleucos
+actitis macularia
+adalia bipunctata
 addax
+addax nasomaculatus
 adder
+adelges abietis
+adelges piceae
 adelgid
+adelie
+adelie penguin
+adenota vardoni
 adjutant
 adjutant bird
 adjutant stork
 admiral
 adult
+aedes aegypti
+aedes albopictus
+aegina
+aegypiidae
+aegypius monachus
+aegyptopithecus
+aepyceros melampus
 aepyornis
+aetobatus narinari
 affenpinscher
+afghan
+afghan hound
+african chameleon
+african clawed frog
+african coral snake
+african crocodile
+african elephant
+african golden wolf
+african gray
+african green monkey
+african grey
+african hunting dog
+african monitor
+africander
+africanized bee
+africanized honey bee
 afropavo
+afropavo congensis
 agama
 agamid
 agamid lizard
+agelaius phoeniceus
+agkistrodon contortrix
+agkistrodon piscivorus
 agnathan
+agonus cataphractus
 agouti
+agriocharis ocellata
 agua
 agua toad
 ai
 ailanthus silkworm
+ailuropoda melanoleuca
+ailurus fulgens
+airedale
+airedale terrier
+aix galericulata
+aix sponsa
+ajaia ajaja
+alaska cod
+alaska crab
+alaska fur seal
+alaska king crab
+alaskan brown bear
+alaskan king crab
+alaskan malamute
+alauda arvensis
 albacore
 albatross
+albino
+albula vulpes
+alca torda
+alcedo atthis
+alces alces
 alder fly
 alderfly
+alectis ciliaris
+alectoris graeca
+alectoris ruffa
+alectura lathami
 alewife
+algeripithecus minutus
 alkali bee
 alley cat
 allice
 allice shad
 alligator
 alligator lizard
+alligator mississipiensis
+alligator sinensis
 alligator snapper
+alligator snapping turtle
 alligatorfish
 allis
 allis shad
@@ -55,29 +148,116 @@ allmouth
 allosaur
 allosaurus
 almond moth
+alopex lagopus
+alopius vulpinus
+alosa alosa
+alosa chrysocloris
+alosa pseudoharengus
+alosa sapidissima
 alpaca
 alpine salamander
 alsatian
+alsophila pometaria
+alytes cisternasi
+alytes obstetricans
 amadavat
 amazon
+amazon ant
 amberfish
 amberjack
+ambloplites rupestris
+amblyrhynchus cristatus
+ambystoma maculatum
+ambystoma mexicanum
+ambystoma talpoideum
+ambystoma tigrinum
 ambystomid
 ambystomid salamander
+ameiurus melas
+american alligator
+american antelope
+american badger
+american bison
+american bittern
+american black bear
+american blight
+american buffalo
+american chameleon
+american cockroach
+american coot
+american copper
+american crayfish
+american creeper
+american crow
+american dog tick
+american eagle
+american egret
+american elk
+american flagfish
+american flying squirrel
+american foxhound
+american gallinule
+american green toad
+american harvest mouse
+american kestrel
+american lady crab
+american lobster
+american magpie
+american marten
+american mastodon
+american mastodont
+american merganser
+american mink
+american oriole
+american plaice
+american red squirrel
+american redstart
+american robin
+american sable
+american saddle horse
+american shrew mole
+american smooth dogfish
+american staffordshire terrier
+american toad
+american water ouzel
+american water shrew
+american water spaniel
+american widgeon
+american woodcock
 amethystine python
+amia calva
+ammotragus lervia
+amniota
 amniote
 amphibian
 amphioxus
 amphipod
+amphiprion percula
 amphiuma
+anabas testudineus
+anabrus simplex
 anaconda
+anagasta kuehniella
 anapsid
 anapsid reptile
+anas acuta
+anas americana
+anas clypeata
+anas crecca
+anas discors
+anas penelope
+anas platyrhynchos
+anas querquedula
+anas rubripes
+anasa tristis
 anaspid
 anatotitan
 anchovy
+ancylus fluviatilis
+andean condor
 andrena
 andrenid
+aneides lugubris
 anemone
 anemone fish
 angel shark
@@ -87,20 +267,43 @@ angler fish
 anglerfish
 anglewing
 angleworm
+angora
+angora cat
+angora goat
+angora rabbit
+angoumois grain moth
 angoumois moth
 anguid lizard
+anguilla sucklandii
+anguillula aceti
+anguis fragilis
+angus
 angwantibo
+anhima cornuta
 anhinga
+anhinga anhinga
 ani
+animate being
+anisotremus surinamensis
+anisotremus virginicus
 ankylosaur
 ankylosaurus
 annelid
 annelid worm
 anoa
+anoa depressicornis
+anoa mindorensis
 anole
+anolis carolinensis
+anomala orientalis
 anomalops
 anomalopteryx
+anomalopteryx oweni
+anomia ephippium
 anopheline
+anoplophora glabripennis
+anser anser
+anser cygnoides
 anseriform bird
 ant
 ant bear
@@ -114,86 +317,223 @@ anteater
 antelope
 antelope chipmunk
 antelope squirrel
+antheraea mylitta
+antheraea pernyi
+antheraea polyphemus
+anthonomus grandis
 anthozoan
+anthrenus scrophulariae
 anthropoid
 anthropoid ape
+anthus pratensis
+antidorcas euchore
+antidorcas marsupialis
+antilocapra americana
+antilope cervicapra
 antler moth
 antlion
 antlion fly
+antrozous pallidus
 anuran
+aotus trivirgatus
 aoudad
 apar
 apatosaur
 apatosaurus
+apatosaurus excelsus
+apatura iris
 ape
 aperea
 aphid
 aphid lion
+aphis fabae
 aphis lion
+aphis pomi
+aphriza virgata
+aphrophora saratogensis
+apis mellifera
+apis mellifera adansonii
+apis mellifera scutellata
 aplacophoran
+aplodontia rufa
+aplysia punctata
+apodemus sylvaticus
 apodiform bird
+apogon maculatus
 apolemia
+appaloosa
 appendicularia
+appenzeller
 apple aphid
 apple maggot
+aptenodytes forsteri
+aptenodytes patagonica
 apteryx
+apus apus
 aquatic bird
 aquatic mammal
 aquatic vertebrate
+aquila chrysaetos
+aquila rapax
+arab
+arabian
+arabian camel
 arachnid
 arachnoid
+aramus guarauna
+aramus pictus
+aranea diademata
+araneus cavaticus
 arboreal salamander
 archaeopteryx
+archaeopteryx lithographica
 archaeornis
 archeopteryx
 archerfish
 archiannelid
+archidiskidon imperator
+archilochus colubris
 architeuthis
+archosargus probatocephalus
+archosargus rhomboidalis
 archosaur
 archosaurian
 archosaurian reptile
+arctic char
+arctic fox
+arctic ground squirrel
+arctic hare
 arctic skua
+arctic wolf
+arctictis bintourong
 arctiid
 arctiid moth
+arctocebus calabarensis
+arctocephalus philippi
+arctocephalus townsendi
+arctonyx collaris
+ardea herodius
+ardea occidentalis
+arenaria interpres
+arenaria-melanocephala
 argal
 argali
 argasid
 argentine
 argentinosaur
+argiope aurantia
+argonaut
+argonauta argo
 argus
 argus pheasant
+argyrotaenia citrana
+arilus cristatus
+arizona elegans
 ark shell
+arkansas kingbird
 armadillo
 armed bullhead
 armored catfish
 armored dinosaur
 armored scale
+armored sea robin
 armored searobin
 army ant
 army cutworm
 army worm
 armyworm
 arrowworm
+artemia salina
 arthropod
 artiodactyl
 artiodactyl mammal
 arui
+arvicola amphibius
+ascaphus trui
+ascaridia galli
+ascaris lumbricoides
 ascidian
 ascidian tadpole
+asian black grouse
+asian coral snake
+asian crocodile
+asian elephant
+asian horseshoe crab
+asian longhorned beetle
+asian tiger mosquito
+asian wild ox
+asiatic beetle
+asiatic black bear
+asiatic buffalo
+asiatic cockroach
+asiatic flying squirrel
+asiatic lion
+asiatic shrew mole
+asio otus
 asp
 asp viper
+aspidelaps lubricus
+aspidiotus perniciosus
+aspidophoroides monopterygius
 assassin bug
+astrophyton muricatum
+astropogon stellatus
+ateles geoffroyi
+athene noctua
+atherinopsis californiensis
+atlantic bonito
+atlantic bottlenose dolphin
+atlantic cod
+atlantic croaker
+atlantic halibut
+atlantic herring
+atlantic manta
+atlantic moonfish
+atlantic puffin
+atlantic ridley
+atlantic sailfish
+atlantic salmon
+atlantic sea bream
+atlantic spiny dogfish
+atlantic tripletail
+atlantic walrus
 atlas moth
 attack dog
+atticus atlas
 audad
+audubon warbler
+audubon's caracara
+audubon's warbler
 auk
 auklet
+aulostomus maculatus
+auriparus flaviceps
 aurochs
+australian blacksnake
+australian cockroach
+australian coral snake
+australian magpie
+australian sea lion
+australian stilt
+australian terrier
+australian turtledove
 australopithecine
+australopithecus afarensis
+australopithecus africanus
+australopithecus boisei
+australopithecus robustus
+automeris io
 avadavat
+avahi laniger
 avocet
 axolotl
 aye-aye
+ayrshire
+aythya affinis
+aythya americana
+aythya ferina
+aythya marila
+aythya valisineria
 baa-lamb
 babbler
 babiroussa
@@ -202,33 +542,59 @@ babirussa
 baboon
 baby
 baby bird
+babyrousa babyrussa
 backswimmer
+bactrian camel
 badger
 badger dog
 badger skunk
+baiomys taylori
+bairdiella chrysoura
+balaena mysticetus
+balaeniceps rex
+balaenoptera acutorostrata
+balaenoptera borealis
+balaenoptera musculus
+balaenoptera physalus
+balanus balanoides
 bald eagle
+bald-faced hornet
 baldpate
 baleen whale
+balistes vetula
 balloonfish
+balsam woolly aphid
+baltimore bird
+baltimore oriole
 banana quit
+band-tail pigeon
+band-tailed pigeon
 banded adder
 banded anteater
 banded gecko
 banded krait
+banded palm civet
 banded purple
 banded rattlesnake
 banded rudderfish
+banded sand snake
 banded stilt
+banded water snake
 bandicoot
 bandicoot rat
 bandtail
 bangtail
 bank martin
 bank swallow
+bankia setaceae
 bantam
 banteng
 banting
+bar-headed goose
 baranduki
+barasingha
+barbary ape
+barbary sheep
 barbet
 barbu
 bark beetle
@@ -251,6 +617,10 @@ barracuda
 barred owl
 barred pickerel
 barrelfish
+barren ground caribou
+barrow's goldeneye
+bartramia longicauda
+bartramian sandpiper
 barunduki
 basenji
 basilisk
@@ -258,6 +628,7 @@ basket fish
 basket star
 basking shark
 bass
+bassariscus astutus
 bassarisk
 basset
 basset hound
@@ -268,6 +639,7 @@ bay
 bay lynx
 bay scallop
 baya
+baya weaver
 beach flea
 beaded lizard
 beagle
@@ -284,23 +656,30 @@ beard worm
 bearded seal
 bearded vulture
 beast
+beast of burden
 beaugregory
 beaver
 beaver rat
 bed bug
 bedbug
+bedlington terrier
 bee
 bee beetle
 bee eater
 bee fly
 bee killer
 bee moth
+bee-eater
 beech marten
 beef
 beef cattle
 beefalo
 beet armyworm
 beetle
+belgian griffon
+belgian hare
+belgian sheepdog
+belgian shepherd
 bell magpie
 bell toad
 bellbird
@@ -309,14 +688,28 @@ bellwether
 belted kingfisher
 belted sandfish
 beluga
+bemisia tabaci
+bengal fox
+bengal monitor
+bengal tiger
 bergall
+bermuda chub
+bernese mountain dog
 beroe
+bessy cerca
 bettong
+bewick's swan
 bezoar goat
+bharal
+bibos frontalis
+bibos gaurus
 biddy
 big bedbug
+big brown bat
 big cat
 big game
+big-eared bat
+big-eyed scad
 bigeye
 bigeye scad
 bighorn
@@ -327,20 +720,37 @@ billy
 billy goat
 binturong
 biped
+biplane flying fish
+birch leaf miner
 bird
 bird dog
 bird louse
+bird of jove
+bird of juno
+bird of minerva
+bird of night
+bird of paradise
+bird of passage
+bird of prey
+bird-footed dinosaur
 bison
+bison bison
+bison bonasus
 biting louse
 biting midge
+bitis arietans
+bitis gabonica
 bittern
 bivalve
+black angus
+black ant
 black bass
 black bear
 black bee
 black bream
 black buck
 black buffalo
+black carpet beetle
 black cat
 black crappie
 black duck
@@ -352,10 +762,13 @@ black kite
 black mamba
 black margate
 black marlin
+black panther
 black racer
 black rat
+black rat snake
 black rhinoceros
 black rudderfish
+black sea bass
 black sheep
 black squirrel
 black stork
@@ -365,10 +778,27 @@ black vulture
 black weevil
 black whale
 black widow
+black-backed gull
+black-backed jackal
+black-billed cuckoo
+black-capped chickadee
+black-footed albatross
+black-footed ferret
+black-headed snake
+black-legged tick
+black-necked cobra
+black-necked grebe
+black-necked stilt
+black-necked stork
+black-tailed deer
+black-winged stilt
 blackback flounder
 blackbeetle
 blackbird
 blackbuck
+blackbuck antelope
+blackburn
+blackburnian warbler
 blackcap
 blackcock
 blackfish
@@ -379,21 +809,28 @@ blacksnake
 blacktail
 blacktail deer
 blacktail jackrabbit
+blacktail prairie dog
 blacktip shark
 bladder worm
 bladdernose
 blanquillo
+blarina brevicauda
 blastocyst
 blastodermic vessicle
 blastosphere
 blastula
+blatta orientalis
+blattella germanica
 bleeding tooth
+blenheim spaniel
 blennioid
 blennioid fish
+blennius pholis
 blenny
 blind eel
 blind snake
 blindworm
+blissus leucopterus
 blister beetle
 blood clam
 blood fluke
@@ -408,6 +845,8 @@ blue
 blue bull
 blue cat
 blue catfish
+blue channel cat
+blue channel catfish
 blue crab
 blue darter
 blue fox
@@ -421,13 +860,17 @@ blue pickerel
 blue pike
 blue pikeperch
 blue point
+blue point siamese
 blue pointed
 blue racer
 blue runner
 blue shark
+blue sheep
 blue walleye
 blue whale
 blue-belly
+blue-headed vireo
+blue-winged teal
 blueback salmon
 bluebill
 bluebird
@@ -448,6 +891,7 @@ boar
 boarfish
 boarhound
 boat bug
+boat-billed heron
 boatbill
 boatswain bird
 bobcat
@@ -456,13 +900,21 @@ bobtail
 bobwhite
 bobwhite quail
 body louse
+bohemian waxwing
 boll weevil
 bollworm
 bolti
 bombardier beetle
+bombina bombina
 bombycid
 bombycid moth
+bombycilla cedrorun
+bombycilla garrulus
+bombyx mori
+bonasa umbellus
+bone-headed dinosaur
 bonefish
+bonelli's eagle
 bongo
 bonito
 bonito shark
@@ -474,13 +926,30 @@ bonobo
 bonxie
 bony fish
 booby
+boocercus eurycerus
 book louse
 book scorpion
 booklouse
+border collie
+border terrier
 borer
 borzoi
+bos banteng
+bos grunniens
+bos indicus
+bos primigenius
+bos taurus
+boselaphus tragocamelus
+boskop man
+boston bull
+boston terrier
 bot
+botaurus lentiginosus
+botaurus stellaris
 botfly
+bothrops atrops
+bottle-nosed dolphin
+bottle-nosed whale
 bottlenose
 bottlenose dolphin
 bottlenose whale
@@ -488,6 +957,8 @@ bottom fish
 bottom lurkers
 bottom-dweller
 bottom-feeder
+bouvier des flandres
+bouviers des flandres
 bovid
 bovine
 bow-wow
@@ -499,19 +970,32 @@ box tortoise
 box turtle
 boxer
 boxfish
+brabancon griffon
 brachiopod
 brachyuran
 bracketed blenny
+bradypus tridactylus
+brahma
+brahman
+brahmin
+brahminy kite
 brain coral
+brama raii
 brambling
 branchiopod
 branchiopod crustacean
 branchiopodan
 brant
 brant goose
+branta bernicla
+branta canadensis
+branta leucopsis
+brazilian trumpeter
 bream
 brent
 brent goose
+brevoortia tyrannis
+brewer's mole
 briard
 brill
 brine shrimp
@@ -519,6 +1003,7 @@ brisling
 bristletail
 brit
 britt
+brittany spaniel
 brittle star
 brittle-star
 broadbill
@@ -534,6 +1019,7 @@ broodmare
 broody
 broody hen
 brook trout
+brosme brosme
 brotula
 brown bat
 brown bear
@@ -544,17 +1030,33 @@ brown lacewing
 brown lemming
 brown rat
 brown snail
+brown soft scale
+brown swiss
 brown thrasher
 brown thrush
 brown trout
+brown-tail moth
 browntail
+bruchus pisorum
 bruin
 brush kangaroo
 brush turkey
 brush wolf
+brush-footed butterfly
+brush-tail porcupine
+brush-tailed phalanger
+brush-tailed porcupine
+brussels griffon
 brute
 bryozoan
+bubalus bubalis
+bubalus mindorensis
 bubble shell
+bubo virginianus
+bubulcus ibis
+bucephala islandica
+bucephela albeola
+bucephela clangula
 buck
 bucking bronco
 buckskin
@@ -562,12 +1064,24 @@ budgereegah
 budgerigar
 budgerygah
 budgie
+budorcas taxicolor
 buffalo
+buffalo carpet beetle
 buffalo fish
 buffalo gnat
 buffalofish
 bufflehead
 bufo
+bufo americanus
+bufo boreas
+bufo bufo
+bufo calamita
+bufo canorus
+bufo debilis
+bufo marinus
+bufo microscaphus
+bufo speciosus
+bufo viridis
 bug
 bulbul
 bull
@@ -584,12 +1098,18 @@ bullfrog
 bullhead
 bullhead catfish
 bullock
+bullock's oriole
 bullterrier
 bumblebee
+bungarus fasciatus
 bunny
 bunny rabbit
 bunting
 burbot
+burchell's zebra
+burhinus oedicnemus
+burmeisteria retusa
+burmese cat
 burrfish
 burro
 burro deer
@@ -603,6 +1123,10 @@ bushytail woodrat
 bustard
 bustard quail
 butcherbird
+buteo buteo
+buteo jamaicensis
+buteo lagopus
+buteo lineatus
 buteonine
 butterball
 butterfish
@@ -616,9 +1140,11 @@ buzzard
 by-catch
 bycatch
 cabassous
+cabassous unicinctus
 cabbage butterfly
 cabbageworm
 cacao moth
+cacatua galerita
 cachalot
 cacique
 cackler
@@ -631,30 +1157,80 @@ caddice-fly
 caddis fly
 caddis-fly
 caddisworm
+cadra cautella
+cadra figulilella
 caecilian
 caffer cat
 caiman
 caiman lizard
+caiman sclerops
+cairina moschata
 cairn
 cairn terrier
+calamus penna
 calf
 calico cat
 calico crab
+calidris canutus
+calidris ferruginea
+calidris melanotos
+california condor
+california newt
+california pompano
+california quail
+california sea lion
+california whipsnake
+callimorpha jacobeae
+callinectes sapidus
+calliphora vicina
+callisaurus draconoides
+callorhinus ursinus
 calosoma
+calosoma scrutator
+calotes
+camberwell beauty
 camel
 camelopard
+camelus bactrianus
+camelus dromedarius
 camp robber
+campephilus principalis
+canachites canadensis
+canada goose
+canada jay
+canada lynx
+canada porcupine
+canadian goose
 canary
 canary bird
+cancer borealis
+cancer irroratus
+cancer magister
 canebrake rattler
 canebrake rattlesnake
 canecutter
 canid
 canine
+canis adustus
+canis anthus
+canis aureus
+canis dingo
+canis familiaris
+canis latrans
+canis lupus
+canis lupus arctos
+canis lupus tundrarum
+canis mesomelas
+canis niger
+canis rufus
 cankerworm
 canvasback
 canvasback duck
 canyon treefrog
+cape buffalo
+cape hunting dog
+cape lobster
+cape may warbler
 capelan
 capelin
 capercaillie
@@ -664,9 +1240,18 @@ capiz
 caplin
 capon
 capped macaque
+capra aegagrus
+capra falconeri
+capra hircus
+capra ibex
+capreolus capreolus
 caprimulgid
 caprimulgiform bird
+caprimulgus carolinensis
+caprimulgus europaeus
+caprimulgus vociferus
 caprine animal
+capros aper
 capsid
 captive
 capuchin
@@ -679,18 +1264,47 @@ caracul
 carancha
 carangid
 carangid fish
+caranx bartholomaei
+caranx crysos
+caranx hippos
+carassius auratus
+carassius carassius
+carassius vulgaris
 carcajou
+carcharhinus leucas
+carcharhinus limbatus
+carcharhinus obscurus
+carcharhinus plumbeus
+carcharias taurus
+carcharinus longimanus
+carcharodon carcharias
+cardigan
+cardigan welsh corgi
 cardinal
 cardinal grosbeak
 cardinal tetra
 cardinalfish
+cardinalis cardinalis
+cardium edule
+carduelis cannabina
+carduelis carduelis
+carduelis cucullata
+carduelis flammea
+carduelis hornemanni
+carduelis spinus
+caretta caretta
+cariama cristata
 caribe
 caribou
 carinate
 carinate bird
+carniolan bee
 carnivore
 carnivorous bat
 carnosaur
+carolina chickadee
+carolina parakeet
+carolina wren
 carp
 carpenter ant
 carpenter bee
@@ -699,6 +1313,10 @@ carpet bug
 carpet moth
 carpet shark
 carpet snake
+carphophis amoenus
+carpocapsa pomonella
+carpodacus mexicanus
+carpodacus purpureus
 carriage dog
 carrier pigeon
 carrion crow
@@ -706,8 +1324,14 @@ cart horse
 carthorse
 cartilaginous fish
 cascades frog
+casemaking clothes moth
 caseworm
+cashmere goat
+casmerodius albus
+cassin's kingbird
 cassowary
+castor canadensis
+castor fiber
 cat
 cat bear
 cat flea
@@ -720,7 +1344,12 @@ catarrhine
 catbird
 caterpillar
 catfish
+catharacta skua
+cathartes aura
 cathartid
+catla
+catocala nupta
+catoptrophorus semipalmatus
 catostomid
 cattalo
 cattle
@@ -730,10 +1359,14 @@ cavalla
 cavalry horse
 cave bat
 cave myotis
+cavia cobaya
+cavia porcellus
 cavy
 cayman
 cayuse
 cazique
+cebuella pygmaea
+cebus capucinus
 cecropia
 cecropia moth
 cedar waxwing
@@ -741,24 +1374,53 @@ cedarbird
 centipede
 central chimpanzee
 centrarchid
+centrocercus urophasianus
+centropistes striata
+centropristis philadelphica
+centropus phasianinus
+centropus sinensis
 cephalaspid
 cephalochordate
 cephalopod
 cephalopod mollusk
+cephalopterus ornatus
+cepphus columba
+cepphus grylle
+cerapteryx graminis
 cerastes
+cerastes cornutus
+ceratitis capitata
 ceratodus
 ceratopsian
 ceratosaur
 ceratosaurus
+ceratotherium simum
 cercaria
+cercopithecus aethiops
+cercopithecus aethiops sabaeus
+cercopithecus talapoin
 cero
+certhia americana
+certhia familiaris
 cervid
+cervus elaphus
+cervus elaphus canadensis
+cervus nipon
+cervus nippon
+cervus sika
+cervus unicolor
+ceryle alcyon
 cestode
+cestum veneris
 cetacean
 cetacean mammal
+cetonia aurata
+cetorhinus maximus
 chachalaca
 chacma
 chacma baboon
+chaenopsis ocellata
+chaetodipterus faber
 chaetodon
 chaetognath
 chaffinch
@@ -770,9 +1432,13 @@ chalcid fly
 chalcid wasp
 chalcidfly
 chalcis fly
+chamaea fasciata
+chamaeleo chamaeleon
+chamaeleo oweni
 chamaeleon
 chambered nautilus
 chameleon
+chameleon tree frog
 chamois
 channel bass
 channel cat
@@ -781,23 +1447,40 @@ char
 characid
 characin
 characin fish
+charadrius melodus
+charadrius morinellus
+charadrius vociferus
 charger
+charina bottae
+charolais
 charr
+charronia flavigula
 chat
+chateura pelagica
 chatterer
+chauna torquata
 checkered adder
+checkered keelback
 checkered whiptail
 cheetah
+cheetal
 cheewink
+chelifer cancroides
+chelonia mydas
 chelonian
 chelonian reptile
+chelydra serpentina
+chen caerulescens
 chenfish
 cherrystone
 cherrystone clam
+chesapeake bay retriever
 chestnut
 chetah
+cheviot
 chevrotain
 chewink
+chiacoan peccary
 chick
 chickadee
 chicken
@@ -810,7 +1493,13 @@ chigetai
 chigger
 chigoe
 chigoe flea
+chihuahua
+chihuahuan spotted whiptail
+chile bonito
+chilean bonito
+chilomeniscus cinctus
 chimaera
+chimaera monstrosa
 chimney swallow
 chimney swift
 chimp
@@ -818,51 +1507,98 @@ chimpanzee
 chinch
 chinch bug
 chinchilla
+chinchilla laniger
 chinchilla rat
 chinchillon
+chinese alligator
+chinese goose
+chinese paddlefish
+chinkara
 chinook
 chinook salmon
 chipmunk
 chipping sparrow
 chiropteran
+chital
 chiton
+chlamydera nuchalis
+chlamydosaurus kingi
 chlamyphore
+chlamyphorus truncatus
+chlorophoneus nigrifrons
+chlorura chlorura
+choeronycteris mexicana
+choloepus didactylus
+choloepus hoffmanni
 chondrichthian
 chordate
+choriotis australis
+chorizagrotis auxiliaris
 chorus frog
 chough
+chousingha
 chow
 chow chow
+chronoperates paradoxus
 chrysalis
 chrysanthemum dog
+chrysaora quinquecirrha
+chrysemys picta
+chrysolophus pictus
 chrysomelid
+chrysophrys auratus
+chrysophrys australis
 chrysopid
 chub
 chub mackerel
+chuck-will's-widow
 chuckwalla
 chum
 chum salmon
 chunga
+chunga burmeisteri
 cicada
 cicada killer
 cicala
 cichlid
 cichlid fish
+ciconia ciconia
+ciconia nigra
 cigarfish
 cimarron
+cimex lectularius
+cinclus aquaticus
+cinclus mexicanus
 cinnabar
 cinnabar moth
 cinnamon bear
+circus aeruginosus
+circus cyaneus
+circus pygargus
 cirriped
 cirripede
 cisco
+cistothorus palustris
+cistothorus platensis
+citellus citellus
+citellus lateralis
+citellus leucurus
+citellus parryi
+citellus richardsoni
+citellus variegatus
+citharichthys cornutus
 citrophilous mealybug
 citrophilus mealybug
 citrus mealybug
 citrus whitefly
 civet
 civet cat
+cladorhyncus leucocephalum
 clam
+clangula hyemalis
+clark's nutcracker
+class merostomata
+clay-colored robin
 cleg
 clegg
 clerid
@@ -875,15 +1611,29 @@ clingfish
 clinid
 clinid fish
 clothes moth
+clouded leopard
+clown anemone fish
 clumber
 clumber spaniel
+clupea harangus
+clupea harengus harengus
+clupea harengus pallasii
+clupea sprattus
 clupeid
 clupeid fish
+clydesdale
+clydesdale terrier
+cnemidophorus exsanguis
+cnemidophorus sexlineatus
+cnemidophorus tesselatus
+cnemidophorus tigris
+cnemidophorus velox
 cnidarian
 coach dog
 coach horse
 coachwhip
 coachwhip snake
+coastal diving bird
 coati
 coati-mondi
 coati-mundi
@@ -891,10 +1641,14 @@ cob
 cobia
 cobra
 coccid insect
+coccothraustes coccothraustes
+coccus hesperidum
+coccyzus erythropthalmus
 cochin
 cochin china
 cochineal
 cochineal insect
+cochlearius cochlearius
 cockateel
 cockatiel
 cockatoo
@@ -916,32 +1670,53 @@ coelophysis
 coho
 coho salmon
 cohoe
+colaptes auratus
+colaptes caper collaris
+colaptes chrysoides
+colinus virginianus
+collared dove
 collared lizard
 collared peccary
 collared pika
 collembolan
 collie
+collocalia inexpectata
 colobus
+colobus guereza
 colobus monkey
+colorado beetle
+colorado potato beetle
 colt
+coluber constrictor
+coluber hippocrepis
 colubrid
 colubrid snake
 colugo
+columba fasciata
+columba livia
+columba palumbus
 columbian mammoth
 columbiform bird
 comatulid
 comb jelly
+comb-footed spider
 combtooth blenny
 comma
 comma butterfly
+common american shad
 common blackfish
 common booklouse
+common brant goose
 common canary
 common dolphin
 common eel
 common eland
+common european earwig
+common european jay
+common garter snake
 common iguana
 common kingsnake
+common krait
 common limpet
 common louse
 common lynx
@@ -951,6 +1726,7 @@ common murre
 common newt
 common nutcracker
 common opossum
+common pond-skater
 common raccoon
 common racoon
 common rorqual
@@ -959,32 +1735,46 @@ common scoter
 common seal
 common shiner
 common shrew
+common snapping turtle
 common spoonbill
 common starling
+common toad
 common viper
 common wallaby
 common wasp
+common water snake
 common yellowthroat
 common zebra
 compsognathus
+comstock mealybug
+comstock's mealybug
 conceptus
 conch
 conchfish
 condor
+condylura cristata
+cone-nosed bug
 conenose
 conenose bug
+conepatus leuconotus
 coney
 conger
 conger eel
 congo eel
+congo peafowl
 congo snake
 conodont
 constrictor
+constrictor constrictor
+contopus sordidulus
+contopus virens
+conuropsis carolinensis
 convict fish
 convictfish
 cony
 coondog
 coonhound
+cooper's hawk
 coot
 cooter
 cootie
@@ -993,24 +1783,41 @@ copepod crustacean
 copper
 copper rockfish
 copperhead
+coppersmith barbet
+coracias garrulus
 coraciiform bird
+coragyps atratus
 coral
 coral snake
 corbina
+coregonus artedi
+coregonus clupeaformis
 coreid
 coreid bug
 corgi
 cormorant
 corn borer
+corn borer moth
 corn earworm
 corn snake
 corncrake
 cornetfish
+cornish
+cornish fowl
 corvine bird
+corvus brachyrhyncos
+corvus corax
+corvus frugilegus
+corvus monedula
+corydalus cornutus
+coryphaena equisetis
+coryphaena hippurus
 corythosaur
 corythosaurus
 coscoroba
+cosmocampus profundus
 cotinga
+cotswold
 cotton bollworm
 cotton mouse
 cotton rat
@@ -1021,6 +1828,8 @@ cottonmouth moccasin
 cottontail
 cottontail rabbit
 cottonwick
+coturnix communis
+coturnix coturnix
 coucal
 cougar
 courlan
@@ -1028,6 +1837,7 @@ courser
 cow
 cow pony
 cow shark
+cow-nosed ray
 cowbird
 cowfish
 cownose ray
@@ -1039,6 +1849,12 @@ coyote
 coypu
 crab
 crab louse
+crab-eating dog
+crab-eating fox
+crab-eating macaque
+crab-eating opossum
+crab-eating raccoon
+crab-eating seal
 crabeater seal
 crake
 crampfish
@@ -1052,6 +1868,7 @@ crawdaddy
 crawfish
 crawler
 crayfish
+cream-colored courser
 creature
 creeper
 creepy-crawly
@@ -1060,20 +1877,39 @@ crested cariama
 crested myna
 crested penguin
 crested screamer
+crested serpent eagle
 crested swift
 crevalle jack
+crex crex
+cricetus cricetus
 cricket
 cricket frog
 crinoid
 critter
+cro-magnon
 croaker
+crocethia alba
 crocodile
 crocodile bird
 crocodilian
 crocodilian reptile
+crocodylus niloticus
+crocodylus porosus
+crocuta crocuta
 croo monkey
 crossbill
 crossopterygian
+crotalus adamanteus
+crotalus atrox
+crotalus cerastes
+crotalus horridus atricaudatus
+crotalus horridus horridus
+crotalus lepidus
+crotalus mitchellii
+crotalus scutulatus
+crotalus tigris
+crotalus viridis
+croton bug
 crotonbug
 crow
 crow blackbird
@@ -1084,18 +1920,34 @@ crown monkey
 crucian carp
 crucifix fish
 crustacean
+cryptacanthodes maculatus
+cryptobranchus alleganiensis
+cryptoprocta
+cryptoprocta ferox
+cryptotermes brevis
+cryptotis parva
+ctenocephalides canis
+ctenocephalides felis
 ctenophore
 cub
 cub shark
 cuckoo
 cuckoo-bumblebee
 cuculiform bird
+cuculus canorus
+culex fatigans
+culex pipiens
+culex quinquefasciatus
+cuniculus paca
 cunner
+cuon alpinus
 cur
 curassow
 curlew
 curlew sandpiper
+curly-coated retriever
 currawong
+cursorius cursor
 cuscus
 cushat
 cusk
@@ -1104,50 +1956,92 @@ cutlassfish
 cuttle
 cuttlefish
 cutworm
+cyanocitta cristata
+cyclopes didactylus
 cyclops
+cyclopterus lumpus
 cyclostome
 cygnet
+cygnus atratus
+cygnus buccinator
+cygnus columbianus
+cygnus columbianus bewickii
+cygnus columbianus columbianus
+cygnus cygnus
+cygnus olor
+cynipid gall wasp
 cynipid wasp
+cynocephalus variegatus
 cynodont
+cynomys gunnisoni
+cynomys ludovicianus
+cynopterus sphinx
+cynoscion nebulosus
+cynoscion regalis
 cynthia moth
+cypraea moneta
+cypraea tigris
 cyprinid
 cyprinid fish
 cypriniform fish
 cyprinodont
+cyprinus carpio
+cystophora cristata
 dabbler
 dabbling duck
 dabchick
 dace
+dacelo gigas
 dachshund
 dachsie
+dactylopius coccus
 daddy longlegs
 dairy cattle
 dairy cow
+dall sheep
+dall's sheep
 dalmatian
 dam
+dama dama
+damaliscus lunatus
+damaraland mole rat
 damselfish
 damselfly
 danaid
 danaid butterfly
+danaus plexippus
+dandie dinmont
+dandie dinmont terrier
 daphnia
 dark horse
+dark-eyed junco
 darkling beetle
+darkling groung beetle
 darning needle
 darter
 das
 dassie
+dasyatis centroura
+dasyprocta aguti
+dasypus novemcinctus
 dasyure
 dasyurid
 dasyurid marsupial
+dasyurus quoll
+dasyurus viverrinus
+daubentonia madagascariensis
 daw
 dawn horse
 dayfly
 dealfish
 death adder
+death's-head moth
 deathwatch
 deathwatch beetle
 decapod
 decapod crustacean
+decapterus macarellus
+decapterus punctatus
 deepwater pipefish
 deepwater squirrelfish
 deer
@@ -1157,32 +2051,61 @@ deerhound
 defoliator
 deinocheirus
 deinonychus
+delichon urbica
+delphinapterus leucas
+delphinus delphis
 demoiselle
+demoiselle crane
+dendroaspis augusticeps
+dendroctonus rufipennis
+dendroica auduboni
+dendroica coronata
+dendroica fusca
+dendroica petechia
+dendroica striate
+dendroica tigrina
+denisonia superba
+dermacentor variabilis
+dermatobia hominis
+dermochelys coriacea
 desert iguana
 desert lynx
 desert rat
 desert tortoise
+desmodus rotundus
 devil ray
+devil's darning needle
 devilfish
+devon
 dew worm
+dhaman
 dhole
+dialeurodes citri
 diamondback
 diamondback rattlesnake
 diamondback terrapin
 diapheromera
+diapheromera femorata
 diapsid
 diapsid reptile
+diapsida
 dibranch
 dibranchiate
 dibranchiate mollusk
 dicamptodon
+dicamptodon ensatus
 dicamptodontid
+diceros bicornis
+diceros simus
 dickey-bird
 dickeybird
 dicky-bird
 dickybird
+dicrostonyx hudsonius
 dictyopterous insect
 dicynodont
+didelphis marsupialis
+didelphis virginiana
 digger wasp
 digitigrade
 digitigrade mammal
@@ -1191,9 +2114,19 @@ dimetrodon
 dingo
 dinoceras
 dinocerate
+dinornis giganteus
 dinosaur
+diodon holocanthus
+diodon hystrix
+diodora apertura
+diomedea exulans
+diomedea nigripes
+diphylla ecaudata
 diplodocus
+dipodomys ordi
+dipodomys phillipsii
 dipper
+dipsosaurus dorsalis
 dipteran
 dipteron
 dipterous insect
@@ -1201,6 +2134,8 @@ diver
 diving duck
 diving petrel
 dobbin
+doberman
+doberman pinscher
 dobson
 dobson fly
 dobsonfly
@@ -1210,11 +2145,14 @@ dodo
 doe
 dog
 dog flea
+dog-day cicada
 dogfish
 doggie
 doggy
 dogie
 dogy
+dolichonyx oryzivorus
+dolichotis patagonum
 doliolum
 dollarfish
 dolphin
@@ -1228,19 +2166,27 @@ domestic goat
 domestic llama
 domestic pigeon
 domestic sheep
+domestic silkworm moth
 domesticated animal
+domesticated silkworm moth
+dominick
+dominique
 donkey
 doodlebug
 dorbeetle
+dorking
 dormouse
 dory
 dotrel
 dotterel
+douglas squirrel
 douroucouli
 dove
 dovekie
 dowitcher
 downy woodpecker
+draco
+dracunculus medinensis
 draft animal
 draft horse
 dragon
@@ -1251,30 +2197,50 @@ drake
 draught horse
 dray horse
 drayhorse
+dreissena polymorpha
 driftfish
 drill
 driver ant
 dromaeosaur
+dromaius novaehollandiae
 dromedary
 drone
+drongo
 drosophila
+drosophila melanogaster
 drum
 drumfish
+dry-wood termite
+drymarchon corais
+drymarchon corais couperi
 dryopithecine
 duck
+duck-billed dinosaur
+duck-billed platypus
 duckbill
 duckbilled platypus
 duckling
 dugong
+dugong dugon
+dumetella carolinensis
 dun
 dung beetle
+dungeness crab
 dunlin
 dunnock
+duplicidentata
+durham
+dusicyon cancrivorus
 dusky salamander
 dusky shark
+dusky-footed woodrat
+dutch-elm beetle
 dwarf buffalo
 dwarf pipefish
+dwarf pocket rat
+dwarf sperm whale
 dziggetai
+eacles imperialis
 eagle
 eagle ray
 eaglet
@@ -1287,36 +2253,68 @@ earthworm
 earwig
 eastern chimpanzee
 eastern chipmunk
+eastern coral snake
 eastern cottontail
+eastern cricket frog
 eastern dasyure
+eastern fence lizard
+eastern fox squirrel
+eastern gray squirrel
+eastern grey squirrel
+eastern ground snake
+eastern indigo snake
 eastern kingbird
+eastern lowland gorilla
 eastern meadowlark
 eastern pipistrel
 eastern woodrat
+echeneis naucrates
 echidna
+echidnophaga gallinacea
 echinococcus
 echinoderm
+echinus esculentus
 ecrevisse
+ectopistes migratorius
 ectoproct
 ectotherm
 edaphosaurus
 edentate
 edible cockle
 edible mussel
+edible sea urchin
 edible snail
+edmontonia
 edmontosaurus
 eel
 eelblenny
 eelpout
 eelworm
 eft
+egg-laying mammal
 eggar
 egger
 egret
+egret bird
+egretta albus
+egretta caerulea
+egretta garzetta
+egretta thula
+egyptian cat
+egyptian cobra
+egyptian jackal
+egyptian vulture
 eider
 eider duck
+eira barbara
+elagatis bipinnulata
 eland
+elanoides forficatus
+elanus leucurus
+elaphe guttata
+elaphe obsoleta
 elaphure
+elaphurus davidianus
 elapid
 elapid snake
 elasmobranch
@@ -1326,12 +2324,20 @@ elaterid beetle
 electric catfish
 electric eel
 electric ray
+electrophorus electric
 elephant
 elephant bird
 elephant seal
+elephas maximus
 elk
+elk calf
 elkhound
+elops saurus
 elver
+emberiza aureola
+emberiza citrinella
+emberiza hortulana
+emberiza schoeniclus
 embryo
 emerald shiner
 emmet
@@ -1340,8 +2346,24 @@ emperor butterfly
 emperor moth
 emperor penguin
 emu
+emu bird
+emu novaehollandiae
+english bulldog
+english cocker spaniel
+english foxhound
+english lady crab
+english setter
+english sole
+english sparrow
+english springer
+english springer spaniel
+english toy spaniel
+engraulis encrasicholus
+enhydra lutris
 entellus
+enterobius vermicularis
 entire
+entlebucher
 entoproct
 eohippus
 eoraptor
@@ -1349,25 +2371,137 @@ ephemeral
 ephemerid
 ephemeron
 ephemeropteran
+ephestia elutella
+ephippiorhynchus senegalensis
+epilachna varivestis
+epinephelus adscensionis
+epinephelus fulvus
 eptatretus
+eptesicus fuscus
+eptesicus serotinus
+equetus lanceolatus
+equetus pulcher
 equid
 equine
+equus africanus
+equus asinus
+equus burchelli
+equus caballus
+equus caballus gomelini
+equus caballus przevalskii
+equus caballus przewalskii
+equus grevyi
+equus hemionus
+equus hemionus hemionus
+equus kiang
+equus quagga
+equus zebra zebra
+erethizon dorsatum
+eretmochelys imbricata
+erignathus barbatus
+erinaceus europaeus
+erinaceus europeaeus
+eriosoma lanigerum
+erithacus rubecola
+erithacus svecicus
 ermine
 ern
 erne
+erolia alpina
+erolia minutilla
+erythrocebus patas
 escallop
+eschrichtius gibbosus
+eschrichtius robustus
 escolar
+eskimo curlew
+eskimo dog
+esox americanus
+esox lucius
+esox masquinongy
+esox niger
+etropus rimosus
+euarctos americanus
+eucinostomus gula
+euderma maculata
+eudromias morinellus
+eumeces callicephalus
+eumeces skiltonianus
+eumetopias jubatus
+eunectes murinus
+euopean hoopoe
+euphagus carilonus
+euphausia pacifica
+euphractus sexcinctus
+euproctis chrysorrhoea
+euproctis phaeorrhoea
+eurasian badger
+eurasian eagle owl
+eurasian green toad
+eurasian hamster
+eurasian kingfisher
+eurasian otter
+eurasian woodcock
+european bittern
+european black grouse
+european blackbird
+european bream
+european brown bat
+european catfish
+european creeper
+european cuckoo
+european curlew
+european fire salamander
+european flatfish
+european gallinule
+european goatsucker
+european hare
+european house cricket
+european lemming
+european lobster
+european magpie
+european nightjar
+european nuthatch
+european perch
+european rabbit
+european roller
+european sandpiper
+european sea bream
+european sea eagle
+european shrike
+european smelt
+european sole
+european spider crab
+european swift
+european toad
+european tortoise
+european water ouzel
+european water shrew
+european wildcat
+european wolf spider
+european wood mouse
 eurypterid
+eutamius asiaticus
+eutamius sibiricus
 eutherian
 eutherian mammal
+euthynnus pelamis
+even-toed ungulate
 evening grosbeak
 ewe
+exmoor
 eyas
 eyra
 fairy armadillo
 fairy bluebird
 fairy shrimp
 fairy swallow
+falco columbarius
+falco peregrinus
+falco rusticolus
+falco sparverius
+falco subbuteo
+falco tinnunculus
 falcon
 falcon-gentil
 falcon-gentle
@@ -1378,9 +2512,15 @@ fallow deer
 false gavial
 false scorpion
 false vampire
+false vampire bat
+family aegypiidae
+family mutillidae
+fan-throated lizard
 fanaloka
 farm animal
 farm horse
+fasciola hepatica
+fasciolopsis buski
 fauna
 fawn
 feather star
@@ -1388,10 +2528,28 @@ feeder
 feist
 felid
 feline
+felis bengalensis
+felis catus
+felis chaus
+felis concolor
+felis domesticus
+felis manul
+felis ocreata
+felis onca
+felis pardalis
+felis serval
+felis silvestris
+felis tigrina
+felis wiedi
+felis yagouaroundi
 female
 female horse
 female mammal
 fence lizard
+fennec
+fennec fox
+fenusa pusilla
+fer-de-lance
 ferret
 ferret badger
 fertilized egg
@@ -1415,14 +2573,17 @@ fin whale
 finback
 finback whale
 finch
+finch bird
 fingerling
 finisher
 fire ant
 fire beetle
 fire salamander
+fire-bellied toad
 firebird
 firebrat
 firebug
+firecrest
 firefly
 fish
 fish doctor
@@ -1434,17 +2595,22 @@ fish louse
 fish-fly
 fisher
 fisher cat
+fishing cat
 fishing eagle
 fishing worm
 fishworm
 fissiped
 fissiped mammal
+fissipedia
+fissurella apertura
 fitch
 flagfish
 flame fish
+flameback
 flamefish
 flamingo
 flashlight fish
+flat-coated retriever
 flatfish
 flathead
 flathead catfish
@@ -1458,9 +2624,14 @@ flicker
 flickertail
 flightless bird
 flinthead
+florida gallinule
+florida pompano
+florida smoothhound
+florida water rat
 flounder
 flour beetle
 flour weevil
+flowerpecker
 fluke
 fly
 flycatcher
@@ -1485,28 +2656,46 @@ foal
 foetus
 food fish
 forest goat
+forest tent caterpillar
+forficula auricularia
+formica fusca
+formica rufa
+formica sanguinea
 fossa
 fossa cat
+fossa fossa
 fossorial mammal
 foulmart
 foumart
+four-footed butterfly
+four-horned antelope
 fowl
 fox
 fox shark
 fox squirrel
 fox terrier
 foxhound
+frankliniella fusca
+fratercula arctica
+fratercula corniculata
+free-tailed bat
 freetail
 freetailed bat
+french bulldog
 freshwater bass
 freshwater bream
 freshwater clam
 freshwater eel
 freshwater limpet
 freshwater mussel
+friesian
 frigate bird
+frigatebird
 frilled lizard
+fringe-toed lizard
 fringed gecko
+fringilla coelebs
+fringilla montifringilla
 fritillary
 frog
 frogfish
@@ -1516,34 +2705,57 @@ frost fish
 frosted bat
 fruit bat
 fruit fly
+fulica americana
+fulica atra
 fulmar
 fulmar petrel
+fulmarus glacialis
+fundulus heteroclitus
+fundulus majalis
 fungus gnat
 fur seal
 gaboon viper
 gadfly
 gadoid
 gadoid fish
+gadus macrocephalus
+gadus merlangus
+gadus morhua
 galago
+galeocerdo cuvieri
+galeorhinus zyopterus
+galictis vittatus
 gall gnat
 gall midge
 gall wasp
+galleria mellonella
 gallfly
 gallina
 gallinacean
 gallinaceous bird
+gallinago gallinago
+gallinago gallinago delicata
+gallinago media
+gallinula chloropus
+gallinula chloropus cachinnans
 gallinule
+galloway
+gallus gallus
+gambusia affinis
 game
 game bird
 game fish
 game fowl
 gamecock
 gander
+ganges dolphin
+gangetic dolphin
 gannet
 ganoid
 ganoid fish
 gar
 garden centipede
+garden lizard
 garden snail
 garden spider
 garden symphilid
@@ -1552,31 +2764,64 @@ garfish
 garganey
 garpike
 garter snake
+garullus garullus
+gasterophilus intestinalis
+gasterosteus aculeatus
+gasterosteus pungitius
+gastrophryne carolinensis
+gastrophryne olivacea
 gastropod
 gastrula
 gator
 gaur
 gavial
+gavialis gangeticus
 gaviiform seabird
 gayal
+gazella subgutturosa
+gazella thomsoni
 gazelle
 gazelle hound
 gecko
 gee-gee
 gelding
+gelechia gossypiella
 gelechiid
 gelechiid moth
 gempylid
+gempylus serpens
 gemsbok
 gemsbuck
 genet
+genetta genetta
+genus acarus
+genus argentinosaurus
+genus cryptoprocta
+genus javanthropus
+genus paranthropus
+genus pithecanthropus
+genus sinanthropus
+genus zinjanthropus
+genyonemus lineatus
+geococcyx californianus
 geoduck
 geometrid
 geometrid moth
+geomys bursarius
+geomys pinetis
+geothlypis trichas
 gerbil
 gerbille
 gerenuk
 gerfalcon
+german bee
+german cockroach
+german police dog
+german shepherd
+german shepherd dog
+gerres cinereus
+gerris lacustris
+gharial
 ghostfish
 giant
 giant anteater
@@ -1591,6 +2836,7 @@ giant hornet
 giant kangaroo
 giant lizard
 giant moa
+giant northwest shipworm
 giant panda
 giant petrel
 giant pigfish
@@ -1598,19 +2844,29 @@ giant salamander
 giant scallop
 giant schnauzer
 giant silkworm
+giant silkworm moth
 giant squid
 giant tortoise
+giant water bug
 gib
 gibbon
+gila monster
 gilded flicker
+ginglymostoma cirratum
 gipsy moth
+giraffa camelopardalis
 giraffe
 glareole
 glass lizard
 glass snake
 glass sponge
+glaucomys sabrinus
+glaucomys volans
+glis glis
 globefish
+globicephala melaena
 glossina
+glossopsitta versicolor
 glossy snake
 glowworm
 glutton
@@ -1626,12 +2882,17 @@ goat antelope
 goatfish
 goatsucker
 gobbler
+gobiesox strumosus
+gobio gobio
 goby
 godwit
 goggle-eye
+gold-crowned kinglet
+gold-tail moth
 goldcrest
 golden eagle
 golden hamster
+golden jackal
 golden mole
 golden oriole
 golden pheasant
@@ -1640,11 +2901,14 @@ golden potto
 golden retriever
 golden shiner
 golden warbler
+golden-crested kinglet
+golden-eyed fly
 goldeneye
 goldfinch
 goldfish
 goliath frog
 gomphothere
+gonorhynchus gonorhynchus
 gooney
 gooney bird
 goonie
@@ -1658,21 +2922,31 @@ gopher
 gopher snake
 gopher tortoise
 gopher turtle
+gopherus agassizii
+gopherus polypemus
 goral
+gordon setter
 gorgonian
 gorgonian coral
 gorilla
+gorilla gorilla
+gorilla gorilla beringei
+gorilla gorilla gorilla
+gorilla gorilla grauri
 goshawk
 gosling
 goujon
 gracilariid
 gracilariid moth
 grackle
+gracula religiosa
 grade
 grain moth
 grampus
+grampus griseus
 grape louse
 grape phylloxera
+grass carp
 grass finch
 grass frog
 grass parakeet
@@ -1690,6 +2964,7 @@ gray kingbird
 gray lemming
 gray mullet
 gray partridge
+gray sea eagle
 gray skate
 gray snapper
 gray whale
@@ -1702,45 +2977,73 @@ great anteater
 great ape
 great auk
 great barracuda
+great blue heron
+great blue shark
 great bowerbird
 great bustard
+great crested grebe
+great dane
+great gray owl
+great grey kangaroo
+great grey owl
+great hornbill
+great horned owl
+great indian bustard
+great pyrenees
 great skua
 great snipe
+great white heron
+great white shark
 greater kudu
 greater pichiciego
+greater prairie chicken
 greater scaup
 greater whitethroat
 greater yellowlegs
 grebe
+greek partridge
+green apple aphid
 green frog
+green june beetle
 green lacewing
 green lizard
 green mamba
 green monkey
+green peach aphid
 green peafowl
+green pigeon
 green plover
 green snake
 green turtle
 green woodpecker
+green-tailed towhee
+green-winged teal
 greenbottle
 greenbottle fly
 greeneye
 greenfly
 greenhouse whitefly
+greenland caribou
+greenland whale
 greenling
 greenshank
 greenwing
 grenadier
+grevy's zebra
 grey
 grey catbird
 grey flounder
 grey fox
+grey francolin
 grey hen
+grey jackal
 grey jay
 grey kingbird
+grey langur
 grey lemming
 grey mullet
 grey partridge
+grey sea eagle
 grey skate
 grey snapper
 grey whale
@@ -1750,10 +3053,12 @@ greyhen
 greyhound
 greylag
 greylag goose
+gridiron-tailed lizard
 griffon
 griffon vulture
 grindle
 grison
+grison vittatus
 grivet
 grizzly
 grizzly bear
@@ -1775,7 +3080,9 @@ grub
 grubby
 grunt
 grunter
+grus americana
 guacharo
+guadalupe fur seal
 guan
 guanaco
 guano bat
@@ -1784,6 +3091,7 @@ gudgeon
 guenon
 guenon monkey
 guereza
+guernsey
 guib
 guide dog
 guillemot
@@ -1791,12 +3099,20 @@ guinea
 guinea fowl
 guinea hen
 guinea pig
+guinea worm
 guitarfish
 gull
+gulo gulo
+gulo luscus
 gun dog
 gunnel
 guppy
 gurnard
+gymnelis viridis
+gymnogyps californianus
+gymnorhina tibicen
+gypaetus barbatus
+gyps fulvus
 gypsy moth
 gyrfalcon
 hack
@@ -1805,34 +3121,56 @@ hackney
 haddock
 hadrosaur
 hadrosaurus
+haematobia irritans
+haemulon album
+haemulon aurolineatum
+haemulon macrostomum
+haemulon malanurum
+haemulon parra
 hag
 hagfish
 hair seal
+hair-tailed mole
 hairstreak
 hairstreak butterfly
 hairtail
 hake
+haldea striatula
 half snipe
 halfbeak
+haliaeetus leucocephalus
+haliaeetus leucorhyphus
+haliaeetus pelagicus
+haliatus albicilla
 halibut
+halicoeres bivittatus
+halicoeres radiatus
+haliotis tuberculata
 hamadryad
 hammerhead
 hammerhead shark
+hampshire
+hampshire down
 hamster
 handsaw fish
 hangbird
 hanging fly
+hanging parrot
 hanuman
+hanuman langur
 harbor porpoise
 harbor seal
 hard clam
 hard tick
+hard-shell clam
+hard-shell crab
 hare
 hare wallaby
 harlequin-snake
 harness horse
 harnessed antelope
 harp seal
+harpia harpyja
 harpy
 harpy bat
 harpy eagle
@@ -1847,6 +3185,7 @@ harvestfish
 harvestman
 hatchling
 hausen
+hawaiian honeycreeper
 hawfinch
 hawk
 hawk moth
@@ -1868,49 +3207,91 @@ hedge sparrow
 hedgehog
 heifer
 heliothis moth
+heliothis zia
+helix aspersa
+helix hortensis
+helix pomatia
 hellbender
 helleri
 hellgrammiate
 helminth
+heloderma horridum
+heloderma suspectum
+hemachatus haemachatus
 hemerobiid
 hemerobiid fly
+hemigalus hardwickii
 hemipode
 hemipteran
 hemipteron
+hemipteronatus novacula
 hemipterous insect
+hemitripterus americanus
 hen
 hen harrier
 hen hawk
 hepatic tanager
 herbivore
+hereford
+hermissenda crassicornis
 hermit crab
 hermit thrush
 heron
+herpestes ichneumon
+herpestes nyula
 herrerasaur
 herrerasaurus
 herring
 herring gull
 herring hog
+hesperiphona vespertina
+hessian fly
 heteropterous insect
+heteroscelus incanus
 heterostracan
+hexagrammos decagrammus
+hexanchus griseus
 hexapod
 high stepper
 hill myna
+hilsa
+himalayan black bear
+himalayan tahr
+himantopus himantopus
+himantopus mexicanus
+himantopus novae-zelandiae
+himantopus stilt
 hind
 hinny
 hippo
+hippobosca equina
 hippoboscid
+hippodamia convergens
+hippoglossoides platessoides
+hippoglossus hippoglossus
+hippoglossus stenolepsis
 hippopotamus
+hippopotamus amphibius
+hippotragus niger
+hipsurus caryi
 hirudinean
+hirudo medicinalis
+hirundo nigricans
+hirundo pyrrhonota
+hirundo rustica
+hispid pocket mouse
 hoactzin
 hoary marmot
 hoatzin
 hobby
 hog
 hog badger
+hog deer
 hog molly
 hog snapper
 hog sucker
+hog-nosed badger
+hog-nosed skunk
 hogchoker
 hogfish
 hogg
@@ -1919,16 +3300,27 @@ hognose bat
 hognose snake
 hognosed skunk
 holibut
+holocanthus tricolor
+holocentrus ascensionis
+holocentrus bullisi
+holocentrus coruscus
 holocephalan
 holocephalian
 holometabola
+holothuria edulis
 holothurian
+holstein
+holstein-friesian
+homarus americanus
+homarus capensis
+homarus vulgaris
 homeotherm
 homer
 homing pigeon
 hominid
 hominoid
 homoiotherm
+homona coffearia
 homopteran
 homopterous insect
 homotherm
@@ -1947,6 +3339,8 @@ hooded sheldrake
 hooded skunk
 hoofed mammal
 hookworm
+hoolock gibbon
+hooman
 hoop snake
 hoopoe
 hoopoo
@@ -1986,8 +3380,10 @@ hound
 hound dog
 house cat
 house centipede
+house crow
 house finch
 house fly
+house gecko
 house martin
 house mouse
 house snake
@@ -1997,6 +3393,7 @@ housedog
 housefly
 howler
 howler monkey
+hudsonian godwit
 human
 human being
 human beings
@@ -2010,30 +3407,74 @@ hummingbird
 hummingbird moth
 humpback
 humpback whale
+hungarian partridge
+hungarian pointer
 hunting dog
 hunting spider
 husky
 hussar monkey
 hyaena
+hyaena brunnea
+hyaena hyaena
+hyalophora cecropia
 hydra
+hydrobates pelagicus
+hydrochoerus hydrochaeris
+hydrodamalis gigas
 hydroid
+hydromantes brunus
+hydromantes shastae
 hydrozoan
+hyemoschus aquaticus
 hyena
 hyena dog
+hyla arenicolor
+hyla crucifer
+hyla regilla
+hylactophryne augusti
+hylobates lar
+hylobates syndactylus
+hylocichla fuscescens
+hylocichla guttata
+hylocichla mustelina
+hylophylax naevioides
 hymenopter
 hymenopteran
 hymenopteron
 hymenopterous insect
+hynerpeton bassetti
+hypentelium nigricans
+hyperglyphe perciformis
+hyperoodon ampullatus
+hyphantria cunea
+hypsiglena torquata
+hypsiprymnodon moschatus
 hyrax
+ibero-mesornis
 ibex
 ibis
+ibis ibis
+ibizan hound
+ibizan podenco
 ice bear
 ichneumon
 ichneumon fly
 ichthyosaur
 ichthyosaurus
+ichthyostega
+ichyostega
+ictalurus punctatus
+icteria virens
+icterus galbula
+icterus galbula bullockii
+icterus galbula galbula
+icterus spurius
+ictiobus niger
 ictodosaur
+ictonyx frenata
+ictonyx striata
 iguana
+iguana iguana
 iguanid
 iguanid lizard
 iguanodon
@@ -2042,25 +3483,78 @@ impala
 imperial elephant
 imperial mammoth
 imperial moth
+inachis io
 inchworm
+indian bison
+indian buffalo
+indian bullfrog
+indian chameleon
+indian cobra
+indian elephant
+indian flapshell turtle
+indian flying fox
+indian fox
+indian gazelle
+indian giant squirrel
+indian grackle
+indian hare
+indian leopard
+indian mongoose
+indian monitor
+indian pangolin
+indian pony
+indian python
+indian rat snake
+indian rhinoceros
+indian rock python
+indian roller
+indian star tortoise
+indian tapir
+indian wild dog
+indian wolf
 indigo bird
 indigo bunting
 indigo finch
 indigo snake
 indri
+indri brevicaudatus
+indri indri
 indris
 insect
 insectivore
 instar
 invertebrate
 io moth
+iridoprocne bicolor
+irish setter
+irish terrier
+irish water spaniel
+irish wolfhound
 isopod
+istiophorus albicans
+isurus glaucus
+isurus oxyrhincus
+isurus paucus
+italian bee
+italian greyhound
 itch mite
 ivory gull
+ivory-billed woodpecker
 ivorybill
+ixobrychus exilis
+ixodes dammini
+ixodes dentatus
+ixodes neotomae
+ixodes pacificus
+ixodes persulcatus
+ixodes ricinus
+ixodes scapularis
+ixodes spinipalpis
 ixodid
 jabiru
+jabiru mycteria
 jacamar
+jacana
 jack
 jack crevalle
 jack mackerel
@@ -2075,13 +3569,22 @@ jackknife-fish
 jackrabbit
 jacksmelt
 jacksnipe
+jaculus jaculus
 jade
 jaeger
 jaguar
 jaguarondi
 jaguarundi
 jaguarundi cat
+japanese beetle
+japanese deer
+japanese oyster
+japanese spaniel
 jassid
+java finch
+java man
+java sparrow
+javanthropus
 javelina
 jawfish
 jawless fish
@@ -2095,20 +3598,34 @@ jenny wren
 jerboa
 jerboa kangaroo
 jerboa rat
+jersey
+jerusalem cricket
 jewfish
 jigger
 jird
+john dory
 joint snake
 jointworm
+jonah crab
+jordanella floridae
 jument
 jumping bristletail
 jumping mouse
+jumping plant louse
 junco
+junco hyemalis
+june beetle
+june bug
 jungle cat
+jungle crow
 jungle fowl
 jungle hen
+junglefowl
 kaffir cat
+kakatoe galerita
+kakatoe leadbeateri
 kaki
+kamchatkan sea eagle
 kanchil
 kangaroo
 kangaroo bear
@@ -2117,11 +3634,15 @@ kangaroo jerboa
 kangaroo mouse
 kangaroo rat
 karakul
+kashmir goat
+katsuwonus pelamis
 katydid
 kea
 keeshond
 kelp greenling
 kelpie
+kentucky black bass
+kerry blue terrier
 kestrel
 keyhole limpet
 kiang
@@ -2134,9 +3655,12 @@ killer bee
 killer whale
 killifish
 kine
+king charles spaniel
 king cobra
 king crab
+king crow
 king mackerel
+king of beasts
 king penguin
 king salmon
 king snake
@@ -2162,6 +3686,17 @@ knot
 koala
 koala bear
 kob
+kobus kob
+kobus leche
+kodiak
+kodiak bear
+koel
+kogia breviceps
+kogia simus
+koi
+kokila
+komodo dragon
+komodo lizard
 komondor
 koodoo
 kookaburra
@@ -2170,12 +3705,19 @@ krait
 krill
 kudu
 kuvasz
+kyphosus sectatrix
+labrador retriever
 labyrinthodont
+lac insect
 lace bug
+lacerta agilis
+lacerta viridis
 lacertid
 lacertid lizard
 lacewing
 lacewing fly
+lachnolaimus maximus
+lactophrys quadricornis
 lady beetle
 lady crab
 ladybeetle
@@ -2183,22 +3725,34 @@ ladybird
 ladybird beetle
 ladybug
 ladyfish
+lagodon rhomboides
 lagomorph
+lagopus scoticus
+lagostomus maximus
 lake duck
 lake herring
 lake salmon
 lake trout
 lake whitefish
+lakeland terrier
+lama guanicoe
+lama pacos
+lama peruana
 lamb
 lambkin
 lamellibranch
 lamellicorn beetle
 lammergeier
 lammergeyer
+lamna nasus
 lamp shell
 lamper eel
 lamprey
 lamprey eel
+lampris guttatus
+lampris regius
+lampropeltis getulus
+lampropeltis triangulum
 lampshell
 lancelet
 lancet fish
@@ -2207,9 +3761,14 @@ land rail
 landlocked salmon
 langouste
 langur
+lanius borealis
+lanius excubitor
+lanius lucovicianus
+lanius ludovicianus migrans
 lantern fly
 lantern-fly
 lanternfish
+lanthanotus borneensis
 lapdog
 lapin
 lappet
@@ -2221,17 +3780,27 @@ large poodle
 large white
 largemouth
 largemouth bass
+largemouth black bass
 largemouthed bass
+largemouthed black bass
 larid
 lark
+larus argentatus
+larus canus
+larus marinus
+larus ridibundus
 larva
 larvacean
 lasiocampid
 lasiocampid moth
+lasiurus borealis
+latimeria chalumnae
+latrodectus mactans
 laughing gull
 laughing hyena
 laughing jackass
 laughing owl
+laughingthrush
 launce
 layer
 leaf beetle
@@ -2240,7 +3809,13 @@ leaf insect
 leaf miner
 leaf roller
 leaf-cutter
+leaf-cutter bee
+leaf-cutting bee
+leaf-foot bug
+leaf-footed bug
 leaf-miner
+leaf-nosed bat
+leaf-nosed snake
 leaf-roller
 leafhopper
 leafnose bat
@@ -2254,6 +3829,7 @@ leatherfish
 leatherjack
 leatherjacket
 leathery turtle
+lebistes reticulatus
 lechwe
 leech
 lefteye flounder
@@ -2261,80 +3837,156 @@ lefteyed flounder
 legionary ant
 legless lizard
 leipoa
+leipoa ocellata
 lemming
+lemmus lemmus
+lemmus trimucronatus
 lemon shark
 lemon sole
 lemur
+lemur catta
+leonberg
 leoncita
+leontocebus oedipus
+leontocebus rosalia
 leopard
 leopard cat
 leopard frog
 leopard lizard
 leopardess
+lepas fascicularis
+lepidochelys kempii
+lepidochelys olivacea
+lepidocybium flavobrunneum
 lepidopteran
 lepidopteron
 lepidopterous insect
+lepisma saccharina
+lepisosteus osseus
+lepomis gibbosus
+lepomis macrochirus
+lepomis punctatus
 leporid
 leporid mammal
 leporide
 leppy
+leptinotarsa decemlineata
 leptocephalus
 leptodactylid
 leptodactylid frog
+leptodactylus pentadactylus
+leptoptilus crumeniferus
+leptoptilus dubius
+leptotyphlops humilis
+lepus americanus
+lepus arcticus
+lepus californicus
+lepus europaeus
+lepus townsendi
 lerot
 lesser anteater
 lesser ape
+lesser florican
 lesser kudu
 lesser panda
+lesser prairie chicken
 lesser rorqual
 lesser scaup
+lesser scaup duck
 lesser whitethroat
 lesser yellowlegs
+leuciscus cephalus
+leuciscus leuciscus
 leveret
+lhasa
+lhasa apso
+lichanura trivirgata
 liger
 lightning bug
+limanda ferruginea
+limenitis archippus
+limenitis arthemis
+limenitis astyanax
+limenitis camilla
 limestone salamander
 limicoline bird
+limnocryptes minima
+limnodromus griseus
+limnodromus scolopaceus
+limosa haemastica
 limpet
 limpkin
+limulus polyphemus
+lincoln
 lined snake
 ling
 lingcod
 linnet
 lintwhite
+liomys irroratus
 lion
 lion cub
 lion marmoset
 lion monkey
+lion-tailed macaque
 lioness
 lionet
 lionfish
+liopelma hamiltoni
+liparis liparis
+lipizzan
+liposcelis divinatorius
+lippizan
+lippizaner
+litocranius walleri
 little auk
+little black ant
+little blue heron
+little brown bat
+little brown myotis
+little chief hare
 little egret
 little grebe
 little owl
 little skate
+little spotted skunk
 littleneck
 littleneck clam
 live-bearer
 liver chestnut
 liver fluke
+liver-spotted dalmatian
 livestock
 liza
 lizard
 lizardfish
 llama
 loach
+lobe-finned fish
 lobefin
+lobipes lobatus
+lobotes pacificus
+lobotes surinamensis
 lobster
 lobworm
 locust
+locusta migratoria
+lofortyx californicus
 loggerhead
 loggerhead shrike
 loggerhead turtle
 loir
 loligo
+long-clawed prawn
+long-eared bat
+long-eared owl
+long-fin tunny
+long-horned beetle
+long-horned grasshopper
 long-legs
+long-neck clam
+long-tailed porcupine
+long-tailed weasel
 longfin mako
 longhorn
 longicorn
@@ -2346,30 +3998,66 @@ lookdown
 lookdown fish
 loon
 looper
+lophius americanus
+lophodytes cucullatus
+lopholatilus chamaeleonticeps
 lorikeet
+loris gracilis
 lory
+lota lota
 lotte
 louse
 louse fly
 louvar
 lovebird
 lowan
+lowland burrowing treefrog
+loxia curvirostra
+loxodonta africana
+loxostege similalis
 lug
 lugworm
+lumpenus lumpretaeformis
 lumpfish
 lumpsucker
 luna moth
+lunda cirrhata
 lungfish
 lungless salamander
+luscinia luscinia
+luscinia megarhynchos
+lutjanus analis
+lutjanus apodus
+lutjanus blackfordi
+lutjanus griseus
+lutra canadensis
+lutra lutra
+luvarus imperialis
+lycaena hypophlaeas
 lycaenid
 lycaenid butterfly
+lycaon pictus
+lycosa tarentula
 lygaeid
 lygaeid bug
 lygus bug
+lygus lineolaris
+lymantria dispar
 lymantriid
 lynx
+lynx canadensis
+lynx caracal
+lynx lynx
+lynx pardina
+lynx rufus
 lyre snake
 lyrebird
+lyrurus mlokosiewiczi
+lyrurus tetrix
+macaca irus
+macaca mulatta
+macaca radiata
+macaca sylvana
 macaque
 macaw
 machilid
@@ -2377,22 +4065,50 @@ mackerel
 mackerel scad
 mackerel shad
 mackerel shark
+macrocephalon maleo
+macrocheira kaempferi
+macroclemys temmincki
+macrodactylus subspinosus
+macronectes giganteus
+macropus agiles
+macropus giganteus
+macrotis lagotis
 macrotus
+macrotus californicus
+macrozoarces americanus
+madagascar cat
 mademoiselle
 madrepore
 madriporian coral
 maggot
+magicicada septendecim
 magpie
+magpie robin
+magur
 mahimahi
+mahseer
 maiger
 maigre
+maine lobster
+maja squinado
+makaira albida
+makaira marlina
+makaira mazara
+makaira mitsukurii
+makaira nigricans
 mako
 mako shark
+malabar hornbill
+malabar squirrel
+malaclemys centrata
 malacopterygian
+malacosoma americana
+malacosoma disstria
 malacostracan crustacean
 malamute
 malaria mosquito
 malarial mosquito
+malayan tapir
 male
 male horse
 malemute
@@ -2401,17 +4117,32 @@ malinois
 mallard
 mallee fowl
 mallee hen
+malopterurus electricus
+maltese
+maltese cat
+maltese dog
+maltese terrier
 mamba
 mammal
 mammalian
 mammoth
+mammut americanum
+mammuthus columbi
+mammuthus primigenius
 mamo
 man
 man-eater
+man-eating shark
+man-of-war
 manakin
 manatee
+manchester terrier
 mandarin duck
 mandrill
+mandrillus leucophaeus
+mandrillus sphinx
+manduca quinquemaculata
+manduca sexta
 maned sheep
 maned wolf
 mangabey
@@ -2419,20 +4150,28 @@ mangrove snapper
 maniraptor
 mankind
 manta
+manta birostris
 manta ray
 mantid
 mantis
 mantis crab
 mantis prawn
+mantis religioso
 mantis shrimp
 mantispid
+mantled ground squirrel
 manul
+manx
+manx cat
+manx shearwater
 maori hen
 mapinguari
 mara
 marabou
 marabou stork
 marabout
+marco polo sheep
+marco polo's sheep
 mare
 margate
 margay
@@ -2447,6 +4186,9 @@ markhor
 marlin
 marmoset
 marmot
+marmota caligata
+marmota flaviventris
+marmota monax
 marsh hare
 marsh harrier
 marsh hawk
@@ -2458,22 +4200,39 @@ marsupial mouse
 marsupial rat
 marten
 marten cat
+martes americana
+martes foina
+martes martes
+martes pennanti
+martes zibellina
 martin
+maryland yellowthroat
 masked shrew
 mason bee
 mason wasp
 massasauga
 massasauga rattler
+masticophis bilineatus
+masticophis flagellum
+masticophis lateralis
 mastiff
 mastiff bat
+mastigoproctus giganteus
 mastodon
 mastodont
+mastotermes darwiniensis
+mastotermes electrodominicus
+mastotermes electromexicus
 mate
 maverick
 mavis
+may beetle
+may bug
 may fish
+mayetiola destructor
 mayfish
 mayfly
+meadow jumping mouse
 meadow mouse
 meadow pipit
 meadow spittlebug
@@ -2487,34 +4246,90 @@ mecopteran
 medfly
 medicinal leech
 mediterranean anchovy
+mediterranean flour moth
+mediterranean fruit fly
+mediterranean water shrew
 medusa
 medusan
 medusoid
 meerkat
 megabat
+megaderma lyra
+megalobatrachus maximus
 megalosaur
 megalosaurus
 megapode
+megaptera novaeangliae
 megathere
 megatherian
 megatherian mammal
 megatheriid
+melanerpes erythrocephalus
+melanitta nigra
+melanogrammus aeglefinus
+melanotis caerulescens
+meleagris gallopavo
+meles meles
+mellivora capensis
 meloid
+melolontha melolontha
 melolonthid beetle
+melophagus ovinus
+melopsittacus undulatus
+melospiza georgiana
+melospiza melodia
+melursus ursinus
 menhaden
+menippe mercenaria
+menominee whitefish
+menopon gallinae
+menopon palladum
+menticirrhus americanus
+menticirrhus littoralis
+menticirrhus saxatilis
+menticirrhus undulatus
+mephitis macroura
+mephitis mephitis
+mercenaria mercenaria
 merganser
+mergus albellus
+mergus merganser
+mergus merganser americanus
+mergus serrator
 merino
 merino sheep
+meriones longifrons
+meriones unguiculatus
 merl
+merlangus merlangus
 merle
 merlin
+merluccius bilinearis
+merostomata
+mesocricetus auratus
 mesohippus
 metabola
 metatherian
 metazoan
 mew
 mew gull
+mexican beaded lizard
+mexican bean beetle
+mexican freetail bat
+mexican hairless
+mexican pocket mouse
 microbat
+micromyx minutus
+micropogonias undulatus
+micropterus dolomieu
+micropterus pseudoplites
+micropterus salmoides
+microstomus kitt
+microtus ochrogaster
+microtus pennsylvaticus
+microtus richardsoni
+micruroides euryxanthus
+micrurus fulvius
 midge
 midwife toad
 mierkat
@@ -2533,10 +4348,14 @@ milking shorthorn
 milkweed butterfly
 millepede
 miller
+miller's-thumb
 milliped
 millipede
+milvus migrans
+mimus polyglotktos
 mina
 minah
+miner's cat
 miniature pinscher
 miniature poodle
 miniature schnauzer
@@ -2553,13 +4372,16 @@ mistletoe thrush
 mite
 mithan
 moa
+mobula hypostoma
 mocker
 mocking thrush
 mockingbird
 modern man
 mojarra
+mojave rattlesnake
 moke
 mola
+mola lanceolata
 mole
 mole cricket
 mole rat
@@ -2568,9 +4390,12 @@ mollie
 mollusc
 mollusk
 molly
+molly miller
 mollymawk
 moloch
+moloch horridus
 molter
+molva molva
 momot
 monal
 monarch
@@ -2585,8 +4410,14 @@ monkey
 monkey dog
 monkey pinscher
 monkfish
+monodon monoceros
+monomorium minimum
+monomorium pharaonis
+mononychus olecranus
+monoplane flying fish
 monotreme
 monster
+montagu's harrier
 moo-cow
 moon shell
 moonfish
@@ -2600,14 +4431,22 @@ moorhen
 moose
 moray
 moray eel
+morelia spilotes variegatus
+morgan
+morlett's crocodile
 mormon cricket
+morone americana
+morone interrupta
 morula
+moschus moschiferus
 mosquito
 mosquito hawk
 mosquitofish
 moss animal
 moth
 moth miller
+mother carey's chicken
+mother carey's hen
 mother hen
 motmot
 moufflon
@@ -2633,12 +4472,15 @@ mountain skink
 mountain viscacha
 mountain zebra
 mourning cloak
+mourning cloak butterfly
 mourning dove
 mouse
 mouse deer
 mouse hare
+mouse-eared bat
 mouser
 mouthbreeder
+mrigal
 mud dauber
 mud hen
 mud puppy
@@ -2647,15 +4489,30 @@ mudcat
 mudder
 mudskipper
 mudspringer
+mugger
+mugger crocodile
+mugil cephalus
+mugil curema
+mugil liza
 muishond
 mule
 mule deer
 mullet
+mulloidichthys martinicus
 mulloway
+mullus auratus
+mullus surmuletus
 mummichog
+munia
 muntjac
 murine
 murre
+mus musculus
+musca domestica
+muscardinus avellanarius
+muscicapa grisola
+muscicapa striata
+muscivora-forficata
 muscovy duck
 mushroom coral
 musk deer
@@ -2671,25 +4528,56 @@ musquash
 mussel
 mussel shrimp
 mustang
+mustela erminea
+mustela frenata
+mustela nigripes
+mustela nivalis
+mustela putorius
+mustela rixosa
+mustela vison
 mustelid
 musteline
 musteline mammal
+mustelus canis
+mustelus mustelus
+mustelus norrisi
 mutant
 mute swan
+mutillidae
 mutt
 mutton snapper
 muttonfish
+mya arenaria
+mycteria americana
+mycteroperca bonaci
 mylodon
 mylodontid
 myna
 myna bird
 mynah
 mynah bird
+myocastor coypus
+myotis leucifugus
+myotis velifer
 myriapod
+myrmecobius fasciatus
+myrmecophaga jubata
 myrtle bird
 myrtle warbler
 mytilid
+mytilus edulis
+myxine glutinosa
+myxinikela siroka
+myxocephalus aenaeus
+naemorhedus goral
 nag
+nail-tailed kangaroo
+nail-tailed wallaby
+naja haje
+naja hannah
+naja naja
+naja nigricollis
+naked mole rat
 nandu
 nanny
 nanny-goat
@@ -2698,24 +4586,67 @@ napu
 narwal
 narwhal
 narwhale
+nasalis larvatus
+nasua narica
 native bear
 native cat
+natrix maura
+natrix natrix
+natrix sipedon
 natterjack
+naucrates ductor
 nautilus
+neandertal
+neandertal man
+neanderthal
+neanderthal man
+necturus maculosus
 needlefish
+negaprion brevirostris
 nematode
 nematode worm
 nemertean
 nemertine
+neofiber alleni
+neomys anomalus
+neomys fodiens
+neophron percnopterus
+neotoma cinerea
+neotoma floridana
+neotoma fuscipes
+nephrops norvegicus
 nerita
+nerita peloronta
 neritid
 neritid gastropod
 neritina
+nerodia sipedon
 nester
 nestling
+nestor notabilis
 neuropteran
 neuropteron
 neuropterous insect
+neurotrichus gibbsii
+new world anteater
+new world beaver
+new world blackbird
+new world chat
+new world flycatcher
+new world goldfinch
+new world jay
+new world monkey
+new world mouse
+new world opah
+new world oriole
+new world porcupine
+new world sparrow
+new world tapir
+new world vulture
+new world warbler
+new zealand wren
+newfoundland
+newfoundland dog
 newt
 night bird
 night heron
@@ -2727,39 +4658,78 @@ nighthawk
 nightingale
 nightjar
 nightwalker
+nile crocodile
 nilgai
+nilgiri tahr
+nilkanth
+nine-banded armadillo
+no-see-um
 noctuid
 noctuid moth
+nomia melanderi
+non-avian dinosaur
 nonpasserine bird
 nonstarter
+norfolk terrier
 northern bobwhite
+northern bog lemming
+northern cricket frog
+northern flying squirrel
 northern harrier
+northern lobster
 northern mammoth
 northern oriole
 northern parula
 northern phalarope
 northern pike
+northern pocket gopher
 northern porgy
 northern scup
+northern sea robin
 northern shrike
 northern snakehead
+northern storm petrel
 northern whiting
+norway lobster
+norway rat
+norwegian elkhound
+norwich terrier
+notechis scutatus
+notemigonus crysoleucas
 nothosaur
+notonecta undulata
+notophthalmus viridescens
 notornis
+notornis mantelli
+notoryctus typhlops
+notropis atherinoides
+notropis cornutus
+nucifraga caryocatactes
+nucifraga columbiana
 nude mouse
 nudibranch
 numbat
 numbfish
+numenius arquata
+numenius borealis
+numida meleagris
 nurse shark
 nutcracker
 nuthatch
 nutria
 nyala
+nyctanassa violacea
+nyctereutes procyonides
+nycticebus pygmaeus
+nycticebus tardigradua
+nycticorax nycticorax
 nylghai
 nylghau
 nymph
 nymphalid
 nymphalid butterfly
+nymphalis antiopa
+nymphicus hollandicus
 oak blight
 oarfish
 obstetrical toad
@@ -2768,81 +4738,171 @@ ocean pout
 ocean sunfish
 oceanic bird
 oceanic bonito
+oceanic whitetip shark
+oceanites oceanicus
 ocellated turkey
 ocelot
+ochotona collaris
+ochotona princeps
 octopod
 octopus
+ocyurus chrysurus
+odd-toed ungulate
+odobenus divergens
+odobenus rosmarus
+odocoileus hemionus
+odocoileus virginianus
 odonate
+odontaspis taurus
+oecanthus fultoni
+oestrus ovis
 offspring
 oil beetle
 oilbird
 oilfish
 okapi
+okapia johnstoni
+old english sheepdog
 old squaw
+old world beaver
+old world buffalo
+old world chat
+old world coot
+old world crayfish
+old world flycatcher
+old world jay
+old world monkey
+old world oriole
+old world porcupine
+old world quail
+old world rabbit
+old world robin
+old world vulture
+old world warbler
 oldwench
 oldwife
 oligochaete
 oligochaete worm
 olive ridley
+olive ridley turtle
 olm
 olympic salamander
 ommastrephes
 omnivore
 onager
+oncorhynchus keta
+oncorhynchus kisutch
+oncorhynchus nerka
+oncorhynchus tshawytscha
+ondatra zibethica
+one-horned rhino
 onion louse
 onion thrips
 onychophoran
 opah
 openbill
+opheodrys aestivus
+opheodrys vernalis
 ophidian
+ophiodon elongatus
+ophiophagus hannah
+opisthocomus hoazin
 opossum
 opossum rat
 opossum shrimp
+opsanus tau
 orang
 orange bat
+orange horseshoe bat
 orange tortrix
 orangutan
 orangutang
+orb-weaving spider
 orca
 orchard oriole
+orcinus orca
+ord kangaroo rat
+order accipitriformes
+order ostariophysi
+oreamnos americanus
+orectolobus barbatus
+oreortyx picta palmeri
+oriental beetle
 oriental cockroach
 oriental roach
+oriental scops owl
 oriole
+oriole bird
+oriolus oriolus
 ormer
 ornithischian
 ornithischian dinosaur
 ornithomimid
 ornithopod
 ornithopod dinosaur
+ornithorhynchus anatinus
 orphan
+orpington
+orthopristis chrysopterus
 orthopteran
 orthopteron
 orthopterous insect
+orthotomus sutorius
+ortilis vetula macalli
 ortolan
 ortolan bunting
 ortygan
+orycteropus afer
+oryctolagus cuniculus
 oryx
+oryx gazella
+oryzomys palustris
 oscine
 oscine bird
+osmerus eperlanus
+osmerus mordax
 osprey
+osprey bird
+ostariophysi
 osteostracan
 ostracod
 ostracoderm
+ostrea gigas
 ostrich
+ostrich chick
+otaria byronia
+otis tarda
 otter
 otter hound
 otter shrew
 otterhound
+otus asio
+otus scops
+otus sunia
 ounce
 ousel
 ouzel
+ovalipes ocellatus
 ovenbird
+ovibos moschatus
 oviraptorid
+ovis ammon
+ovis aries
+ovis canadensis
+ovis montana dalli
+ovis musimon
+ovis poli
+ovis vignei
 owl
+owl monkey
 owlet
 owlet moth
 ox
 oxen
+oxpecker
+oxylebius pictus
+oxyura jamaicensis
+oxyuranus scutellatus
 oyster
 oyster catcher
 oyster crab
@@ -2857,42 +4917,91 @@ pacesetter
 pachycephalosaur
 pachycephalosaurus
 pachyderm
+pacific bonito
+pacific bottlenose dolphin
+pacific cod
+pacific giant salamander
+pacific halibut
+pacific herring
+pacific newt
+pacific ridley
+pacific sardine
+pacific spiny dogfish
+pacific sturgeon
+pacific tree toad
+pacific tripletail
+pacific walrus
 pack animal
 pack rat
 packhorse
 packrat
+padda oryzivora
 paddlefish
 paddymelon
 pademelon
+pagellus centrodontus
+pagophila eburnea
+pagophilus groenlandicus
+pagrus pagrus
 painted beauty
 painted greenling
 painted sandgrouse
+painted stork
 painted terrapin
 painted tortoise
 painted turtle
 painter
+palaemon australis
+pale chrysanthemum aphid
+paleacrita vernata
 palfrey
+pallas's cat
+pallas's sandgrouse
 pallid bat
 palm cat
 palm civet
+palm squirrel
 palometa
+palometa simillima
 palomino
+pan paniscus
+pan troglodytes
+pan troglodytes schweinfurthii
+pan troglodytes troglodytes
+pan troglodytes verus
 pancake turtle
 panda
 panda bear
+pandion haliaetus
 pangolin
+panonychus ulmi
 panther
 panther cat
+panthera leo
+panthera onca
+panthera pardus
+panthera tigris
+panthera uncia
 paper nautilus
 paper wasp
 papillon
+papio ursinus
+paprilus alepidotus
+paracheirodon axelrodi
 parakeet
+paralichthys dentatus
+paralichthys lethostigmus
+paralithodes camtschatica
+paranthias furcifer
+paranthropus
 paraquet
+parascalops breweri
 parasitic jaeger
 parasitic worm
 parazoan
 pariah dog
 parka squirrel
+parophrys vitulus
 paroquet
 parr
 parrakeet
@@ -2901,12 +5010,25 @@ parroquet
 parrot
 parrotfish
 partridge
+parula americana
 parula warbler
+parus atricapillus
+parus bicolor
+parus caeruleus
+parus carolinensis
 pasang
 passenger pigeon
+passer domesticus
+passer montanus
 passeriform bird
+passerina cyanea
 passerine
+pastor roseus
+pastor sturnus
 patas
+patella vulgata
+pavo cristatus
+pavo muticus
 pea crab
 pea weevil
 pea-chick
@@ -2921,70 +5043,145 @@ pearl-fish
 pearlfish
 pearly nautilus
 pearly razorfish
+pearly-shelled mussel
 peba
+peccari angulatus
 peccary
 peckerwood
+pecten irradians
+pecten magellanicus
 pectoral sandpiper
+pediculus capitis
+pediculus corporis
+pediculus humanus
+pedioecetes phasianellus
+pedionomus torquatus
 peeper
 peewee
 peewit
 pekan
+peke
+pekinese
+peking man
+pekingese
 pelagic bird
 pelecaniform seabird
+pelecanus erythrorhynchos
+pelecanus onocrotalus
 pelecypod
 pelican
 peludo
 pelycosaur
+pembroke
+pembroke welsh corgi
 pen
 pen-tail
 penguin
 pentail
 pentastomid
+perca flavescens
+perca fluviatilis
 perch
+percheron
+percina tanasi
 percoid
 percoid fish
 percoidean
+perdix perdix
+pere david's deer
 peregrine
 peregrine falcon
 periodical cicada
 peripatus
+periplaneta americana
+periplaneta australasiae
+perisoreus canadensis
 perissodactyl
 perissodactyl mammal
+peristedion miniatum
 periwinkle
 permit
+pernis apivorus
 pernyi moth
+perodicticus potto
+perognathus flavescens
+perognathus flavus
+perognathus hispidus
+peromyscus eremicus
+peromyscus gossypinus
+peromyscus leucopus
+peromyscus maniculatus
+persian cat
+persian lamb
 pest
 pet
+petaurista petaurista
 petchary
 petrel
+petromyzon marinus
 pewee
 pewit
 pewit gull
+pezophaps solitaria
+phalacrocorax carbo
+phalaenoptilus nuttallii
 phalanger
+phalangium opilio
 phalarope
+phalaropus fulicarius
 pharaoh ant
+pharaoh's ant
+pharaoh's chicken
+pharomacrus mocino
+phascolarctos cinereus
 phasianid
+phasianus colchicus
 phasmid
 phasmid insect
 pheasant
 pheasant coucal
 pheasant cuckoo
+pheasant-tailed jacana
 phenacomys
+philaenus spumarius
+philohela minor
+philomachus pugnax
+phlebotomus papatasii
+phoca vitulina
+phocoena phocoena
+phocoena sinus
 phoebe
 phoebe bird
+pholis gunnellus
 phoronid
+photoblepharon palpebratus
+phoxinus phoxinus
+phrynosoma cornutum
+phthirius pubis
+phthorimaea operculella
+phylloscopus sibilatrix
+phyllostomus hastatus
+phylloxera vitifoleae
 physa
+physeter catodon
+pica pica
+pica pica hudsonia
 pichiciago
 pichiciego
 piciform bird
 pickerel
 pickerel frog
 piculet
+picus viridis
 piddock
 pie-dog
 pied lemming
+pied-billed grebe
 pierid
 pierid butterfly
+pieris brassicae
+pieris protodice
+pieris rapae
 pig
 pigeon
 pigeon guillemot
@@ -3003,9 +5200,14 @@ pill bug
 pilot blacksnake
 pilot whale
 pilotfish
+pin-tailed duck
+pin-tailed grouse
+pin-tailed sandgrouse
 pinche
+pinctada margaritifera
 pine finch
 pine grosbeak
+pine leaf aphid
 pine lizard
 pine marten
 pine mouse
@@ -3014,75 +5216,125 @@ pine siskin
 pine snake
 pine spittlebug
 pine vole
+pineus pinifoliae
 pinfish
+pinguinus impennis
+pinicola enucleator
 pink bollworm
 pink cockatoo
 pinnatiped
 pinniped
 pinniped mammal
+pinnotheres ostreum
 pinscher
 pintado
 pintail
 pinto
 pinworm
+pipa americana
+pipa pipa
 pipefish
+pipilo erythrophthalmus
 piping crow
+piping crow-shrike
 piping guan
 piping plover
 pipistrel
 pipistrelle
+pipistrellus hesperus
+pipistrellus pipistrellus
+pipistrellus subflavus
 pipit
 pirana
+piranga flava hepatica
+piranga ludoviciana
+piranga olivacea
+piranga rubra
 piranha
 pisanosaur
 pisanosaurus
 pismire
 pistol shrimp
+pit bull terrier
 pit viper
+pithecanthropus
+pithecanthropus erectus
 pitta
+pituophis melanoleucus
+pitymys pinetorum
 placental
 placental mammal
 placoderm
+placuna placenta
 plaice
 plain turkey
 plain wanderer
+plains pocket gopher
+plains pocket mouse
 plains spadefoot
 planaria
 planarian
+planococcus citri
 plant bug
 plant hopper
 plant louse
+plantation walking horse
 planthopper
 plantigrade
 plantigrade mammal
 planula
+platalea leucorodia
+plateau striped whiptail
+platichthys flesus
 platy
 platyctenean
 platyhelminth
+platypoecilus maculatus
 platypus
 platyrrhine
 platyrrhinian
+plautus alle
 plecopteran
+plecotus townsendi
 plectognath
 plectognath fish
+plectophera
+plectrophenax nivalis
 plesiosaur
 plesiosaurus
+plethodon cinereus
+plethodon vehiculum
 plethodont
 pleurodont
+pleuronectes platessa
+plicatoperipatus jamaicensis
+ploceus philippinus
+plott hound
 plough horse
 plover
 plow horse
 plug
 plumed scorpionfish
+pluvianus aegyptius
+plymouth rock
 poacher
 pochard
 pocket gopher
 pocket mouse
 pocket rat
 pocketed bat
+pocketed freetail bat
+podiceps cristatus
+podiceps grisegena
+podiceps nigricollis
+podiceps ruficollis
 podicipitiform seabird
+podilymbus podiceps
 poeciliid
 poeciliid fish
+poecilocapsus lineatus
+poecilogale albinucha
+poephila castanotis
 pogge
 pogonophoran
 poikilotherm
@@ -3095,8 +5347,10 @@ polecat
 poler
 police dog
 policeman bird
+polistes annularis
 poll
 poll parrot
+pollachius pollachius
 pollack
 pollard
 pollinator
@@ -3106,25 +5360,43 @@ polly fish
 pollyfish
 pollywog
 polo pony
+polyborus cheriway audubonii
+polyborus plancus
 polychaete
 polychaete worm
 polychete
 polychete worm
+polydactylus virginicus
+polyergus rufescens
+polygonia comma
+polynesian tattler
+polyodon spathula
 polyp
 polyphemus moth
 polyplacophore
+polyprion americanus
 polyzoan
 pomace fly
+pomacentrus leucostictus
+pomatomus saltatrix
+pomeranian
 pomfret
+pomolobus pseudoharengus
+pomoxis annularis
+pomoxis nigromaculatus
 pompano
 pompon
+pond heron
 pond-skater
 pongid
+pongo pygmaeus
 pony
 pooch
 poodle
 poodle dog
+pooecetes gramineus
 poorwill
+popillia japonica
 popinjay
 porbeagle
 porcupine
@@ -3135,18 +5407,28 @@ poriferan
 pork-fish
 porker
 porkfish
+poronotus triacanthus
+porphyrio porphyrio
+porphyrula martinica
 porpoise
+portunus puber
+porzana porzana
 possum
 post horse
 post-horse
 poster
 potamogale
+potamogale velox
+potamophis striatula
 potato beetle
 potato bug
 potato moth
+potato tuber moth
 potato tuberworm
 potato worm
 potoroo
+potos caudivolvulus
+potos flavus
 potter bee
 potter wasp
 potto
@@ -3158,6 +5440,7 @@ poultry
 pout
 pouter
 pouter pigeon
+powder-post termite
 poyou
 prairie chicken
 prairie dog
@@ -3177,38 +5460,82 @@ praying mantid
 praying mantis
 predator
 predatory animal
+presbytes entellus
 prey
+priacanthus arenatus
 pricket
 prickleback
 primate
+priodontes giganteus
+prionace glauca
+prionotus carolinus
+pristis pectinatus
 proboscidean
 proboscidian
 proboscis monkey
 proboscis worm
+procavia capensis
+procellaria aequinoctialis
 procellariiform seabird
+prociphilus tessellatus
 proconsul
+procyon cancrivorus
+procyon lotor
 procyonid
+progne subis
 prongbuck
 pronghorn
 pronghorn antelope
 prosimian
+prosopium cylindraceum
+prosopium williamsonii
+proteles cristata
+proteus anguinus
 protoavis
 protoceratops
 protohippus
 protomammal
 prototherian
 proturan
+prunella modularis
+przevalski's horse
+przewalski's horse
+psephurus gladis
+psetta maxima
+psettichthys melanostichus
+pseudaletia unipuncta
+pseudechis porphyriacus
+pseudemys concinna
+pseudemys rubriventris
+pseudemys scripta
+pseudococcus comstocki
+pseudococcus fragilis
+pseudopleuronectes americanus
+pseudoryx nghetinhensis
 pseudoscorpion
 psittacosaur
 psittacosaurus
+psittacula krameri
+psittacus erithacus
 psocid
 psocopterous insect
+psophia crepitans
 psychodid
 psylla
 psyllid
 ptarmigan
+pternohyla fodiens
+pterocles alchata
+pterocles indicus
+pterocnemia pennata
 pterodactyl
+pteropus capestratus
+pteropus hypomelanus
 pterosaur
+ptilonorhynchus violaceus
+ptloris paradisea
+ptyas mucosus
+ptychozoon homalocephalum
 pubic louse
 pudding-wife
 puddingwife
@@ -3217,9 +5544,11 @@ puffbird
 puffer
 pufferfish
 puffin
+puffinus puffinus
 pug
 pug-dog
 puku
+pulex irritans
 pullet
 puma
 pumpkinseed
@@ -3236,6 +5565,8 @@ purple finch
 purple gallinule
 purple grackle
 purple martin
+purple sunbird
+purple swamphen
 puss
 pussycat
 pycnogonid
@@ -3243,10 +5574,22 @@ pye-dog
 pygmy chimpanzee
 pygmy marmoset
 pygmy mouse
+pygmy sperm whale
+pygoscelis adeliae
+pylodictus olivaris
 pyralid
 pyralid moth
+pyrausta nubilalis
+pyrocephalus rubinus mexicanus
+pyrophorus noctiluca
+pyrrhula pyrrhula
 pyrrhuloxia
+pyrrhuloxia sinuata
 python
+python molurus
+python reticulatus
+python sebae
+python variegatus
 quack-quack
 quadruped
 quagga
@@ -3257,15 +5600,18 @@ quarry
 quarter horse
 queen
 queen bee
+queen mole rat
 queen triggerfish
 queenfish
 quetzal
 quetzal bird
 quiaquia
 quinnat salmon
+quiscalus quiscula
 rabbit
 rabbit bandicoot
 rabbit ears
+rabbit-eared bandicoot
 rabbitfish
 raccoon
 raccoon dog
@@ -3275,6 +5621,7 @@ race runner
 racehorse
 racer
 racerunner
+rachycentron canadum
 racoon
 rail
 railroad worm
@@ -3286,9 +5633,28 @@ rainbow seaperch
 rainbow smelt
 rainbow trout
 raisin moth
+raja batis
+raja erinacea
+raja laevis
+raja radiata
 ram
+rambouillet
+rana cascadae
+rana catesbeiana
+rana clamitans
+rana goliath
+rana palustris
+rana pipiens
+rana sylvatica
+rana tarahumarae
+rana temporaria
 range animal
+rangifer arcticus
+rangifer caribou
+rangifer tarandus
 ranid
+raphicerus campestris
+raphus cucullatus
 raptor
 raptorial bird
 rasher
@@ -3305,16 +5671,20 @@ rattail fish
 ratter
 rattler
 rattlesnake
+rattus norvegicus
+rattus rattus
 raven
 ray
 razor clam
 razor fish
+razor-billed auk
 razor-fish
 razorback
 razorback hog
 razorbacked hog
 razorbill
 red admiral
+red ant
 red bat
 red coral
 red deer
@@ -3323,21 +5693,44 @@ red eft
 red fox
 red goatfish
 red grouse
+red jungle fowl
+red junglefowl
 red mullet
 red panda
 red phalarope
 red poll
 red porgy
+red rat snake
 red rockfish
 red salmon
 red setter
 red siskin
 red snapper
 red spider
+red spider mite
 red squirrel
 red underwing
 red wolf
 red worm
+red-backed lemming
+red-backed mouse
+red-backed sandpiper
+red-bellied snake
+red-bellied terrapin
+red-bellied turtle
+red-breasted merganser
+red-breasted nuthatch
+red-breasted sapsucker
+red-breasted snipe
+red-eyed vireo
+red-legged partridge
+red-necked grebe
+red-shafted flicker
+red-shouldered hawk
+red-spotted purple
+red-tailed hawk
+red-wattled lapwing
+red-winged blackbird
 redback vole
 redbelly
 redbird
@@ -3359,8 +5752,14 @@ redwing
 reed bunting
 reedbird
 reef squirrelfish
+reef whitetip shark
 reeve
+regalecus glesne
+regulus calendula
+regulus regulus
+regulus satrata
 reindeer
+remilegia australis
 remora
 remount
 reptile
@@ -3369,13 +5768,29 @@ requiem shark
 resplendent quetzel
 resplendent trogon
 reticulated python
+reticulitermes flanipes
+reticulitermes lucifugus
 retriever
+reynard
+rhagoletis pomonella
 rhea
+rhea americana
 rhesus
+rhesus macaque
 rhesus monkey
+rhincodon typus
 rhino
 rhinoceros
+rhinoceros antiquitatis
 rhinoceros beetle
+rhinoceros unicornis
+rhinonicteris aurantius
+rhinoptera bonasus
+rhode island red
+rhodesian man
+rhodesian ridgeback
+rhyacotriton olympicus
+rhynchoelaps australis
 ribbed toad
 ribbon snake
 ribbon worm
@@ -3383,6 +5798,9 @@ ribbonfish
 rice rat
 rice weevil
 ricebird
+richardson ground squirrel
+richardson vole
+richmondena cardinalis
 ridgel
 ridgeling
 ridgil
@@ -3398,6 +5816,11 @@ ring blackbird
 ring ouzel
 ring snake
 ring thrush
+ring-necked parakeet
+ring-necked pheasant
+ring-necked snake
+ring-tailed cat
+ring-tailed lemur
 ringdove
 ringed snake
 ringhals
@@ -3406,6 +5829,7 @@ ringlet butterfly
 ringneck snake
 ringtail
 rinkhals
+riparia riparia
 river cooter
 river dolphin
 river horse
@@ -3422,9 +5846,11 @@ robber fly
 robber frog
 robin
 robin redbreast
+roccus saxatilis
 rock barnacle
 rock bass
 rock beauty
+rock cornish
 rock crab
 rock dove
 rock gunnel
@@ -3438,17 +5864,26 @@ rock pigeon
 rock python
 rock rabbit
 rock rattlesnake
+rock sea bass
 rock snake
 rock squirrel
 rock sunfish
 rock wallaby
 rock wren
 rockchuck
+rocket-tailed drongo
 rockfish
+rocky mountain bighorn
+rocky mountain goat
+rocky mountain jay
+rocky mountain sheep
+rocky mountain whitefish
 rodent
+rodolia cardinalis
 roe deer
 roebuck
 rogue elephant
+rohu
 roller
 roof rat
 rook
@@ -3458,21 +5893,33 @@ rorqual
 rose beetle
 rose bug
 rose chafer
+rose-colored pastor
+rose-colored starling
+rose-ringed parakeet
 roseate spoonbill
+rosefinch
 rosefish
 rosy boa
 rotifer
+rottweiler
 rough fish
+rough green snake
+rough-legged hawk
+rough-skinned newt
 roughleg
 roughtail stingray
 round clam
 round scad
 round whitefish
+round-tailed muskrat
 roundworm
 rove beetle
 royal
+royal bengal tiger
 royal stag
 rubber boa
+ruby-crowned kinglet
+ruby-crowned wren
 rudapithecus
 rudd
 rudderfish
@@ -3482,12 +5929,22 @@ ruff
 ruffed grouse
 ruminant
 runner
+rupicapra rupicapra
+rupicola peruviana
+rupicola rupicola
+russell's viper
+russian wolfhound
 rust mite
 rusty blackbird
 rusty grackle
+rusty-spotted cat
+rutilus rutilus
+ruvettus pretiosus
+saber-toothed tiger
 sabertooth
 sable
 sable antelope
+sacramento sturgeon
 sacred ibis
 saddle horse
 saddle oyster
@@ -3496,20 +5953,44 @@ sage grouse
 sage hen
 sagebrush lizard
 sagitta
+sagittarius serpentarius
 saiga
+saiga tatarica
 sailfish
+sailor's-choice
 sailors choice
+saimiri sciureus
+saint bernard
 saki
 salamander
+salamandra atra
+salamandra maculosa
+salamandra salamandra
 salientian
+salmo gairdneri
+salmo salar
+salmo trutta
 salmon
 salmon trout
 salmonid
 salp
 salpa
+salpinctes obsoletus
+saltwater crocodile
+saluki
+salvelinus alpinus
+salvelinus fontinalis
+salvelinus namaycush
 sambar
+sambhar
 sambur
+samia cynthia
+samia walkeri
+samoyed
+samoyede
+san jose scale
 sand badger
+sand boa
 sand cat
 sand cricket
 sand dab
@@ -3538,61 +6019,108 @@ sandgrouse
 sandhopper
 sandpiper
 sanguinary ant
+santa gertrudis
 sapsucker
+saratoga spittlebug
+sarcophaga carnaria
+sarcophilus hariisi
 sarcoptid
+sarcorhamphus papa
+sarda chiliensis
+sarda sarda
+sardina pilchardus
 sardine
+sardinops caerulea
 sargassum fish
+sarus crane
 sassaby
 satin bird
 satin bowerbird
+saturnia pavonia
 saturniid
 saturniid moth
 saurel
 saurian
 saurischian
 saurischian dinosaur
+sauromalus obesus
 sauropod
 sauropod dinosaur
 saury
 sausage dog
 sausage hound
+saw-scaled viper
 sawbill
 sawfish
 sawfly
 sawyer
 sawyer beetle
+saxicola rubetra
+saxicola torquata
+sayornis phoebe
 scad
 scale insect
 scallop
 scaly anteater
+scaphiopus bombifrons
+scaphiopus hammondii
+scaphiopus multiplicatus
 scaphopod
 scarab
 scarabaean
 scarabaeid
 scarabaeid beetle
 scarabaeus
+scarabaeus sacer
+scardinius erythrophthalmus
 scarlet tanager
+scartella cristata
 scaup
 scaup duck
 scavenger
+sceloglaux albifacies
+sceloporus graciosus
+sceloporus occidentalis
+sceloporus undulatus
 schipperke
 schistosome
 schnauzer
 schoolmaster
 schrod
+sciaena antarctica
+sciaena aquila
 sciaenid
 sciaenid fish
+sciaenops ocellatus
 sciara
 sciarid
 scincid
 scincid lizard
 scissortail
 scissortailed flycatcher
+sciurus carolinensis
+sciurus griseus
+sciurus hudsonicus
+sciurus niger
+sciurus vulgaris
 scollop
+scolopax rusticola
+scolytus multistriatus
+scomber colias
+scomber japonicus
+scomber scombrus
+scomberesox saurus
+scomberomorus cavalla
+scomberomorus maculatus
+scomberomorus regalis
+scomberomorus sierra
 scombroid
 scombroid fish
 scooter
+scophthalmus aquosus
+scophthalmus rhombus
 scops owl
+scorpaena grandicornis
 scorpaenid
 scorpaenid fish
 scorpaenoid
@@ -3602,7 +6130,11 @@ scorpion fish
 scorpion fly
 scorpion shell
 scorpionfish
+scotch terrier
 scoter
+scottie
+scottish deerhound
+scottish terrier
 screamer
 screech owl
 scrod
@@ -3612,6 +6144,8 @@ scrub-bird
 scrubbird
 sculpin
 scup
+scutigera coleoptrata
+scutigerella immaculata
 scyphozoan
 sea anemone
 sea animal
@@ -3668,10 +6202,20 @@ seafowl
 seagull
 seahorse
 seal
+sealyham
+sealyham terrier
 searcher
 searcher beetle
 searobin
 seasnail
+sebastes caurinus
+sebastes marinus
+sebastes miniatus
+sebastes ruberrimus
+sebastodes caurinus
+sebastodes marinus
+sebastodes miniatus
+sebastodes ruberrimus
 secretary bird
 sedge bird
 sedge warbler
@@ -3680,24 +6224,42 @@ seed beetle
 seed oyster
 seed shrimp
 seed weevil
+seeing eye dog
+seer fish
 segmented worm
 sei whale
 seismosaur
+seiurus aurocapillus
+seizure-alert dog
 selachian
+selar crumenophthalmus
+selenarctos thibetanus
+selene setapinnis
+selene vomer
+semnopithecus entellus
+sennenhunde
 sergeant fish
 sergeant major
 seriema
 serin
+serinus canaria
+seriola dorsalis
+seriola grandis
+seriola zonata
+seriphus politus
 serotine
 serow
 serpent
 serpent star
 serranid
 serranid fish
+serranus subligarius
 sertularian
 serval
+setophaga ruticilla
 setter
 setting hen
+seventeen-year locust
 sewellel
 sewer rat
 sewing needle
@@ -3707,7 +6269,9 @@ shaft louse
 shanny
 shark
 sharksucker
+sharp-tailed grouse
 sharptail mola
+shasta salamander
 she-goat
 shearwater
 sheatfish
@@ -3727,6 +6291,12 @@ shelduck
 shell parakeet
 shellfish
 shepherd dog
+shetland
+shetland pony
+shetland sheep dog
+shetland sheepdog
+shih-tzu
+shikra
 shiner
 shipworm
 shire
@@ -3736,6 +6306,9 @@ shoebill
 shoebird
 shore bird
 shorebird
+short-horned grasshopper
+short-tailed shrew
+short-toed eagle
 shortfin mako
 shorthorn
 shorttail weasel
@@ -3751,19 +6324,30 @@ shrike
 shrimp
 shrimp-fish
 shrimpfish
+sialis lutaria
 siamang
+siamese
+siamese cat
+siberian husky
+side-blotched lizard
+side-striped jackal
 sidewinder
 sierra
+sigmodon hispidus
 sika
 sild
+silk moth
 silkworm
 silkworm moth
 silky anteater
+silky pocket mouse
 silky tamarin
 silky terrier
 silurid
 silurid fish
 siluriform fish
+silurus glanis
+silver carp
 silver fox
 silver hake
 silver jenny
@@ -3777,7 +6361,11 @@ silverside
 silversides
 silverspot
 silvertip
+silvia atricapilla
 simian
+sinanthropus
+singhara
+sinornis
 siphonophore
 sipunculid
 sire
@@ -3785,7 +6373,17 @@ siren
 sirenian
 sirenian mammal
 siskin
+sistrurus catenatus
+sistrurus miliaris
+sitophylus oryzae
+sitotroga cerealella
+sitta canadensis
+sitta carolinensis
+sitta europaea
 sitter
+sivapithecus
+six-gilled shark
+six-lined racerunner
 skate
 skeeter hawk
 skeleton shrimp
@@ -3798,16 +6396,20 @@ skipjack tuna
 skua
 skunk
 skunk bear
+skye terrier
 skylark
+slate-colored junco
 slater
 slave ant
 slave-maker
+slave-making ant
 sled dog
 sledge dog
 sleeper
 sleeper goby
 slender loris
 slender salamander
+slender-tailed meerkat
 sleuthhound
 slider
 slime eels
@@ -3817,17 +6419,25 @@ slow loris
 slowworm
 slug
 small civet
+small game
+small indian civet
+small livestock
 small white
 smalleye hammerhead
 smallmouth
 smallmouth bass
+smallmouth black bass
 smallmouthed bass
+smallmouthed black bass
 smalltooth sawfish
 smelt
 smew
+smiledon californicus
 smooth dogfish
+smooth green snake
 smooth hammerhead
 smooth softshell
+smooth-coated otter
 smoothhound
 smoothhound shark
 snail
@@ -3856,17 +6466,24 @@ snow bunting
 snow goose
 snow leopard
 snowbird
+snowcock
 snowflake
 snowshoe hare
 snowshoe rabbit
 snowy egret
 snowy heron
+snowy tree cricket
 soapfish
 social insect
 sockeye
 sockeye salmon
 soft scale
 soft tick
+soft-finned fish
+soft-shell clam
+soft-shell crab
+soft-shelled crab
+soft-shelled turtle
 solan
 solan goose
 solant goose
@@ -3874,19 +6491,33 @@ soldier
 soldier-fish
 soldierfish
 sole
+solea lascaris
+solea solea
 solenogaster
 solitaire
 solitary vireo
+solo man
 song sparrow
 song thrush
 songbird
 songster
+sonora semiannulata
+sonoran lyre snake
+sonoran whipsnake
+sorex araneus
+sorex cinereus
+sorex palustris
 sorrel
 soup-fin
 soupfin
 soupfin shark
 souslik
+south american bullfrog
+southeastern pocket gopher
+southern bog lemming
+southern cabbage butterfly
 southern flounder
+southern flying squirrel
 southern porgy
 southern scup
 southern spadefoot
@@ -3897,11 +6528,16 @@ spadefish
 spadefoot
 spadefoot toad
 spaniel
+spanish fly
+spanish grunt
+spanish mackerel
+spanish pointer
 sparid
 sparid fish
 sparling
 sparrow
 sparrow hawk
+sparrowhawk
 spat
 spawner
 spearfish
@@ -3909,31 +6545,54 @@ spearnose bat
 speckled rattlesnake
 speckled trout
 spectacled caiman
+spectacled cobra
 sperm whale
 spermophile
+sphecius speciosis
 sphecoid
 sphecoid wasp
 sphenisciform seabird
+spheniscus demersus
+sphenodon punctatum
 sphingid
 sphinx moth
+sphyraena barracuda
+sphyrapicus varius
+sphyrapicus varius ruber
+sphyrna tiburo
+sphyrna tudes
+sphyrna zygaena
 spider
 spider crab
 spider mite
 spider monkey
+spilogale putorius
 spindle horn
+spinus pinus
+spinus tristis
 spiny anteater
 spiny dogfish
 spiny lizard
 spiny lobster
 spiny puffer
 spiny softshell
+spiny-finned fish
+spiny-headed worm
+spipistrellus hesperus
+spirit animal
 spirula
+spirula peronii
 spitting cobra
 spitting snake
 spittle insect
 spittlebug
 spitz
+spizella arborea
+spizella passerina
+spizella pusilla
 splitworm
+spodoptera exigua
+spodoptera frugiperda
 sponge
 spongefly
 spongillafly
@@ -3941,16 +6600,23 @@ spoonbill
 spoonbill catfish
 sport fish
 sporting dog
+spot-billed pelican
 spotted antbird
 spotted bat
+spotted black bass
 spotted crake
+spotted deer
+spotted dove
+spotted eagle ray
 spotted flycatcher
 spotted hyena
 spotted lynx
 spotted owl
+spotted owlet
 spotted ray
 spotted salamander
 spotted sandpiper
+spotted sea trout
 spotted skunk
 spotted squeateague
 spotted sunfish
@@ -3969,21 +6635,32 @@ springer
 springer spaniel
 springing cow
 springtail
+spruce bark beetle
+spruce gall aphid
 spruce grouse
 spruce squirrel
 squab
+squalus acanthias
+squalus suckleyi
+squareflipper square flipper
 squaretail
 squash bug
+squatina squatina
 squealer
 squid
 squilla
 squirrel
 squirrel monkey
 squirrelfish
+st bernard
 stable companion
 stablemate
+staffordshire bull terrier
+staffordshire bullterrier
+staffordshire terrier
 stag
 stag beetle
+stag's-horn coral
 staghorn coral
 staghound
 stake driver
@@ -3991,6 +6668,8 @@ stalking-horse
 stallion
 standard poodle
 standard schnauzer
+star tortoise
+star-nosed mole
 starfish
 stargazer
 starling
@@ -4000,19 +6679,33 @@ staurikosaurus
 stayer
 steamer
 steamer clam
+steatornis caripensis
 steed
 steenbok
 steeplechaser
 steer
+steganopus tricolor
 stegosaur
+stegosaur stenops
 stegosaurus
 steinbok
+stellar's sea eagle
+steller sea lion
+steller's sea cow
+steller's sea lion
+stenopelmatus fuscus
 stenopterygius
+stenopterygius quadrisicissus
+stenotomus aculeatus
+stenotomus chrysops
 stepper
+stercorarius parasiticus
+sterna hirundo
 stick insect
 stickleback
 sticktight
 sticktight flea
+stictopelia cuneata
 stilt
 stilt plover
 stiltbird
@@ -4022,6 +6715,7 @@ stinkbird
 stinkpot
 stint
 stirk
+stizostedion vitreum
 stoat
 stock
 stocker
@@ -4036,13 +6730,17 @@ stonechat
 stonefish
 stonefly
 stony coral
+storeria occipitamaculata
 stork
 storm petrel
 stormy petrel
 strand wolf
 strawworm
 stray
+streptopelia risoria
+streptopelia turtur
 striped bass
+striped button quail
 striped drum
 striped hyena
 striped killifish
@@ -4053,31 +6751,46 @@ striped racer
 striped skunk
 striped squirrel
 striper
+strix aluco
+strix nebulosa
+strix occidentalis
+strix varia
+strizostedion vitreum glaucum
 stromateid
 stromateid fish
+strombus gigas
+struthio camelus
 struthiomimus
+strymon melinus
 stud
 stud mare
 studhorse
 stumpknocker
 stunt
 sturgeon
+sturnella magna
+sturnella neglecta
+sturnus vulgaris
 styracosaur
 styracosaurus
+subclass diapsida
 sucker
 suckerfish
 sucking fish
 sucking louse
 sucking pig
 suckling
+sula bassana
 sulfur bottom
 sulfur butterfly
 sulphur butterfly
+sulphur-crested cockatoo
 summer duck
 summer flounder
 summer redbird
 summer tanager
 sumpter
+sunbird
 sunfish
 superbug
 superslasher
@@ -4086,30 +6799,59 @@ surfbird
 surffish
 surfperch
 surgeonfish
+suricata suricatta
+suricata tetradactyla
 suricate
+surinam toad
 surmullet
+surnia ulula
 survivor
+sus scrofa
 suslik
+sussex spaniel
 swallow
 swallow shrike
+swallow-tailed hawk
+swallow-tailed kite
+swamp deer
 swamp hare
 swamp rabbit
 swamp sparrow
 swamphen
 swan
 sweeper
+sweet-potato whitefly
 swift
 swiftlet
 swimming crab
 swine
 swordfish
 swordtail
+sydney silky
+sylvia communis
+sylvia curruca
+sylvilagus aquaticus
+sylvilagus floridanus
+sylvilagus palustris
+symbion pandora
+symphalangus syndactylus
 symphilid
+synagrops bellus
+synanceja verrucosa
 synapsid
 synapsid reptile
+synaptomys borealis
+synaptomys cooperi
+synercus caffer
+syngnathus hildebrandi
+syrian bear
+syrian hamster
+syrrhaptes paradoxus
 tabby
 tabby cat
 tachina fly
+tadarida brasiliensis
+tadirida femorosacca
 tadpole
 tadpole shrimp
 taenia
@@ -4125,28 +6867,51 @@ takin
 talapoin
 tamandu
 tamandua
+tamandua tetradactyla
 tamanoir
 tamarao
 tamarau
 tamarin
 tamarisk gerbil
+tamias striatus
+tamiasciurus douglasi
+tamiasciurus hudsonicus
 tanager
 tapestry moth
 tapeworm
 tapir
+tapirus indicus
+tapirus terrestris
 tarahumara frog
 tarantula
 tardigrade
+taricha granulosa
+taricha torosa
+tarnished plant bug
 tarpan
 tarpon
+tarpon atlanticus
 tarsier
+tarsius glis
+tarsius syrichta
+tasmanian devil
+tasmanian tiger
+tasmanian wolf
 tatou
 tatouay
 tattler
 tatu
+taurotragus derbianus
+taurotragus oryx
 tautog
+tautoga onitis
+tautogolabrus adspersus
 tawny eagle
 tawny owl
+taxidea taxus
+tayassu angulatus
+tayassu pecari
+tayassu tajacu
 tayra
 tea tortrix
 teal
@@ -4158,12 +6923,17 @@ teleost
 teleost fish
 teleostan
 telsontail
+ten-spined stickleback
 tench
 tendrac
 tenebrionid
+tennessee walker
+tennessee walking horse
 tenpounder
 tenrec
+tenrec ecaudatus
 tent caterpillar
+tent-caterpillar moth
 teras
 tercel
 tercelet
@@ -4171,20 +6941,40 @@ teredinid
 teredo
 termite
 tern
+terrapene ornata
 terrapin
 terrier
+testudo graeca
 tetra
 tetranychid
+tetrao urogallus
 tetrapod
 tettigoniid
+texas armadillo
+texas chachalaca
+texas horned lizard
+texas longhorn
+texas toad
+texas tortoise
+thalarctos maritimus
+thalassoma bifasciatum
+thamnophis proximus
+thamnophis sauritus
+thamnophis sirtalis
 thecodont
 thecodont reptile
 therapsid
 theridiid
+thermobia domestica
 theropod
 theropod dinosaur
+thick-billed murre
 thick-knee
 thickhead
+thin-shelled mussel
+thomomys bottae
+thomomys talpoides
+thomson's gazelle
 thornbill
 thorny skate
 thoroughbred
@@ -4193,22 +6983,37 @@ thread-fish
 threadfin
 threadfish
 threadworm
+three year old
+three-banded armadillo
+three-spined stickleback
+three-toed sloth
 thresher
 thresher shark
+threskiornis aethiopica
 thrip
 thripid
 thrips
+thrips tobaci
 throstle
 thrush
 thrush nightingale
+thryothorus ludovicianus
 thunder lizard
 thunder snake
+thunnus alalunga
+thunnus albacares
+thunnus thynnus
 thylacine
+thylacinus cynocephalus
 thysanopter
 thysanopteron
 thysanopterous insect
 thysanuran insect
 thysanuron
+tibetan mastiff
+tibetan terrier
+tibetan wolf
+tichodroma muriaria
 tichodrome
 tick
 tiercel
@@ -4225,15 +7030,20 @@ tiger snake
 tiglon
 tigon
 tigress
+tilapia
+tilapia nilotica
 tilefish
 timber rattlesnake
 timber wolf
 timucu
 tinamou
+tinca tinca
+tinea pellionella
 tineid
 tineid moth
 tineoid
 tineoid moth
+tineola bisselliella
 tinker
 titanosaur
 titanosaurian
@@ -4249,12 +7059,14 @@ tobacco hornworm
 tobacco moth
 tobacco thrips
 tody
+tolypeutes tricinctus
 tom
 tom turkey
 tomato fruitworm
 tomato hornworm
 tomato worm
 tomcat
+tomistoma schlegeli
 tomtate
 tomtit
 tongue worm
@@ -4278,16 +7090,35 @@ tortrix
 toucan
 toucanet
 touraco
+tow-headed snake
 towhee
+toxostoma rufums
+toxotes jaculatrix
 toy
 toy dog
+toy manchester
+toy manchester terrier
 toy poodle
 toy spaniel
 toy terrier
+trachinotus carolinus
+trachinotus falcatus
+trachipterus arcticus
 trachodon
 trachodont
+trachurus symmetricus
+trachurus trachurus
 trade rat
+tragelaphus angasi
+tragelaphus buxtoni
+tragelaphus eurycerus
+tragelaphus imberbis
+tragelaphus scriptus
+tragelaphus strepsiceros
 tragopan
+tragulus javanicus
+tragulus kanchil
+trap-door spider
 tree creeper
 tree cricket
 tree frog
@@ -4304,24 +7135,49 @@ tree toad
 tree wallaby
 tree-frog
 treehopper
+treepie
 trematode
 trematode worm
 trepang
+triaenodon obseus
+trialeurodes vaporariorum
 triceratops
+trichechus manatus
 trichina
+trichinella spiralis
+trichoglossus moluccanus
+trichophaga tapetzella
 trichopteran
 trichopteron
 trichopterous insect
+trichosurus vulpecula
+trichys lipura
+tridacna gigas
 triggerfish
+trigla lucerna
 trilobite
+trimorphodon lambda
+trinectes maculatus
+tringa flavipes
+tringa melanoleuca
+tringa nebularia
+tringa totanus
+trinil man
+trionyx muticus
+trionyx spiniferus
 tripletail
 triton
+triturus vulgaris
+trogium pulsatorium
+troglodytes aedon
+troglodytes troglodytes
 trogon
 trombiculid
 trombidiid
 tropic bird
 tropical prawn
 tropicbird
+tropidoclonion lineatum
 trotter
 trotting horse
 trout
@@ -4334,6 +7190,7 @@ true marmoset
 true seal
 true sparrow
 true toad
+true vampire bat
 true warbler
 trumpeter
 trumpeter swan
@@ -4344,6 +7201,7 @@ tsetse fly
 tsine
 tuatara
 tub gurnard
+tube-nosed bat
 tufted puffin
 tufted titmouse
 tumblebug
@@ -4351,17 +7209,30 @@ tumbler
 tumbler pigeon
 tuna
 tundra swan
+tunga penetrans
 tunicate
 tunny
 tup
 turaco
 turacou
 turakoo
+turbatrix aceti
 turbot
+turdus greyi
+turdus iliacus
+turdus merula
+turdus migratorius
+turdus philomelos
+turdus pilaris
+turdus torquatus
+turdus viscivorus
 turkey
 turkey buzzard
 turkey vulture
+turnix sylvatica
 turnstone
+tursiops gilli
+tursiops truncatus
 turtle
 turtledove
 tusk shell
@@ -4374,36 +7245,76 @@ tussock moth
 tussore
 tussur
 twitterer
+two year old
+two-spotted ladybug
+two-toed anteater
+two-toed sloth
+two-winged insects
+tylenchus tritici
+tympanuchus cupido
+tympanuchus cupido cupido
+tympanuchus pallidicinctus
 typical jerboa
 tyrannid
 tyrannosaur
 tyrannosaurus
+tyrannosaurus rex
+tyrannus tyrannus
+tyrannus vociferans
 tyrant bird
 tyrant flycatcher
+tyto alba
 tzetze
 tzetze fly
 uakari
 uintathere
+uma notata
 umbrella bird
+umbrina roncador
 unai
 unau
 underwing
+unguiculata
 unguiculate
 unguiculate mammal
+ungulata
 ungulate
 univalve
 upland plover
 upland sandpiper
+upupa epops
+uria aalge
+uria lomvia
 urial
 urochord
 urochordate
+urocyon cinereoargenteus
 urodele
+uropsilus soricipes
+urosaurus ornatus
 ursine dasyure
+ursus americanus
+ursus arctos
+ursus arctos horribilis
+ursus arctos middendorffi
+ursus arctos syriacus
+ursus horribilis
+ursus maritimus
+ursus middendorffi
+ursus thibetanus
+ursus ursinus
 urus
+uta stansburiana
 utahraptor
+valley pocket gopher
 vampire bat
+vanessa atalanta
+vanessa virginiensis
 vaquita
 varan
+varanus komodoensis
+varanus niloticus
+varied lorikeet
 varment
 varmint
 varying hare
@@ -4413,6 +7324,9 @@ velociraptor
 velvet ant
 velvet worm
 venomous lizard
+venus mercenaria
+venus's flower basket
+venus's girdle
 verdin
 vermillion flycatcher
 vermillion rockfish
@@ -4420,14 +7334,20 @@ vermin
 vertebrate
 vervet
 vervet monkey
+vespa crabro
 vesper mouse
 vesper sparrow
 vespertilian bat
+vespertilio murinus
 vespertilionid
 vespid
 vespid wasp
+vespula maculata
+vespula maculifrons
+vespula vulgaris
 vetchworm
 viceroy
+vicugna vicugna
 vicuna
 vine snake
 vinegar eel
@@ -4435,19 +7355,39 @@ vinegar fly
 vinegar worm
 vinegarroon
 viper
+vipera aspis
+vipera berus
+viperine grass snake
 vireo
+vireo olivaceous
+vireo solitarius
+vireo solitarius solitarius
+virginia deer
+virginia oyster
 viscacha
+viverra zibetha
+viverricula indica
+viverricula malaccensis
 viverrine
 viverrine mammal
 viviparous eelpout
 vixen
 vizsla
 vole
+vulpes fulva
+vulpes macrotis
+vulpes velox
+vulpes vulpes
+vultur gryphus
 vulture
 wader
 wading bird
 wagtail
+wagtail bird
 wahoo
+walker foxhound
+walker hound
+walking horse
 walking leaf
 walking stick
 walkingstick
@@ -4470,6 +7410,7 @@ water beetle
 water bird
 water boatman
 water buffalo
+water buffalo bull
 water bug
 water chevrotain
 water deer
@@ -4499,23 +7440,46 @@ waxwing
 weakfish
 weasel
 weaver
+weaver ant
+weaver bird
 weaver finch
 weaverbird
 web spinner
+web-spinning mite
+web-toed salamander
+webbing clothes moth
 webbing moth
 webworm
 webworm moth
 weevil
+weimaraner
 weka
+welsh
+welsh black
+welsh corgi
+welsh pony
+welsh springer spaniel
+welsh terrier
+western blind snake
+western box turtle
 western chimpanzee
+western coral snake
+western diamondback
+western fence lizard
+western gray squirrel
+western grey squirrel
 western kingbird
+western lowland gorilla
 western meadowlark
 western pipistrel
+western rattlesnake
+western ribbon snake
 western skink
 western spadefoot
 western tanager
 western toad
 western whiptail
+western wood pewee
 wether
 whale
 whale louse
@@ -4548,8 +7512,10 @@ whiptail lizard
 whirligig beetle
 whisker jack
 whistler
+whistling duck
 whistling marmot
 whistling swan
+whistling thrush
 white admiral
 white ant
 white crappie
@@ -4568,13 +7534,31 @@ white sturgeon
 white tail
 white whale
 white wolf
+white-bellied swallow
+white-breasted nuthatch
+white-chinned petrel
+white-crowned sparrow
+white-faced hornet
+white-footed mouse
+white-headed stilt
+white-lipped peccary
+white-rumped shrike
+white-rumped vulture
+white-tailed deer
+white-tailed jackrabbit
+white-tailed kite
+white-throated kingfisher
+white-throated sparrow
+white-tipped shark
 whitebait
 whiteface
 whitefish
 whitefly
 whitetail
+whitetail antelope squirrel
 whitetail deer
 whitetail jackrabbit
+whitetail prairie dog
 whitethroat
 whitetip shark
 whiting
@@ -4585,9 +7569,11 @@ whooping crane
 whydah
 widgeon
 widow bird
+widowbird
 wigeon
 wiggler
 wild boar
+wild buffalo
 wild cavy
 wild dog
 wild duck
@@ -4599,12 +7585,19 @@ wild wilkworm
 wildcat
 wildebeest
 willet
+wilson's blackcap
+wilson's phalarope
+wilson's snipe
+wilson's thrush
+wilson's warbler
+wilsonia pusilla
 window oyster
 windowpane
 windowpane oyster
 winkle
 winter flounder
 winter wren
+wire-haired terrier
 wirehair
 wirehaired terrier
 wireworm
@@ -4651,11 +7644,16 @@ woodlouse
 woodpecker
 woodworm
 woolly adelgid
+woolly alder aphid
 woolly aphid
+woolly apple aphid
 woolly bear
+woolly bear caterpillar
+woolly bear moth
 woolly indris
 woolly mammoth
 woolly monkey
+woolly plant louse
 woolly rhinoceros
 work animal
 worker
@@ -4675,7 +7673,17 @@ wren warbler
 wriggler
 wrymouth
 wryneck
+xenicus gilviventris
+xenopus laevis
+xenorhyncus asiaticus
+xestobium rufovillosum
+xiphias gladius
+xiphosurus polyphemus
+xyphophorus helleri
+yabby
 yak
+yak calf
+yapok
 yearling
 yellow bass
 yellow bunting
@@ -4686,6 +7694,14 @@ yellow jack
 yellow jacket
 yellow perch
 yellow warbler
+yellow-bellied marmot
+yellow-bellied sapsucker
+yellow-bellied terrapin
+yellow-breasted bunting
+yellow-breasted chat
+yellow-fever mosquito
+yellow-shafted flicker
+yellow-throated marten
 yellowbelly marmot
 yellowbird
 yellowfin
@@ -4698,15 +7714,30 @@ yellowtail
 yellowtail flounder
 yellowtail snapper
 yellowthroat
+yeti crab
+yorkshire terrier
+yosemite toad
 young
 young bird
 young carnivore
 young fish
 young mammal
+yucca moth
+zalophus californianus
+zalophus californicus
+zalophus lobatus
+zapus hudsonius
 zebra
 zebra finch
 zebra mussel
+zebra-tailed lizard
 zebu
+zenaidura macroura
+zeus faber
+zinjanthropus
+zoarces viviparus
+zonotrichia albicollis
+zonotrichia leucophrys
 zoophyte
 zooplankton
 zoril

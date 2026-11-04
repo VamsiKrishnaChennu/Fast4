@@ -76,6 +76,19 @@ describe('names, places and animals through Wikidata', () => {
     expect(net.calls[1].url.searchParams.get('query')).toContain('Q2221906');
   });
 
+  test('spaces and hyphens are ignored: "tamilnadu" matches the label "Tamil Nadu"', async () => {
+    const net = internet({
+      search: () => json({ search: [hit('Q1445', 'Tamil Nadu'), hit('Q9', 'Tamil Nadu Tourism')] }),
+      sparql: yes,
+    });
+    expect(await judge(net).check('place', 'tamilnadu')).toEqual({
+      result: 'valid',
+      source: 'wikidata',
+    });
+    expect(net.calls[1].url.searchParams.get('query')).toContain('wd:Q1445');
+    expect(net.calls[1].url.searchParams.get('query')).not.toContain('wd:Q9 ');
+  });
+
   test('a place name that only a person has is invalid', async () => {
     const net = internet({ search: () => json({ search: [hit('Q4', 'Maya')] }) });
     expect(await judge(net).check('place', 'maya')).toMatchObject({ result: 'invalid' });

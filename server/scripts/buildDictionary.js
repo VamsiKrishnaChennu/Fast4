@@ -1,21 +1,54 @@
 /* Builds server/data/dictionary/{names,places,animals,things}.txt.
    Run on a machine with internet access: npm run dictionary:build
-   Every online source is optional; the script reports what it used and falls back to the curated lists. */
+
+   Options
+     --allow-fallback         carry on when SSA, Wikidata or WordNet gave nothing (the lists then come
+                              from the curated starter files only)
+     --only=names,places      rebuild only some lists (the sources document is not updated)
+     --refresh                ignore the cached Wikidata answers in downloads/wikidata
+     --no-wikidata-things     leave the Wikidata object classes out of things
+     --accept-large-places    write places.txt even when it is over 15 MB
+
+   Sources are listed in docs/DICTIONARY_SOURCES.md. Downloads are cached in
+   server/data/dictionary/downloads (not committed). */
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { normalizeAnswer } from '@fastfour/shared';
 import { parseBlocklist } from './lib/blocklist.js';
+import { composeList, emptyRequiredSources } from './lib/compose.js';
+import { loadOewn } from './lib/oewn.js';
 import { createProfanityCheck } from './lib/profanity.js';
-import { descendants, lemmasOf, loadWordnet } from './lib/wordnet.js';
-import { fetchNltkNames, fetchSsaNames, fetchWikidataPlaces } from './lib/sources.js';
+import { formatTable, writeTable } from './lib/report.js';
+import { selectAnimalsAndThings } from './lib/selection.js';
+import { ensureOewn, fetchNltkNames, fetchSsaNames } from './lib/sources.js';
+import {
+  createWikidataClient,
+  fetchWikidataAnimals,
+  fetchWikidataNames,
+  fetchWikidataPlaces,
+  fetchWikidataThings,
+} from './lib/wikidata.js';
+import { loadWordnet } from './lib/wordnet.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(here, '..', 'data', 'dictionary');
+const DOWNLOADS = path.join(OUT, 'downloads');
+const SOURCES_DOC = path.join(here, '..', '..', 'docs', 'DICTIONARY_SOURCES.md');
+const MAX_PLACES_BYTES = 15_000_000;
 const require = createRequire(import.meta.url);
-const isProfane = createProfanityCheck();
+
+const args = process.argv.slice(2);
+const has = (flag) => args.includes(flag);
+const only = args
+  .find((a) => a.startsWith('--only='))
+  ?.slice(7)
+  .split(',');
+const wants = (category) => !only || only.includes(category);
+const allowFallback = has('--allow-fallback');
 const log = (message) => process.stdout.write(`${message}\n`);
+
+const isProfane = createProfanityCheck();
 
 /** Reads a curated list: new lines or commas separate entries, lines starting with # are notes. */
 async function starter(file) {
@@ -28,87 +61,236 @@ async function starter(file) {
     .filter(Boolean);
 }
 
-async function attempt(label, fn) {
+/** Runs one source. A failure is recorded, not thrown, so the report can show every source at once. */
+async function attempt(source, fn, extra = {}) {
   try {
-    const result = await fn();
-    log(`  ${label}: ${result.length} entries`);
-    return result;
+    const labels = await fn();
+    log(`  ${source}: ${labels.length} entries`);
+    return { source, labels, ...extra };
   } catch (err) {
-    log(`  ${label}: not available (${err.message})`);
-    return [];
+    log(`  ${source}: NOT AVAILABLE (${err.message})`);
+    return { source, labels: [], error: err.message, ...extra };
   }
 }
 
-function clean(words) {
-  const out = new Set();
-  for (const word of words) {
-    const normalized = normalizeAnswer(word);
-    if (normalized.length < 2 || normalized.length > 30) continue;
-    if (isProfane(normalized)) continue;
-    out.add(normalized);
-  }
-  return [...out].sort();
-}
+const flatten = (parts) => parts.flatMap((part) => part.labels);
+const wikidataParts = (parts) =>
+  parts
+    .filter((p) => !p.skipped)
+    .map((p) => `${p.name} ${p.labels.length}${p.complete === false ? ' INCOMPLETE' : ''}`)
+    .join(', ');
+const phrase = (min, max) => (label) =>
+  new RegExp(`^[A-Za-z]+(?:[ -][A-Za-z]+){${min},${max}}$`).test(label) ||
+  (min === 0 && /^[A-Za-z]+$/.test(label));
 
-async function write(file, words) {
-  await writeFile(path.join(OUT, file), `${words.join('\n')}\n`);
-  log(`${file}: ${words.length} words`);
-}
-
-await mkdir(OUT, { recursive: true });
+await mkdir(DOWNLOADS, { recursive: true });
 const blockedWords = parseBlocklist(
   await readFile(path.join(OUT, 'starter', 'blocked.txt'), 'utf8'),
 );
+const client = createWikidataClient({
+  cacheDir: path.join(DOWNLOADS, 'wikidata'),
+  log,
+  refresh: has('--refresh'),
+});
 
-log('Names');
-const ssa = await attempt('SSA baby names', () => fetchSsaNames());
-const nltk = await attempt('NLTK names list', fetchNltkNames);
-const names = clean([...ssa, ...nltk, ...(await starter('names.txt'))]);
-await write(
-  'names.txt',
-  names.filter((w) => !blockedWords.name.has(w)),
-);
+const lists = {};
 
-log('Places');
-const countries = require('world-countries');
-const countryNames = countries.flatMap((c) => [c.name.common, ...(c.capital ?? [])]);
-log(`  world-countries: ${countryNames.length} entries`);
-const wikidata = await attempt('Wikidata places', () => fetchWikidataPlaces(log));
-const places = clean([...countryNames, ...wikidata, ...(await starter('places.txt'))]);
-await write(
-  'places.txt',
-  places.filter((w) => !blockedWords.place.has(w)),
-);
+if (wants('names')) {
+  log('Names');
+  lists.names = composeList({
+    category: 'name',
+    isProfane,
+    blocked: blockedWords.name,
+    contributions: [
+      await attempt(
+        'SSA baby names',
+        () => fetchSsaNames({ downloadsDir: DOWNLOADS, minCount: 50, log }),
+        { required: true },
+      ),
+      await attempt('NLTK names list', fetchNltkNames),
+      await (async () => {
+        let parts = [];
+        const result = await attempt(
+          'Wikidata given names',
+          async () => {
+            parts = await fetchWikidataNames(client, log);
+            return flatten(parts);
+          },
+          { required: true },
+        );
+        if (parts.length) log(`    ${wikidataParts(parts)}`);
+        return result;
+      })(),
+      await attempt('Curated (starter/names.txt)', () => starter('names.txt')),
+    ],
+  });
+}
 
-log('Animals and things (WordNet)');
-const dictDir = path.join(path.dirname(require.resolve('wordnet-db/package.json')), 'dict');
-const { graph, root } = await loadWordnet(dictDir);
-const animalSet = descendants(graph, root('animal'));
-const animalLemmas = lemmasOf(graph, animalSet);
-const animals = clean([...animalLemmas, ...(await starter('animals.txt'))]);
-await write(
-  'animals.txt',
-  animals.filter((w) => !blockedWords.animal.has(w)),
-);
+if (wants('places')) {
+  log('Places');
+  const countries = require('world-countries');
+  lists.places = composeList({
+    category: 'place',
+    isProfane,
+    blocked: blockedWords.place,
+    contributions: [
+      {
+        source: 'world-countries package',
+        labels: countries.flatMap((c) => [c.name.common, ...(c.capital ?? [])]),
+      },
+      await (async () => {
+        let parts = [];
+        const result = await attempt(
+          'Wikidata places',
+          async () => {
+            parts = await fetchWikidataPlaces(client, log);
+            return flatten(parts);
+          },
+          { required: true, plausible: true, minLetters: 3 },
+        );
+        if (parts.length) log(`    ${wikidataParts(parts)}`);
+        return result;
+      })(),
+      await attempt('Curated (starter/places.txt)', () => starter('places.txt')),
+    ],
+  });
+}
 
-const excluded = new Set([
-  ...animalSet,
-  ...descendants(graph, root('person')),
-  ...descendants(graph, root('location')),
-]);
-const physical = [
-  ...descendants(graph, root('physical_entity')),
-  ...descendants(graph, root('artifact')),
-];
-const thingOffsets = new Set(physical.filter((offset) => !excluded.has(offset)));
-const blocked = new Set([...names, ...places, ...animals]);
-const things = clean([...lemmasOf(graph, thingOffsets), ...(await starter('things.txt'))]).filter(
-  (word) =>
-    !blocked.has(word) ||
-    ['apple', 'bat', 'seal', 'crane', 'cricket', 'jaguar', 'mercury'].includes(word),
+if (wants('animals') || wants('things')) {
+  log('Animals and things (WordNet)');
+  const dictDir = path.join(path.dirname(require.resolve('wordnet-db/package.json')), 'dict');
+  let wn = { animals: new Set(), things: new Set() };
+  let oewn = { animals: new Set(), things: new Set() };
+  let wnError;
+  let oewnError;
+  try {
+    wn = selectAnimalsAndThings(await loadWordnet(dictDir));
+  } catch (err) {
+    wnError = err.message;
+    log(`  WordNet 3.1: NOT AVAILABLE (${err.message})`);
+  }
+  try {
+    const file = await ensureOewn({ downloadsDir: DOWNLOADS, log });
+    // Open English WordNet files people under "doer" as well as "person".
+    oewn = selectAnimalsAndThings(await loadOewn(file), { extraExcludedRoots: ['doer'] });
+  } catch (err) {
+    oewnError = err.message;
+    log(`  Open English WordNet 2024: NOT AVAILABLE (${err.message})`);
+  }
+  log(
+    `  WordNet 3.1: ${wn.animals.size} animals, ${wn.things.size} things; OEWN 2024: ${oewn.animals.size} animals, ${oewn.things.size} things`,
+  );
+
+  if (wants('animals')) {
+    log('Animals');
+    lists.animals = composeList({
+      category: 'animal',
+      isProfane,
+      blocked: blockedWords.animal,
+      contributions: [
+        { source: 'WordNet 3.1', labels: wn.animals, required: true, error: wnError },
+        { source: 'Open English WordNet 2024', labels: oewn.animals, error: oewnError },
+        await (async () => {
+          let parts = [];
+          const result = await attempt('Wikidata animal common names', async () => {
+            parts = await fetchWikidataAnimals(client, log);
+            return flatten(parts).filter(phrase(0, 2));
+          });
+          return result;
+        })(),
+        await attempt('Curated (starter/animals.txt)', () => starter('animals.txt')),
+      ],
+    });
+  }
+
+  if (wants('things')) {
+    log('Things');
+    lists.things = composeList({
+      category: 'thing',
+      isProfane,
+      blocked: blockedWords.thing,
+      contributions: [
+        { source: 'WordNet 3.1', labels: wn.things, required: true, error: wnError },
+        { source: 'Open English WordNet 2024', labels: oewn.things, error: oewnError },
+        has('--no-wikidata-things')
+          ? { source: 'Wikidata object classes (skipped)', labels: [] }
+          : await attempt('Wikidata object classes', async () =>
+              flatten(await fetchWikidataThings(client, log)).filter(phrase(0, 1)),
+            ),
+        await attempt('Curated (starter/things.txt)', () => starter('things.txt')),
+      ],
+    });
+  }
+}
+
+// Report before writing anything, so a failed build never leaves half-written lists.
+const built = Object.values(lists);
+const rows = built.flatMap((list) => list.rows);
+log('\nPer-source table');
+log(formatTable(rows));
+for (const list of built) {
+  for (const row of list.rows) {
+    const rejected = Object.entries(row.rejects)
+      .map(([why, count]) => `${why} ${count}`)
+      .join(', ');
+    if (rejected) log(`  rejected from ${row.category} / ${row.source}: ${rejected}`);
+  }
+  if (list.profane.length) {
+    log(
+      `  profanity filter removed ${list.profane.length}: ${list.profane.slice(0, 60).join(', ')}${list.profane.length > 60 ? ', ...' : ''}`,
+    );
+  }
+}
+
+const missing = emptyRequiredSources(rows);
+if (missing.length && !allowFallback) {
+  log('\nBUILD STOPPED. These required sources gave no entries:');
+  for (const row of missing) log(`  - ${row.category} / ${row.source}: ${row.error ?? 'empty'}`);
+  log(
+    'Nothing was written. Fix the problem above, or run with --allow-fallback to build from the curated lists only.',
+  );
+  process.exit(1);
+}
+if (missing.length) log('\n--allow-fallback: continuing without the sources above.');
+
+const placesBytes = lists.places ? Buffer.byteLength(`${lists.places.words.join('\n')}\n`) : 0;
+if (placesBytes > MAX_PLACES_BYTES && !has('--accept-large-places')) {
+  log(
+    `\nBUILD STOPPED. places.txt would be ${(placesBytes / 1e6).toFixed(1)} MB (limit ${MAX_PLACES_BYTES / 1e6} MB). Nothing was written. Ask the owner, then run again with --accept-large-places.`,
+  );
+  process.exit(2);
+}
+
+const files = {
+  names: 'names.txt',
+  places: 'places.txt',
+  animals: 'animals.txt',
+  things: 'things.txt',
+};
+for (const [key, list] of Object.entries(lists)) {
+  await writeFile(path.join(OUT, files[key]), `${list.words.join('\n')}\n`);
+  log(`${files[key]}: ${list.words.length} words`);
+}
+
+// Fifty random new words from the two supplements that might be noisy, for the owner to review.
+const samples = [];
+for (const row of rows) {
+  if (!/^Wikidata (object classes|animal)/.test(row.source) || row.addedWords.length === 0)
+    continue;
+  const picked = [...row.addedWords].sort(() => Math.random() - 0.5).slice(0, 50);
+  samples.push(`${row.category} / ${row.source} (${row.added} new):\n  ${picked.join(', ')}`);
+}
+if (samples.length) {
+  const text = samples.join('\n\n');
+  await writeFile(path.join(DOWNLOADS, 'review-samples.txt'), `${text}\n`);
+  log(`\nReview these samples. If they look noisy, rebuild with --no-wikidata-things.\n${text}`);
+}
+
+if (!only) {
+  const stamp = `Built ${new Date().toISOString().slice(0, 10)}.`;
+  await writeTable(SOURCES_DOC, formatTable(rows), stamp);
+  log('\nPer-source table written to docs/DICTIONARY_SOURCES.md');
+}
+log(
+  'Done. Review the files, then commit them. Next: npm run dictionary:seed -- --replace, then restart the server.',
 );
-await write(
-  'things.txt',
-  things.filter((w) => !blockedWords.thing.has(w)),
-);
-log('Done. Review the files, then commit them. Sources are listed in docs/DICTIONARY_SOURCES.md.');

@@ -71,3 +71,9 @@
 - Client: `RealtimeContext` (connection, token refresh on expiry, time sync, room snapshot, actions), Play with friends (create steppers, join with the six-box code input and live preview), the lobby for host and players, the popups (room not found, cannot join, removed, opened somewhere else, room closed, settings, remove player, how scoring works) and the reconnecting banner. Client tests: 108.
 - End-to-end with several browsers: create, join by code, share link after log in, takeover by a second tab, kick, closed browser shown as reconnecting, settings edits, start; no sideways scroll at 360px; no page scrollbar at three desktop sizes in light and dark with an 8-player lobby (the player list scrolls inside its own panel).
 - Not built yet: lobby chat (Phase 9), the game itself (Phase 7). `game:start` locks the room and shows a placeholder.
+
+## Dictionary rebuild (branch fix/dictionary-rebuild, between Phase 6 and Phase 7)
+
+- Code done and tested: `dictionaryKey` matching, key-based `dictionaryService`, judge label comparison, strict build script with per-source table, accent folding, Open English WordNet reader, synset-only thing selection, Wikidata fetchers for names, places, animals and objects (SPARQL syntax checked offline), SSA local-file support, `seed --replace`, `dictionary:coverage`, `dictionary:diagnose`.
+- Built in the sandbox: animals.txt and things.txt (WordNet 3.1 + OEWN 2024 + curated), names.txt (NLTK + curated, no SSA or Wikidata). The sandbox cannot reach Wikidata or ssa.gov.
+- **Still to do on the owner's laptop:** `npm run dictionary:build` (full), review the table and the printed samples, `npm run dictionary:seed -- --replace` against npatarena, restart the server, `npm run dictionary:coverage`. places.txt is still the old file until then.

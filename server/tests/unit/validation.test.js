@@ -22,6 +22,11 @@ describe('validateAnswer', () => {
     ["O'Brien", 'O', 'name'],
     ['Cities', 'C', 'place'],
     ['Glasses', 'G', 'thing'],
+    ['Icecream', 'I', 'thing'],
+    ['Icecreams', 'I', 'thing'],
+    ['Ice-Creams', 'I', 'thing'],
+    ['Newyork', 'N', 'place'],
+    ['New-York', 'N', 'place'],
   ])('%s is valid for %s %s', (raw, letter, category) => {
     const { service } = make();
     const result = service.validateAnswer({ raw, letter, category });

@@ -65,8 +65,14 @@ export function descendants(graph, rootOffset) {
   return seen;
 }
 
+/** One word of a lemma: letters, with at most one apostrophe inside ("devil's"). */
+const LEMMA_WORD = /^[A-Za-z]+(?:'[A-Za-z]+)?$/;
+
 /**
- * Plain lower-case English lemmas of one or two words (letters, hyphen and apostrophe only).
+ * English lemmas of one to three words, separated by a space or a hyphen. Capital letters are
+ * allowed and the result is lower-cased ("Bengal tiger" becomes "bengal tiger"). Lemmas with numbers
+ * or symbols are ignored. Named instances ("Paris") never get here because only ordinary hypernym
+ * links are followed.
  * @param {{ words: Map<string, string[]> }} graph
  * @param {Set<string>} offsets
  * @returns {Set<string>}
@@ -75,9 +81,10 @@ export function lemmasOf(graph, offsets) {
   const out = new Set();
   for (const offset of offsets) {
     for (const lemma of graph.words.get(offset) ?? []) {
-      if (/[A-Z0-9]/.test(lemma)) continue;
       const text = lemma.replace(/_/g, ' ');
-      if (/^[a-z]+(?:[ '-][a-z]+)?$/.test(text)) out.add(text);
+      const parts = text.split(/[ -]/);
+      if (parts.length > 3 || !parts.every((part) => LEMMA_WORD.test(part))) continue;
+      out.add(text.toLowerCase());
     }
   }
   return out;

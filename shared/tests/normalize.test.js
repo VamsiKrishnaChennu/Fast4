@@ -1,4 +1,10 @@
-import { formatCheck, lookupCandidates, matchKey, normalizeAnswer } from '../index.js';
+import {
+  dictionaryKey,
+  formatCheck,
+  lookupCandidates,
+  matchKey,
+  normalizeAnswer,
+} from '../index.js';
 
 describe('normalizeAnswer', () => {
   test.each([
@@ -103,5 +109,31 @@ describe('lookupCandidates', () => {
       'netherlands',
       'netherland',
     ]);
+  });
+});
+
+describe('dictionaryKey', () => {
+  test.each([
+    ['tamil nadu', 'tamilnadu'],
+    ['tamilnadu', 'tamilnadu'],
+    ['ice cream', 'icecream'],
+    ['ice-cream', 'icecream'],
+    ['icecream', 'icecream'],
+    ["o'brien", 'obrien'],
+    ['  a - b ', 'ab'],
+    ['', ''],
+  ])('%j becomes %j', (input, expected) => {
+    expect(dictionaryKey(input)).toBe(expected);
+  });
+
+  test('spellings that differ only by spaces, hyphens or apostrophes share a key', () => {
+    const keys = new Set(['new york', 'new-york', 'newyork'].map(dictionaryKey));
+    expect(keys.size).toBe(1);
+  });
+
+  test('plural forms found by lookupCandidates still reach the key of the singular', () => {
+    const keys = lookupCandidates('icecreams', 'thing').map(dictionaryKey);
+    expect(keys).toContain(dictionaryKey('ice cream'));
+    expect(lookupCandidates('ice creams', 'thing').map(dictionaryKey)).toContain('icecream');
   });
 });

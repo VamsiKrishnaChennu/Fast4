@@ -20,6 +20,17 @@ export function normalizeAnswer(raw) {
     .replace(/ {2,}/g, ' ');
 }
 
+/**
+ * Key used to look a word up in the dictionary. Removes spaces, hyphens and apostrophes, so
+ * "Tamilnadu" finds "Tamil Nadu" and "ice cream", "ice-cream" and "icecream" are one entry.
+ * Stored words keep their own spelling; only the lookup ignores the difference.
+ * @param {string} normalized output of normalizeAnswer
+ * @returns {string}
+ */
+export function dictionaryKey(normalized) {
+  return normalized.replace(/[ '-]/g, '');
+}
+
 /** Removes a leading "the " (used for places only). */
 const stripThe = (text) => (text.startsWith('the ') ? text.slice(4) : text);
 

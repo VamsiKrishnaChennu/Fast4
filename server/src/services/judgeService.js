@@ -1,4 +1,4 @@
-import { LIMITS, normalizeAnswer } from '@fastfour/shared';
+import { dictionaryKey, LIMITS, normalizeAnswer } from '@fastfour/shared';
 import { JudgeUnavailableError } from '../utils/AppErrors.js';
 
 /**
@@ -177,8 +177,10 @@ export function createJudgeService({ env, fetchImpl = fetch, cache, now = Date.n
     const response = await request('wikidata', url, signal);
     if (!response.ok) throw new JudgeUnavailableError(undefined, `http ${response.status}`);
     const body = await response.json();
+    // Spaces, hyphens and apostrophes are ignored, so "tamilnadu" finds the label "Tamil Nadu".
+    const wanted = dictionaryKey(word);
     const found = (body.search ?? []).filter(
-      (item) => normalizeAnswer(item.match?.text ?? item.label) === word,
+      (item) => dictionaryKey(normalizeAnswer(item.match?.text ?? item.label)) === wanted,
     );
     debug?.({
       source: 'wikidata',

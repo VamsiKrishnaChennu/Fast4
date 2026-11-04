@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { LETTER_POOL, normalizeAnswer } from '@fastfour/shared';
+import { dictionaryKey, LETTER_POOL, normalizeAnswer } from '@fastfour/shared';
 import { createProfanityCheck } from '../../scripts/lib/profanity.js';
 import { createValidationService } from '../../src/services/validationService.js';
 
@@ -24,8 +24,10 @@ const words = Object.fromEntries(
     readFileSync(path.join(dir, f), 'utf8').split('\n').filter(Boolean),
   ]),
 );
-const sets = Object.fromEntries(Object.entries(words).map(([c, list]) => [c, new Set(list)]));
-const dictionary = { has: (category, word) => sets[category].has(word) };
+const sets = Object.fromEntries(
+  Object.entries(words).map(([c, list]) => [c, new Set(list.map(dictionaryKey))]),
+);
+const dictionary = { has: (category, word) => sets[category].has(dictionaryKey(word)) };
 const service = createValidationService({ dictionary });
 
 describe('the committed word lists', () => {
@@ -71,6 +73,17 @@ describe('the committed word lists', () => {
       ['The Netherlands', 'N', 'place'],
       ['Priya', 'P', 'name'],
       ['Sam', 'S', 'name'],
+      // The cases from the bug report, and words that exist in more than one list.
+      ['Tulasi', 'T', 'name'],
+      ['Tamilnadu', 'T', 'place'],
+      ['Tamil Nadu', 'T', 'place'],
+      ['Tiger', 'T', 'animal'],
+      ['Tape', 'T', 'thing'],
+      ['Kite', 'K', 'thing'],
+      ['Kite', 'K', 'animal'],
+      ['Mouse', 'M', 'thing'],
+      ['Bengal tiger', 'B', 'animal'],
+      ['Dupatta', 'D', 'thing'],
     ];
     for (const [raw, letter, category] of cases) {
       expect(service.validateAnswer({ raw, letter, category }).verdict).toBe('valid');

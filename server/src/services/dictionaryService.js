@@ -1,8 +1,14 @@
-import { CATEGORIES } from '@fastfour/shared';
+import { CATEGORIES, dictionaryKey } from '@fastfour/shared';
 import { DictionaryEntry } from '../models/DictionaryEntry.js';
+
+/** Matches every stored spelling of a key: "icecream" matches "ice cream", "ice-cream" and "icecream". */
+function spellingsOf(key) {
+  return new RegExp(`^[ '-]*${[...key].join("[ '-]*")}[ '-]*$`);
+}
 
 /**
  * In-memory word sets for instant judging. Loaded once at startup, kept in step with the database.
+ * The sets hold dictionary keys (no spaces, hyphens or apostrophes), so "Tamilnadu" finds "Tamil Nadu".
  * @param {{ model?: typeof DictionaryEntry }} [deps]
  */
 export function createDictionaryService({ model = DictionaryEntry } = {}) {
@@ -20,15 +26,15 @@ export function createDictionaryService({ model = DictionaryEntry } = {}) {
     async init() {
       const fresh = new Map(CATEGORIES.map((c) => [c, new Set()]));
       for await (const entry of model.find({}, { category: 1, word: 1, _id: 0 }).lean().cursor()) {
-        fresh.get(entry.category)?.add(entry.word);
+        fresh.get(entry.category)?.add(dictionaryKey(entry.word));
       }
       for (const category of CATEGORIES) sets.set(category, fresh.get(category));
       loaded = true;
     },
 
-    /** @returns {boolean} true when the normalized word is in the category */
+    /** @returns {boolean} true when the normalized word is in the category, ignoring spaces and hyphens */
     has(category, normalized) {
-      return setFor(category).has(normalized);
+      return setFor(category).has(dictionaryKey(normalized));
     },
 
     /**
@@ -44,14 +50,18 @@ export function createDictionaryService({ model = DictionaryEntry } = {}) {
         { $setOnInsert: { displayWord, source: 'external' } },
         { upsert: true },
       );
-      set.add(normalized);
+      set.add(dictionaryKey(normalized));
     },
 
-    /** Admin only: removes a word from the database and from memory. */
+    /**
+     * Admin only: removes a word from the database and from memory. The key stays in memory while
+     * another stored spelling ("ice-cream" for "ice cream") still has it.
+     */
     async remove(category, normalized) {
       const set = setFor(category);
       await model.deleteOne({ category, word: normalized });
-      set.delete(normalized);
+      const key = dictionaryKey(normalized);
+      if (!(await model.exists({ category, word: spellingsOf(key) }))) set.delete(key);
     },
 
     /** @returns {Record<string, number>} word count per category */

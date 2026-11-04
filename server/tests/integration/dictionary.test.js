@@ -5,6 +5,7 @@ import request from 'supertest';
 import { DictionaryEntry } from '../../src/models/DictionaryEntry.js';
 import { createDictionaryService } from '../../src/services/dictionaryService.js';
 import { parseWordList, seedDictionary } from '../../src/services/dictionarySeeder.js';
+import { createValidationService } from '../../src/services/validationService.js';
 import { createTestApp } from '../helpers/createTestApp.js';
 import { clearDb, startTestDb, stopTestDb } from '../helpers/testDb.js';
 
@@ -38,16 +39,43 @@ describe('seedDictionary', () => {
     const dir = await makeDir();
     const first = await seedDictionary(dir);
     expect(first).toEqual({
-      name: { read: 3, added: 3 },
-      place: { read: 3, added: 3 },
-      animal: { read: 2, added: 2 },
-      thing: { read: 3, added: 3 },
+      name: { read: 3, added: 3, removed: 0, total: 3 },
+      place: { read: 3, added: 3, removed: 0, total: 3 },
+      animal: { read: 2, added: 2, removed: 0, total: 2 },
+      thing: { read: 3, added: 3, removed: 0, total: 3 },
     });
     const second = await seedDictionary(dir);
     expect(Object.values(second).map((r) => r.added)).toEqual([0, 0, 0, 0]);
     expect(await DictionaryEntry.countDocuments()).toBe(11);
     const stored = await DictionaryEntry.findOne({ category: 'thing', word: 'ice-cream' });
     expect(stored).toMatchObject({ displayWord: 'Ice-Cream', source: 'seed', overturnedCount: 0 });
+  });
+
+  test('--replace removes old seed words, keeps appeal words and reports the totals', async () => {
+    await seedDictionary(await makeDir());
+    await DictionaryEntry.create({ category: 'thing', word: 'sitar', source: 'external' });
+    const report = await seedDictionary(
+      await makeDir({ 'things.txt': 'Cup\nKettle\n', 'animals.txt': 'Cat\nCow\nCamel\n' }),
+      { replace: true },
+    );
+    expect(report.thing).toEqual({ read: 2, added: 1, removed: 2, total: 3 });
+    expect(report.animal).toEqual({ read: 3, added: 1, removed: 0, total: 3 });
+    const things = (await DictionaryEntry.find({ category: 'thing' }).lean()).map((e) => e.word);
+    expect(things.sort()).toEqual(['cup', 'kettle', 'sitar']);
+  });
+
+  test('a plain seed never deletes anything', async () => {
+    await seedDictionary(await makeDir());
+    const report = await seedDictionary(await makeDir({ 'things.txt': 'Cup\n' }));
+    expect(report.thing).toMatchObject({ removed: 0, total: 3 });
+  });
+
+  test('--replace refuses to run when a file is empty', async () => {
+    await seedDictionary(await makeDir());
+    await expect(
+      seedDictionary(await makeDir({ 'animals.txt': '' }), { replace: true }),
+    ).rejects.toThrow(/would delete the whole animal list/);
+    expect(await DictionaryEntry.countDocuments({ category: 'animal' })).toBe(2);
   });
 
   test('a missing file stops the seed with a clear error', async () => {
@@ -102,6 +130,66 @@ describe('dictionaryService', () => {
     await dictionary.remove('thing', 'cup');
     expect(dictionary.has('thing', 'cup')).toBe(false);
     expect(await DictionaryEntry.countDocuments({ category: 'thing', word: 'cup' })).toBe(0);
+  });
+
+  test('spaces, hyphens and apostrophes are ignored when looking a word up', async () => {
+    await seedDictionary(
+      await makeDir({
+        'places.txt': "Tamil Nadu\nNew York\nSt John's\n",
+        'things.txt': 'Ice Cream\nCup\nChair\n',
+      }),
+    );
+    const dictionary = createDictionaryService();
+    await dictionary.init();
+    expect(dictionary.has('place', 'tamilnadu')).toBe(true);
+    expect(dictionary.has('place', 'tamil nadu')).toBe(true);
+    expect(dictionary.has('place', 'tamil-nadu')).toBe(true);
+    expect(dictionary.has('place', 'st johns')).toBe(true);
+    expect(dictionary.has('thing', 'ice-cream')).toBe(true);
+    expect(dictionary.has('thing', 'icecream')).toBe(true);
+    expect(dictionary.has('thing', 'ice cream')).toBe(true);
+    expect(dictionary.has('thing', 'ice cones')).toBe(false);
+    // The stored spelling is unchanged.
+    expect(await DictionaryEntry.findOne({ category: 'place', word: 'tamil nadu' })).toMatchObject({
+      displayWord: 'Tamil Nadu',
+    });
+    // Counts are still one per key, and a word stays in its own category.
+    expect(dictionary.counts().place).toBe(3);
+    expect(dictionary.has('thing', 'tamilnadu')).toBe(false);
+  });
+
+  test('plural and no-space spellings together: "icecreams" finds "ice cream"', async () => {
+    await seedDictionary(await makeDir());
+    const dictionary = createDictionaryService();
+    await dictionary.init();
+    const validation = createValidationService({ dictionary });
+    for (const raw of ['icecreams', 'ice creams', 'Ice-Cream', 'icecream']) {
+      expect(validation.validateAnswer({ raw, letter: 'I', category: 'thing' }).verdict).toBe(
+        'valid',
+      );
+    }
+  });
+
+  test('add() with a spaced spelling is found without the space, and the other way round', async () => {
+    await seedDictionary(await makeDir());
+    const dictionary = createDictionaryService();
+    await dictionary.init();
+    await dictionary.add('place', 'tiruchi rock', 'Tiruchi Rock');
+    expect(dictionary.has('place', 'tiruchirock')).toBe(true);
+    await dictionary.add('thing', 'pressure-cooker');
+    expect(dictionary.has('thing', 'pressure cooker')).toBe(true);
+  });
+
+  test('remove() keeps the key while another stored spelling still has it', async () => {
+    await seedDictionary(await makeDir({ 'things.txt': 'Ice Cream\nIce-Cream\nCup\n' }));
+    const dictionary = createDictionaryService();
+    await dictionary.init();
+    expect(dictionary.counts().thing).toBe(2);
+    await dictionary.remove('thing', 'ice cream');
+    expect(dictionary.has('thing', 'icecream')).toBe(true);
+    await dictionary.remove('thing', 'ice-cream');
+    expect(dictionary.has('thing', 'icecream')).toBe(false);
+    expect(dictionary.has('thing', 'cup')).toBe(true);
   });
 
   test('unknown categories are rejected', async () => {

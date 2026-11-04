@@ -1,3 +1,4 @@
+import { dictionaryKey } from '@fastfour/shared';
 /** Small fixture dictionary used by tests (not the real word lists). */
 export const FIXTURE_WORDS = {
   name: [
@@ -103,8 +104,9 @@ export function fixtureDictionary(extra = {}) {
   const sets = Object.fromEntries(
     Object.entries(FIXTURE_WORDS).map(([c, words]) => [
       c,
-      new Set([...words, ...(extra[c] ?? [])]),
+      new Set([...words, ...(extra[c] ?? [])].map(dictionaryKey)),
     ]),
   );
-  return { has: (category, word) => sets[category].has(word), sets };
+  // Like the real dictionary: spaces, hyphens and apostrophes are ignored in a lookup.
+  return { has: (category, word) => sets[category].has(dictionaryKey(word)), sets };
 }

@@ -101,3 +101,20 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Chat is not in the lobby yet.** The player lobby design shows a chat panel; it arrives with the chat service in Phase 9. Until then the player lobby shows the avatar row, the settings line and the waiting bar.
 - **Round count is any whole number from 5 to 20** in rooms (the design's stepper), unlike solo, which offers 5, 10, 15 or 20.
 - **Server shutdown** sends `error:notice SERVER_RESTARTING` to everyone before closing.
+
+## 2026-11-04 (dictionary rebuild, branch fix/dictionary-rebuild)
+
+Triggered by a solo game that scored 0 for Tulasi, Tamilnadu, Tiger and Tape, and by "kite" being rejected as a thing. These decisions override Development Playbook 8.1 to 8.3 where they differ.
+
+- **Lookups ignore spaces, hyphens and apostrophes.** New `dictionaryKey()` in `shared/src/normalize.js`. The in-memory sets hold keys, so "Tamilnadu" = "Tamil Nadu" and "ice cream" = "ice-cream" = "icecream". Stored words and display words are unchanged; `matchKey` (same-answer test between players) is unchanged. The judge compares Wikidata labels with the same key. `remove()` keeps a key while another stored spelling still has it.
+- **Things are no longer filtered against names, places and animals.** Playbook 8.1 says "minus names, places and animals". The old filter deleted 1,043 valid objects (kite, mouse, pen, bag, bell, rose, pearl, mango, egg). Now only SYNSETS are excluded: animals, people, locations and physical processes. A word may be in several lists; validation is per category, so nothing leaks. The 7 hard-coded exceptions are gone.
+- **Physical processes are excluded from things** (activities and reflexes such as digestion or coitus). They are not objects, and Open English WordNet adds many sexual and medical terms there. Cost: lightning, storm, flame and fog; these are added to the curated list.
+- **Open English WordNet 2024 (CC BY 4.0) is added next to WordNet 3.1** for animals and things (union of both, same synset rules; it files people under "doer" as well as "person", so that root is excluded too). Parsed line by line from a cached download; no new npm dependency.
+- **WordNet lemmas may have capital letters and up to three words** (lower-cased), so "bengal tiger" and "ferris wheel" are kept. Named instances are still excluded.
+- **Names:** Wikidata given names (five classes, plus one-word English aliases), SSA baby names (threshold lowered from 200 to 50), NLTK, and a curated list with 2,000+ Indian first names.
+- **Places:** Wikidata with no population cutoff, but only items with an English Wikipedia article (this removes junk like "'aio"), settlements fetched one country at a time, a dedicated India pass, plus curated states, union territories, alternate names and places. Labels are rejected when they start with a non-letter, have fewer than 3 letters, or are implausible (5 consonants in a row, or a letter three times). If places.txt would exceed 15 MB the build stops and asks.
+- **Accents are folded before normalizing** (Ümit becomes umit, not mit); labels still containing other scripts are skipped.
+- **The build is strict.** If SSA, Wikidata names, Wikidata places or WordNet give nothing, it exits with code 1 and writes nothing. `--allow-fallback` restores the old behaviour. It prints, and writes into `docs/DICTIONARY_SOURCES.md`, a per-source table (fetched, kept, new). Wikidata answers are cached in `downloads/wikidata` so a long build can resume.
+- **Seeding:** `dictionary:seed -- --replace` deletes old `seed` entries no longer in the files, never `external` ones, refuses to run on an empty file, prints the final count per category, and reminds you to restart the server.
+- **Coverage test:** `npm run dictionary:coverage` checks a fixture of realistic answers against the .txt files (target 95%).
+- Wikidata things (subclasses of tool, container, vehicle and so on) and Wikidata animal common names are additive. Review the 50-word samples the build prints before committing; `--no-wikidata-things` leaves the first out.
