@@ -165,6 +165,12 @@ export const S = {
   },
   notFound: { title: 'Page not found', body: 'That page does not exist.', home: 'Go home' },
   loading: 'Loading...',
+  offline: 'You are offline. Fast Four needs the internet to play.',
+  crash: {
+    title: 'Something went wrong',
+    body: 'Reload the app to carry on. Your account and scores are safe.',
+    reload: 'Reload',
+  },
   errors: {
     network: "We can't reach the server. Check your connection and try again.",
     generic: 'Something went wrong. Please try again.',

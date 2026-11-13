@@ -8,9 +8,12 @@ import '@fontsource/nunito/latin-700.css';
 import './styles/theme.css';
 import './styles/custom.css';
 import App from './App.jsx';
+import { registerServiceWorker } from './pwa/registerServiceWorker.js';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
 );
+
+registerServiceWorker();

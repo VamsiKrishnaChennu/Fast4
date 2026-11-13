@@ -12,7 +12,7 @@
 | 7. Group game engine                                                   | done (see notes) |
 | 8. Challenges and appeals                                              | done (see notes) |
 | 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | done (see notes) |
-| 10. Polish and PWA (no sounds)                                         | not started      |
+| 10. Polish and PWA (no sounds)                                         | done (see notes) |
 | 11. Hardening                                                          | not started      |
 | 12. Play Store readiness                                               | not started      |
 | 13. Release readiness                                                  | not started      |
@@ -92,3 +92,11 @@
 - Client: chat button and sheet in the lobby, review, results and game over (hidden while a round runs), Report and Block from each message, Profile (stats, recent games with Show more, edit nickname and avatar, Blocked players link, dark mode, log out), the Blocked players screen with Unblock, and the Group tab of Ranks (wins or points, your row pinned when outside the list). Client tests: 143.
 - End-to-end: two browsers chat, report, block and unblock; profile edit and Group ranks, with no page scrollbar on desktop. E2E total: 60.
 - Not built yet: reporting a nickname or an answer from the screens (the API supports both), an admin screen for reports (API only), Delete account (Phase 12).
+
+## Phase 10 notes
+
+- PWA: web app manifest (standalone, 192, 512 and maskable icons), a small hand-written service worker (`client/public/sw.js`) that keeps the app shell and fingerprinted files, serves a friendly offline page, and never touches `/api`, `/socket.io` or `/.well-known`; registered in the production build only. An "You are offline" notice shows on every screen while the device has no network.
+- Polish: Screen Wake Lock while writing (solo and group), an error screen with Reload instead of a blank page, and a contrast pass (darker link blue and red button colours, underlined Terms and Privacy links) so no screen has a serious axe violation in light or dark.
+- Lighthouse (mobile, local server): Landing performance 96, accessibility 100, best practices 96, SEO 100; Login 95, 100, 96, 100. Largest Contentful Paint measured 2.6 to 2.8 s under the simulated slow phone, slightly over the 2.5 s goal. Initial JavaScript is about 144 KB gzipped (limit 250 KB), so route splitting was not needed.
+- Tests: client 149; end-to-end 74, including the manifest, service worker and offline load, an axe scan of every screen in light and dark, a keyboard-only walk through the writing fields, and a responsive audit at 360, 768 and 1280 wide (no sideways scroll, tap targets of at least 44 px under 900 px).
+- No sounds (your decision), so the playbook's "sounds toggle" is not built. Real-device checks (Add to Home Screen, Android back button, rotation) are still for you; the Android back-button rule belongs to Phase 12.

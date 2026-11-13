@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { CATEGORIES, formatCheck, normalizeAnswer } from '@fastfour/shared';
 import { useCountdown } from '../../hooks/useCountdown.js';
+import { useWakeLock } from '../../hooks/useWakeLock.js';
 import { S } from '../../utils/strings.js';
 import BoardLogo from '../common/BoardLogo.jsx';
 import Button from '../common/Button.jsx';
@@ -38,6 +39,7 @@ export default function WritingView({
   bottom,
   hideTimeUp = false,
 }) {
+  useWakeLock(true);
   const left = useCountdown(round.endsAt);
   const sent = useRef(false);
   const [timeUp, setTimeUp] = useState(false);

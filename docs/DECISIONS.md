@@ -142,3 +142,13 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Not built in the screens:** reporting a nickname or an answer (API ready), and an admin screen for reports.
 
 Decision update: Chat opens from a round chat button as a bottom sheet in every phase where it is allowed (lobby included), instead of an inline panel in the lobby.
+
+## 2026-11-13 (Phase 10: polish and PWA)
+
+- **Hand-written service worker instead of `vite-plugin-pwa`.** The playbook lists the plugin, but the worker we need is about 60 lines (shell and fingerprinted files only, no offline play) and a hand-written one adds no dependency and is easy to read. Pages are fetched network-first, so a new release shows at once; the saved copy is used only offline. Bump `VERSION` in `sw.js` to drop old caches.
+- **Offline page is plain HTML and CSS** (`offline.html`, `offline.css`) because the Content-Security-Policy blocks inline styles and scripts.
+- **Colour tokens changed for contrast (WCAG AA):** light link `#2557E0` (was `#2F66F5`), light red `#D43D36` (was `#E8473F`), dark red `#C4413B` (was `#D24A43`); category tile colours are unchanged. The Home play-card subtitle is no longer faded.
+- **No route splitting:** initial JavaScript is about 144 KB gzipped, under the 250 KB limit.
+- **`@axe-core/playwright`** added as a dev dependency for the accessibility specs (the Testing Playbook asks for axe-core).
+
+Decision update: Phase 10 uses a hand-written service worker (no vite-plugin-pwa), and the light link, light red and dark red tokens were darkened for AA contrast.
