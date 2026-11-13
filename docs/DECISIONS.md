@@ -152,3 +152,12 @@ Decision update: Chat opens from a round chat button as a bottom sheet in every 
 - **`@axe-core/playwright`** added as a dev dependency for the accessibility specs (the Testing Playbook asks for axe-core).
 
 Decision update: Phase 10 uses a hand-written service worker (no vite-plugin-pwa), and the light link, light red and dark red tokens were darkened for AA contrast.
+
+## 2026-11-13 (Phase 11: hardening)
+
+- **Sentry is a hook, not installed.** `errorReporter` loads `@sentry/node` only when `SENTRY_DSN` is set and the package exists, strips headers, cookies and bodies, and never throws. Adding the packages (server and client) adds a third-party service that receives error data, so it changes the privacy policy and the Data safety form. Waiting for your approval; the client hook (`VITE_SENTRY_DSN`) is not built.
+- **Socket limit is per socket:** 30 events per 10 seconds (token bucket), answered with RATE_LIMITED; the older more-than-100-events-a-second disconnect stays as the flood guard.
+- **Metrics** are in-process counters plus `GET /api/admin/metrics` for admins; no external monitoring service.
+- **Soak script lives in `server/tests/soak/`** and uses the real socket test harness, so it needs a test MongoDB.
+
+Decision update: Sockets are limited to 30 events per 10 seconds each, and Sentry stays hook-only until you approve adding the SDK.

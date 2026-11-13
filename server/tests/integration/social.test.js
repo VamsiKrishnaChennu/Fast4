@@ -90,12 +90,14 @@ describe('chat over real sockets', () => {
   });
 
   test('history of the last 50 is sent on join', async () => {
-    const { host, code } = await lobby('Maya');
+    // Three senders take turns, so no single socket hits its event limit (30 per 10 seconds).
+    const { host, others, code } = await lobby('Maya', 'Ben', 'Cyrus');
+    const senders = [host, ...others];
     for (let i = 0; i < 60; i += 1) {
       rt.clock.advance(11_000);
-      await host.emitAck('chat:send', { text: `msg ${i}` });
+      await senders[i % 3].emitAck('chat:send', { text: `msg ${i}` });
     }
-    const late = await rt.player('Ben');
+    const late = await rt.player('Dara');
     await late.emitAck('room:join', { code });
     const history = await late.waitFor('chat:history');
     expect(history.messages).toHaveLength(50);

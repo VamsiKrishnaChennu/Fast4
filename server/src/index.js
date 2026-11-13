@@ -12,6 +12,8 @@ import { createJudgeService } from './services/judgeService.js';
 import { createMongoJudgeCache } from './services/judgeCache.js';
 import { createGameStore } from './services/gameStore.js';
 import { pickLetter } from './services/letterService.js';
+import { createErrorReporter } from './services/errorReporter.js';
+import { createMetricsService } from './services/metricsService.js';
 import { createBlockService } from './services/blockService.js';
 import { createChatService } from './services/chatService.js';
 import { createModerationService } from './services/moderationService.js';
@@ -36,6 +38,8 @@ try {
 }
 
 const logger = createLogger(env);
+/** Set at start-up; the process-level error handlers use it. */
+let reporter;
 const clientDist = path.join(here, '..', '..', 'client', 'dist');
 
 async function main() {
@@ -44,6 +48,8 @@ async function main() {
   await dictionary.init();
   logger.info({ words: dictionary.counts() }, 'dictionary loaded');
 
+  reporter = createErrorReporter({ env, logger });
+  await reporter.ready();
   const judgeCache = createMongoJudgeCache({ logger });
   await judgeCache.sweep();
   const judge = createJudgeService({ env, cache: judgeCache });
@@ -54,13 +60,18 @@ async function main() {
   const chatService = createChatService({ logger });
   const moderation = createModerationService();
   await chatService.purgeOld();
+  const live = { io: null };
+  const metrics = createMetricsService({
+    roomCount: () => roomManager.size(),
+    socketCount: () => live.io?.engine.clientsCount ?? 0,
+  });
   const roomManager = createRoomManager({
     chat: { send: chatService.send, blockedSet: blocks.blockedSet },
     onChange: (snapshot) => persistence.save(snapshot),
     onClose: (code) => persistence.close(code),
     game: {
       validation: createValidationService({ dictionary }),
-      store: createGameStore(),
+      store: createGameStore({ onEvent: (name) => metrics.count(name) }),
       judge,
       dictionary,
       pickLetter: (used) => pickLetter(used),
@@ -80,6 +91,8 @@ async function main() {
     roomManager,
     moderation,
     blocks,
+    metrics,
+    reporter,
     clientDist: existsSync(clientDist) ? clientDist : undefined,
   });
   const server = http.createServer(app);
@@ -90,10 +103,13 @@ async function main() {
     tokenService: createTokenService(env),
     roomManager,
     moderation,
+    reporter,
   });
+  live.io = realtime.io;
   const sweeper = setInterval(() => {
     roomManager.sweepIdle();
     persistence.purgeExpired();
+    logger.info(metrics.snapshot(), 'metrics');
     void chatService.purgeOld().catch((err) => logger.warn({ err }, 'chat purge failed'));
   }, 60_000);
   sweeper.unref();
@@ -107,8 +123,10 @@ async function main() {
     const force = setTimeout(() => process.exit(1), 10_000);
     force.unref();
     clearInterval(sweeper);
+    metrics.stop();
     realtime.shutdown().finally(() => {
       server.close(async () => {
+        await reporter.flush();
         await disconnectDb();
         process.exit(0);
       });
@@ -120,7 +138,11 @@ async function main() {
 for (const event of ['unhandledRejection', 'uncaughtException']) {
   process.on(event, (err) => {
     logger.fatal({ err }, event);
-    process.exit(1);
+    reporter?.capture(err, { event });
+    // Give the report a moment to leave, then exit so the host restarts the service.
+    const exit = () => process.exit(1);
+    if (reporter) reporter.flush(2000).then(exit, exit);
+    else exit();
   });
 }
 

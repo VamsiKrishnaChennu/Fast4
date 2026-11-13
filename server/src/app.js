@@ -22,6 +22,7 @@ import { createValidationService } from './services/validationService.js';
 import { createAuthService } from './services/authService.js';
 import { createEmailProvider } from './services/emailService.js';
 import { createTokenService } from './services/tokenService.js';
+import { metricsRoutes } from './routes/metrics.js';
 import { createSocialService } from './services/socialService.js';
 import { socialRoutes } from './routes/social.js';
 import { metaRoutes } from './routes/meta.js';
@@ -48,6 +49,8 @@ function socketOrigins(appOrigin) {
  * @param {{ preview: Function }} [options.roomManager] live rooms; the room preview API is mounted only when given
  * @param {{ createReport: Function }} [options.moderation] reports and admin actions; with `blocks` mounts the social API
  * @param {{ list: Function }} [options.blocks] who blocked whom
+ * @param {{ snapshot: Function }} [options.metrics] numbers for the admin metrics endpoint
+ * @param {{ capture: Function }} [options.reporter] receives unexpected 500 errors
  * @param {Function} [options.pickLetter] letter chooser for games; tests pass a fixed sequence
  * @returns {import('express').Express}
  */
@@ -65,6 +68,8 @@ export function createApp({
   roomManager,
   moderation,
   blocks,
+  metrics,
+  reporter,
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -164,11 +169,12 @@ export function createApp({
       }),
     );
   }
+  if (metrics) app.use('/api', metricsRoutes({ metrics, auth: createAuth({ tokenService }) }));
   // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
   // BEFORE the single-page-app fallback below.
 
   if (clientDist) serveClient(app, clientDist);
   app.use(notFound);
-  app.use(createErrorHandler({ logger }));
+  app.use(createErrorHandler({ logger, reporter }));
   return app;
 }

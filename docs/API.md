@@ -153,3 +153,8 @@ Chat works in `LOBBY`, `REVIEW`, `ROUND_RESULT` and `GAME_OVER`. Text is plain; 
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
 | `GET /api/admin/reports?status=open` | `{ reports: [{ id, status, context, reason, details, snapshot, reporter, target, createdAt, handledAt }] }` |
 | `POST /api/admin/reports/:id/action` | `{ action: dismiss\|mute\|ban, hours? }` → `{ status }`; 409 when already handled; non-admins get 403       |
+
+## Hardening (Phase 11)
+
+- `GET /api/admin/metrics` (admin only; 401 without a token, 403 for others) returns `{uptimeSeconds, rooms, sockets, eventLoopLagMs: {mean, p99}, memoryMb: {rss, heapUsed}, games: {gamesStarted, gamesFinished, gamesAbandoned}}`.
+- Every socket event is limited to 30 per 10 seconds per socket. Over the limit the ack is `{ok: false, error: {code: 'RATE_LIMITED', message}}` and the handler does not run. More than 100 events in one second still disconnects the socket.

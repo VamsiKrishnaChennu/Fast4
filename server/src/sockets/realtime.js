@@ -13,9 +13,12 @@ import {
 import { User } from '../models/User.js';
 import { AppError } from '../utils/AppError.js';
 import { toAppError } from '../utils/toApiError.js';
+import { createTokenBucket } from '../utils/tokenBucket.js';
 
-/** More events than this in one second from one socket is treated as a flood. */
+/** More events than this in one second from one socket is treated as a flood and cut off. */
 const FLOOD_PER_SECOND = 100;
+/** Each socket may send 30 events per 10 seconds on average (a burst of 30 is allowed). */
+const BUCKET = { capacity: 30, windowMs: 10_000 };
 
 /**
  * Attaches Socket.IO to the HTTP server and connects the room manager to it.
@@ -25,10 +28,19 @@ const FLOOD_PER_SECOND = 100;
  * @param {import('pino').Logger} deps.logger
  * @param {{ verifyAccess: (token: string) => { sub: string, tv?: number } }} deps.tokenService
  * @param {ReturnType<import('../services/roomManager.js').createRoomManager>} deps.roomManager
+ * @param {{ capture: Function }} [deps.reporter] receives unexpected handler errors
  * @param {{ setDisconnect: Function }} [deps.moderation] told how to close a banned user's connections
  * @returns {{ io: import('socket.io').Server, shutdown: () => Promise<void> }}
  */
-export function createRealtime({ httpServer, env, logger, tokenService, roomManager, moderation }) {
+export function createRealtime({
+  httpServer,
+  env,
+  logger,
+  tokenService,
+  roomManager,
+  moderation,
+  reporter,
+}) {
   const io = new Server(httpServer, {
     transports: ['websocket', 'polling'],
     pingInterval: 25_000,
@@ -98,8 +110,16 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
    * Every failure becomes { ok: false, error: { code, message } }.
    */
   function register(socket, event, schema, handler) {
+    const bucket = (socket.data.bucket ??= createTokenBucket(BUCKET));
     socket.on(event, async (...args) => {
       const ack = typeof args.at(-1) === 'function' ? args.at(-1) : () => {};
+      if (!bucket.take(Date.now())) {
+        ack({
+          ok: false,
+          error: { code: 'RATE_LIMITED', message: 'You are doing that too fast. Wait a moment.' },
+        });
+        return;
+      }
       // Socket.IO turns a skipped payload into null on the wire, so null counts as "nothing sent".
       const raw = typeof args[0] === 'function' || args[0] === null ? undefined : args[0];
       try {
@@ -108,7 +128,10 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
         ack({ ok: true, data: result ?? {} });
       } catch (err) {
         const appError = toAppError(err);
-        if (appError.status >= 500) logger.error({ err, event }, 'socket handler failed');
+        if (appError.status >= 500) {
+          logger.error({ err, event }, 'socket handler failed');
+          reporter?.capture(err, { event });
+        }
         const error = { code: appError.code, message: appError.message };
         if (appError.details) error.details = appError.details;
         ack({ ok: false, error });

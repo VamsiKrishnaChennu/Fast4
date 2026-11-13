@@ -3,9 +3,9 @@ import { AppError } from '../utils/AppError.js';
 
 /**
  * Turns any error into the standard error body. Internal details are never sent to the client.
- * @param {{ logger: import('pino').Logger }} options
+ * @param {{ logger: import('pino').Logger, reporter?: { capture: Function } }} options
  */
-export function createErrorHandler({ logger }) {
+export function createErrorHandler({ logger, reporter }) {
   return (err, req, res, next) => {
     let appError;
     if (err instanceof AppError) {
@@ -26,6 +26,7 @@ export function createErrorHandler({ logger }) {
 
     if (appError.status >= 500) {
       logger.error({ err, reqId: req.id }, 'unhandled error');
+      reporter?.capture(err, { reqId: String(req.id), method: req.method });
     }
     if (res.headersSent) {
       next(err);

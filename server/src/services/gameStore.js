@@ -11,10 +11,11 @@ import { User } from '../models/User.js';
  * writes here and never waits for a read.
  * @param {{ clock?: { now: () => number } }} [deps]
  */
-export function createGameStore({ clock = { now: () => Date.now() } } = {}) {
+export function createGameStore({ clock = { now: () => Date.now() }, onEvent = () => {} } = {}) {
   return {
     /** @returns {Promise<string>} the new game id */
     async createGame({ players, rounds, startedAt }) {
+      onEvent('gamesStarted');
       const game = await Game.create({
         mode: 'group',
         players: players.map((p) => ({ userId: p.userId, nickname: p.nickname })),
@@ -115,6 +116,7 @@ export function createGameStore({ clock = { now: () => Date.now() } } = {}) {
 
     /** Writes the final result once and, when the game was played, updates every player's stats. */
     async finishGame({ gameId, letters, players, winnerIds, status, endedAt, updateStats }) {
+      onEvent(status === 'abandoned' ? 'gamesAbandoned' : 'gamesFinished');
       const claimed = await Game.updateOne(
         { _id: gameId, status: 'in_progress' },
         {

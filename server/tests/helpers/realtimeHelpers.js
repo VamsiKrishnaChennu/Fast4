@@ -6,6 +6,7 @@ import { createApp } from '../../src/app.js';
 import { createGameStore } from '../../src/services/gameStore.js';
 import { createBlockService } from '../../src/services/blockService.js';
 import { createChatService } from '../../src/services/chatService.js';
+import { createMetricsService } from '../../src/services/metricsService.js';
 import { createModerationService } from '../../src/services/moderationService.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
 import { createValidationService } from '../../src/services/validationService.js';
@@ -77,7 +78,12 @@ export async function startRealtimeServer({
       dictionary,
     },
   });
-  const app = createApp({ env, logger, dictionary, roomManager, moderation, blocks });
+  const live = { io: null };
+  const metrics = createMetricsService({
+    roomCount: () => roomManager.size(),
+    socketCount: () => live.io?.engine.clientsCount ?? 0,
+  });
+  const app = createApp({ env, logger, dictionary, roomManager, moderation, blocks, metrics });
   const server = http.createServer(app);
   const realtime = createRealtime({
     httpServer: server,
@@ -87,6 +93,7 @@ export async function startRealtimeServer({
     roomManager,
     moderation,
   });
+  live.io = realtime.io;
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const url = `http://127.0.0.1:${server.address().port}`;
   const sockets = [];
@@ -149,6 +156,7 @@ export async function startRealtimeServer({
 
   async function close() {
     for (const s of sockets) s.close();
+    metrics.stop();
     await realtime.io.close();
   }
 

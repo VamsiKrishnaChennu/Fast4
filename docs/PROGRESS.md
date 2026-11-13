@@ -13,6 +13,7 @@
 | 8. Challenges and appeals                                              | done (see notes) |
 | 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | done (see notes) |
 | 10. Polish and PWA (no sounds)                                         | done (see notes) |
+| 11. Hardening                                                          | done (see notes) |
 | 11. Hardening                                                          | not started      |
 | 12. Play Store readiness                                               | not started      |
 | 13. Release readiness                                                  | not started      |
@@ -100,3 +101,12 @@
 - Lighthouse (mobile, local server): Landing performance 96, accessibility 100, best practices 96, SEO 100; Login 95, 100, 96, 100. Largest Contentful Paint measured 2.6 to 2.8 s under the simulated slow phone, slightly over the 2.5 s goal. Initial JavaScript is about 144 KB gzipped (limit 250 KB), so route splitting was not needed.
 - Tests: client 149; end-to-end 74, including the manifest, service worker and offline load, an axe scan of every screen in light and dark, a keyboard-only walk through the writing fields, and a responsive audit at 360, 768 and 1280 wide (no sideways scroll, tap targets of at least 44 px under 900 px).
 - No sounds (your decision), so the playbook's "sounds toggle" is not built. Real-device checks (Add to Home Screen, Android back button, rotation) are still for you; the Android back-button rule belongs to Phase 12.
+
+## Phase 11 notes
+
+- Rate limits: HTTP limits (API 100 a minute, login and signup 10 per 15 minutes) were already in; every socket now also has a token bucket of 30 events per 10 seconds (RATE_LIMITED ack, other sockets unaffected), on top of the older flood guard that disconnects above 100 events a second.
+- Logging: pino redacts tokens, cookies, passwords, emails and phones. Each minute the server logs a metrics line (rooms, sockets, event-loop lag, memory, games started, finished and abandoned). Admins can read the same numbers at `GET /api/admin/metrics`.
+- Errors: 5xx errors from HTTP and socket handlers, unhandled rejections and uncaught exceptions go to an error reporter (Sentry hook). Shutdown flushes it before closing the database.
+- Security tests (`security.test.js`): tampered, wrong-secret, `alg: none`, expired and old-version tokens; Mongo operator injection on login and signup; unknown fields rejected; production headers (HSTS, CSP, nosniff, referrer and permissions policy, no x-powered-by, no CORS); rate limits; socket abuse; admin-only metrics. Server tests: 479; client 149; end-to-end 74.
+- Soak: `npm run soak -w server -- --minutes 30` (needs `TEST_MONGODB_URI`) churns rooms, joins, chat and leaves through real sockets and fails on errors, leftover rooms or heap growth over 20%. A 2-minute run here gave 115 cycles, 0 failures, 0 rooms left, heap flat at 43 MB. **The 30-minute run is for staging, as is a load test with many concurrent rooms.**
+- Not done: Sentry is hook-only (see decisions). The "please refresh" version banner and service-worker update prompt are left for Phase 13.
