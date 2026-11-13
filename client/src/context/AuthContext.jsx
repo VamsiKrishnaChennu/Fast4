@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as authApi from '../api/authApi.js';
+import * as socialApi from '../api/socialApi.js';
 import {
   hasSessionHint,
   refreshAccessToken,
@@ -73,6 +74,11 @@ export function AuthProvider({ children }) {
       login: (payload) => signIn(authApi.login, payload),
       signup: (payload) => signIn(authApi.signup, payload),
       refreshUser,
+      async updateProfile(changes) {
+        const next = await socialApi.updateProfile(changes);
+        setUser(next);
+        return next;
+      },
       async logout() {
         try {
           await authApi.logout();

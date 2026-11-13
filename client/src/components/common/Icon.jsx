@@ -75,6 +75,7 @@ const PATHS = {
       <circle cx="19" cy="12" r="1.4" />
     </>
   ),
+  chat: <path d="M5 5h14a2 2 0 012 2v8a2 2 0 01-2 2H11l-5 4v-4H5a2 2 0 01-2-2V7a2 2 0 012-2z" />,
   lock: (
     <>
       <rect x="5" y="11" width="14" height="9" rx="2.5" />

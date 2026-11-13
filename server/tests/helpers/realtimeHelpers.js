@@ -4,6 +4,9 @@ import { loadEnv } from '../../src/config/env.js';
 import { createLogger } from '../../src/config/logger.js';
 import { createApp } from '../../src/app.js';
 import { createGameStore } from '../../src/services/gameStore.js';
+import { createBlockService } from '../../src/services/blockService.js';
+import { createChatService } from '../../src/services/chatService.js';
+import { createModerationService } from '../../src/services/moderationService.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
 import { createValidationService } from '../../src/services/validationService.js';
 import { createRoomPersistence } from '../../src/services/roomPersistence.js';
@@ -58,8 +61,12 @@ export async function startRealtimeServer({
   const logger = createLogger(env);
   const dictionary = fixtureDictionary();
   const persistence = persist ? createRoomPersistence({ logger }) : undefined;
+  const blocks = createBlockService();
+  const chatService = createChatService({ clock: { now: () => clock.now() } });
+  const moderation = createModerationService({ clock: { now: () => clock.now() } });
   const roomManager = createRoomManager({
     clock,
+    chat: { send: chatService.send, blockedSet: blocks.blockedSet },
     onChange: (snapshot) => persistence?.save(snapshot),
     onClose: (code) => persistence?.close(code),
     game: {
@@ -70,7 +77,7 @@ export async function startRealtimeServer({
       dictionary,
     },
   });
-  const app = createApp({ env, logger, dictionary, roomManager });
+  const app = createApp({ env, logger, dictionary, roomManager, moderation, blocks });
   const server = http.createServer(app);
   const realtime = createRealtime({
     httpServer: server,
@@ -78,6 +85,7 @@ export async function startRealtimeServer({
     logger,
     tokenService: createTokenService(env),
     roomManager,
+    moderation,
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const url = `http://127.0.0.1:${server.address().port}`;
@@ -144,7 +152,20 @@ export async function startRealtimeServer({
     await realtime.io.close();
   }
 
-  return { app, url, clock, roomManager, connect, player, close, realtime, env };
+  return {
+    app,
+    url,
+    clock,
+    roomManager,
+    blocks,
+    moderation,
+    chatService,
+    connect,
+    player,
+    close,
+    realtime,
+    env,
+  };
 }
 
 /** Lets pending events and timers run. */

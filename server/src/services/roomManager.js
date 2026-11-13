@@ -1,5 +1,6 @@
 import { randomInt as cryptoRandomInt } from 'node:crypto';
 import {
+  CHAT_PHASES,
   LIMITS,
   isRoomCodeFormat,
   makeRoomCode,
@@ -32,6 +33,7 @@ const noop = () => {};
  * @param {(socketId: string, code: string) => void} [deps.notify.leave] takes it out again
  * @param {(snapshot: object) => void} [deps.onChange] called after every change worth saving
  * @param {(code: string) => void} [deps.onClose] called when a room is removed
+ * @param {{ send: Function, history?: Function }} [deps.chat] chat service and `blockedSet`; without it chat is off
  * @param {{ validation: object, store: object, pickLetter: Function, timing?: object, logger?: object }} [deps.game]
  *   what the game engine needs; without it a started room stays in the STARTING phase
  */
@@ -42,6 +44,7 @@ export function createRoomManager({
   onChange = noop,
   onClose = noop,
   game = null,
+  chat = null,
 } = {}) {
   let channels = { room: noop, socket: noop, join: noop, leave: noop, ...notify };
   const toRoom = (...args) => channels.room(...args);
@@ -260,8 +263,9 @@ export function createRoomManager({
       lastActivity: now,
     };
     rooms.set(room.code, room);
-    addPlayer(room, user, socketId);
+    const host = addPlayer(room, user, socketId);
     touch(room);
+    void sendHistory(room, host);
     return snapshot(room);
   }
 
@@ -293,6 +297,7 @@ export function createRoomManager({
       touch(room);
       room.engine?.playersChanged();
       sendState(room);
+      void sendHistory(room, existing);
       return { room: snapshot(room, user.id), rejoined: true };
     }
 
@@ -308,6 +313,7 @@ export function createRoomManager({
     toRoom(room.code, 'room:playerJoined', { player: publicPlayer(player) });
     touch(room);
     sendState(room);
+    void sendHistory(room, player);
     return { room: snapshot(room), rejoined: false };
   }
 
@@ -476,6 +482,50 @@ export function createRoomManager({
     }, LIMITS.REJOIN_GRACE_SECONDS * 1000);
   }
 
+  /** The last messages of the room, minus those from people this player blocked. Best effort. */
+  async function sendHistory(room, player) {
+    if (!chat || !player.socketId) return;
+    try {
+      const blocked = await chat.blockedSet(player.userId);
+      const messages = (room.chatLog ?? []).filter((m) => !blocked.has(m.userId));
+      if (player.socketId) toSocket(player.socketId, 'chat:history', { messages });
+    } catch {
+      // The chat is a nicety; a failed history never breaks joining.
+    }
+  }
+
+  /**
+   * Sends a chat message to everyone in the room who has not blocked the sender.
+   * @throws {AppError} NOT_IN_ROOM, INVALID_PHASE (during a round), MUTED, RATE_LIMITED, VALIDATION_ERROR
+   */
+  async function sendChat({ userId, text }) {
+    const room = rooms.get(byUser.get(userId));
+    const sender = room?.players.get(userId);
+    if (!chat || !room || !sender || sender.left) {
+      throw new AppError('ROOM_NOT_FOUND', 'You are not in a room.');
+    }
+    if (!CHAT_PHASES.includes(snapshot(room, userId).phase)) {
+      throw new AppError('INVALID_PHASE', 'Chat is closed while a round is running.');
+    }
+    const message = await chat.send({
+      userId,
+      nickname: sender.nickname,
+      avatarColor: sender.avatarColor,
+      roomCode: room.code,
+      text,
+    });
+    room.chatLog = [...(room.chatLog ?? []), message].slice(-LIMITS.CHAT_HISTORY);
+    room.lastActivity = clock.now();
+    await Promise.all(
+      [...room.players.values()].map(async (p) => {
+        if (!p.socketId || p.left) return;
+        const blocked = await chat.blockedSet(p.userId);
+        if (!blocked.has(userId)) toSocket(p.socketId, 'chat:message', { message });
+      }),
+    );
+    return { message };
+  }
+
   /**
    * Closes rooms with no activity for the idle time (joins, leaves, settings and game events all
    * count as activity). Players still in them are told. Call it once a minute.
@@ -533,6 +583,7 @@ export function createRoomManager({
     submit,
     skipReview,
     challenge,
+    sendChat,
     playAgain,
     disconnect,
     sweepIdle,

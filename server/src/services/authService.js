@@ -1,15 +1,14 @@
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
-import { Filter } from 'bad-words';
 import { AUTH, RESERVED_NICKNAMES } from '@fastfour/shared';
 import { Session } from '../models/Session.js';
 import { User } from '../models/User.js';
 import { AppError } from '../utils/AppError.js';
+import { isProfane } from '../utils/profanity.js';
 import { createResetToken, hashToken } from './tokenService.js';
 import { buildResetEmail } from './emailService.js';
 import { toPublicUser } from './userService.js';
 
-const profanity = new Filter();
 const INVALID_LOGIN = 'Invalid credentials.';
 const BAD_RESET_LINK = 'This reset link is invalid or has expired. Ask for a new one.';
 
@@ -30,7 +29,7 @@ export function createAuthService({ env, tokenService, emailProvider, logger }) 
         { field: 'nickname', message: 'Choose a different nickname.' },
       ]);
     }
-    if (profanity.isProfane(nickname.replace(/_/g, ' '))) {
+    if (isProfane(nickname.replace(/_/g, ' '))) {
       throw new AppError('VALIDATION_ERROR', 'Please choose a friendlier nickname.', [
         { field: 'nickname', message: 'Please choose a friendlier nickname.' },
       ]);
@@ -175,6 +174,29 @@ export function createAuthService({ env, tokenService, emailProvider, logger }) 
     async me(userId) {
       const user = await User.findById(userId);
       if (!user) throw new AppError('UNAUTHENTICATED', 'Please log in.');
+      return toPublicUser(user);
+    },
+
+    /**
+     * Changes the nickname and/or avatar colour.
+     * @throws {AppError} VALIDATION_ERROR (reserved or unfriendly nickname), CONFLICT (taken)
+     */
+    async updateProfile(userId, { nickname, avatarColor }) {
+      const user = await User.findById(userId);
+      if (!user) throw new AppError('UNAUTHENTICATED', 'Please log in.');
+      if (nickname !== undefined && nickname !== user.nickname) {
+        checkNickname(nickname);
+        const nicknameLower = nickname.toLowerCase();
+        const clash = await User.exists({
+          nicknameLower,
+          _id: mongoose.trusted({ $ne: user._id }),
+        });
+        if (clash) throw conflictError('nickname');
+        user.nickname = nickname;
+        user.nicknameLower = nicknameLower;
+      }
+      if (avatarColor !== undefined) user.avatarColor = avatarColor;
+      await user.save();
       return toPublicUser(user);
     },
 

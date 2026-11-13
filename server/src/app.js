@@ -22,6 +22,8 @@ import { createValidationService } from './services/validationService.js';
 import { createAuthService } from './services/authService.js';
 import { createEmailProvider } from './services/emailService.js';
 import { createTokenService } from './services/tokenService.js';
+import { createSocialService } from './services/socialService.js';
+import { socialRoutes } from './routes/social.js';
 import { metaRoutes } from './routes/meta.js';
 import { serveClient } from './static.js';
 
@@ -44,6 +46,8 @@ function socketOrigins(appOrigin) {
  * @param {{ has: Function }} [options.dictionary] the word lists; the single-player API is mounted only when given
  * @param {{ now: () => number }} [options.clock] time source for games; tests pass a fake
  * @param {{ preview: Function }} [options.roomManager] live rooms; the room preview API is mounted only when given
+ * @param {{ createReport: Function }} [options.moderation] reports and admin actions; with `blocks` mounts the social API
+ * @param {{ list: Function }} [options.blocks] who blocked whom
  * @param {Function} [options.pickLetter] letter chooser for games; tests pass a fixed sequence
  * @returns {import('express').Express}
  */
@@ -59,6 +63,8 @@ export function createApp({
   clock,
   pickLetter,
   roomManager,
+  moderation,
+  blocks,
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -146,6 +152,17 @@ export function createApp({
   }
   if (roomManager) {
     app.use('/api', roomRoutes({ roomManager, auth: createAuth({ tokenService }) }));
+  }
+  if (moderation && blocks) {
+    app.use(
+      '/api',
+      socialRoutes({
+        moderation,
+        blocks,
+        social: createSocialService(),
+        auth: createAuth({ tokenService }),
+      }),
+    );
   }
   // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
   // BEFORE the single-page-app fallback below.

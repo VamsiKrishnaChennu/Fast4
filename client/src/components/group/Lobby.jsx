@@ -6,6 +6,7 @@ import Avatar from '../common/Avatar.jsx';
 import Button from '../common/Button.jsx';
 import Icon from '../common/Icon.jsx';
 import Modal from '../common/Modal.jsx';
+import ChatDock from './ChatDock.jsx';
 import ConnectionBanner from './ConnectionBanner.jsx';
 import ScoringSheet from './ScoringSheet.jsx';
 import SettingsFields from './SettingsFields.jsx';
@@ -117,6 +118,7 @@ export default function Lobby({ room, me, onLeave, busy }) {
   return (
     <main className="ff-page ff-page--wide ff-lobby">
       <ConnectionBanner />
+      <ChatDock me={me} phase="LOBBY" />
       <header className="ff-lobby__head">
         <button
           type="button"

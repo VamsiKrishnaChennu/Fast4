@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { forgotSchema, loginSchema, resetSchema, signupSchema } from '@fastfour/shared';
+import {
+  forgotSchema,
+  loginSchema,
+  profileUpdateSchema,
+  resetSchema,
+  signupSchema,
+} from '@fastfour/shared';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { validate } from '../middleware/validate.js';
 
@@ -35,5 +41,11 @@ export function authRoutes({ controller, auth, authLimiter }) {
   router.post('/auth/refresh', asyncHandler(controller.refresh));
   router.post('/auth/logout', asyncHandler(controller.logout));
   router.get('/auth/me', auth.requireAuth, asyncHandler(controller.me));
+  router.patch(
+    '/users/me',
+    auth.requireAuth,
+    validate({ body: profileUpdateSchema }),
+    asyncHandler(controller.updateMe),
+  );
   return router;
 }

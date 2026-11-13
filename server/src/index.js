@@ -12,6 +12,9 @@ import { createJudgeService } from './services/judgeService.js';
 import { createMongoJudgeCache } from './services/judgeCache.js';
 import { createGameStore } from './services/gameStore.js';
 import { pickLetter } from './services/letterService.js';
+import { createBlockService } from './services/blockService.js';
+import { createChatService } from './services/chatService.js';
+import { createModerationService } from './services/moderationService.js';
 import { createRoomManager } from './services/roomManager.js';
 import { createRoomPersistence } from './services/roomPersistence.js';
 import { createTokenService } from './services/tokenService.js';
@@ -47,7 +50,12 @@ async function main() {
   const persistence = createRoomPersistence({ logger });
   const abandoned = await persistence.abandonOpenRooms();
   if (abandoned > 0) logger.info({ abandoned }, 'rooms from the last run marked abandoned');
+  const blocks = createBlockService();
+  const chatService = createChatService({ logger });
+  const moderation = createModerationService();
+  await chatService.purgeOld();
   const roomManager = createRoomManager({
+    chat: { send: chatService.send, blockedSet: blocks.blockedSet },
     onChange: (snapshot) => persistence.save(snapshot),
     onClose: (code) => persistence.close(code),
     game: {
@@ -70,6 +78,8 @@ async function main() {
     ],
     dictionary,
     roomManager,
+    moderation,
+    blocks,
     clientDist: existsSync(clientDist) ? clientDist : undefined,
   });
   const server = http.createServer(app);
@@ -79,10 +89,12 @@ async function main() {
     logger,
     tokenService: createTokenService(env),
     roomManager,
+    moderation,
   });
   const sweeper = setInterval(() => {
     roomManager.sweepIdle();
     persistence.purgeExpired();
+    void chatService.purgeOld().catch((err) => logger.warn({ err }, 'chat purge failed'));
   }, 60_000);
   sweeper.unref();
   server.listen(env.PORT, () => logger.info({ port: env.PORT }, 'server listening'));

@@ -16,6 +16,9 @@ import { createValidationService } from '../../src/services/validationService.js
 import { createMemoryEmailProvider } from '../../src/services/emailService.js';
 import { fixtureDictionary } from '../helpers/fixtures.js';
 import { letterSequence } from '../helpers/singleHelpers.js';
+import { createBlockService } from '../../src/services/blockService.js';
+import { createChatService } from '../../src/services/chatService.js';
+import { createModerationService } from '../../src/services/moderationService.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
 import { createTokenService } from '../../src/services/tokenService.js';
 import { createRealtime } from '../../src/sockets/realtime.js';
@@ -60,7 +63,11 @@ const stubJudge = {
     return { result: 'inconclusive', source: 'wikidata' };
   },
 };
+const blocks = createBlockService();
+const chatService = createChatService();
+const moderation = createModerationService();
 const roomManager = createRoomManager({
+  chat: { send: chatService.send, blockedSet: blocks.blockedSet },
   game: {
     validation: createValidationService({ dictionary }),
     store: createGameStore(),
@@ -78,6 +85,8 @@ const app = createApp({
   emailProvider,
   dictionary,
   roomManager,
+  moderation,
+  blocks,
   // Fixed letters so scores are predictable: T, C, S, A, B.
   pickLetter: letterSequence(['T', 'C', 'S', 'A', 'B']),
   authLimit: { limit: 1000 },
@@ -94,5 +103,6 @@ createRealtime({
   logger: createLogger(env),
   tokenService: createTokenService(env),
   roomManager,
+  moderation,
 });
 server.listen(port);

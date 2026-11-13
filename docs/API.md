@@ -122,3 +122,34 @@ The review ends when its time has elapsed **and** no check is pending (a check w
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `GET /api/admin/dictionary/overturned?min=3`   | `{ entries: [{ category, word, displayWord, source, overturnedCount }] }`, most overturned first           |
 | `DELETE /api/admin/dictionary/:category/:word` | 204; removes the word from the database and from memory. Overturned words are never removed automatically. |
+
+## Chat, reports, blocks, profile, history and leaderboards (Phase 9)
+
+**Socket events**
+
+| Event          | Direction | Payload and result                                                                                                                                                             |
+| -------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `chat:send`    | to server | `{ text }`; ack `{ message }`. Errors: `VALIDATION_ERROR` (empty, over 200), `INVALID_PHASE` (during a round), `MUTED`, `RATE_LIMITED` (more than 5 in 10 s), `ROOM_NOT_FOUND` |
+| `chat:history` | to client | `{ messages: [{ id, userId, nickname, avatarColor, text, at }] }`, last 50, without blocked senders; sent after create, join and rejoin                                        |
+| `chat:message` | to client | `{ message }` to every player who has not blocked the sender                                                                                                                   |
+
+Chat works in `LOBBY`, `REVIEW`, `ROUND_RESULT` and `GAME_OVER`. Text is plain; profanity is masked with asterisks.
+
+**REST (all need a signed-in user)**
+
+| Method and path                                            | Result                                                                                                                                        |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/reports`                                        | `{ targetUserId, context: chat\|nickname\|answer, refId?, reason, details? }` → 201 `{ id }`. `RATE_LIMITED` after 10 a day; 400 for yourself |
+| `GET /api/blocks`                                          | `{ blocks: [{ userId, nickname, avatarColor, blockedAt }] }`                                                                                  |
+| `POST /api/blocks`                                         | `{ userId }` → 201 with the new list (repeating is fine)                                                                                      |
+| `DELETE /api/blocks/:userId`                               | 204                                                                                                                                           |
+| `PATCH /api/users/me`                                      | `{ nickname?, avatarColor? }` → `{ user }`; 409 nickname taken, 400 reserved or unfriendly nickname or bad colour                             |
+| `GET /api/users/me/games?limit=20&cursor`                  | `{ games: [{ id, mode, rounds, score, rank, players, newPersonalBest, endedAt }], nextCursor }`, newest first                                 |
+| `GET /api/leaderboards/group?metric=wins\|points&limit=50` | `{ entries: [{ rank, userId, nickname, avatarColor, wins, points, games, isYou }], you }`; `you` is the caller's row even outside the list    |
+
+**Admin**
+
+| Method and path                      | Result                                                                                                      |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `GET /api/admin/reports?status=open` | `{ reports: [{ id, status, context, reason, details, snapshot, reporter, target, createdAt, handledAt }] }` |
+| `POST /api/admin/reports/:id/action` | `{ action: dismiss\|mute\|ban, hours? }` → `{ status }`; 409 when already handled; non-admins get 403       |

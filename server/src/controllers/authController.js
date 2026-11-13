@@ -50,6 +50,9 @@ export function createAuthController({ authService, env }) {
       res.status(204).end();
     },
 
+    async updateMe(req, res) {
+      res.json({ user: await authService.updateProfile(req.auth.userId, req.body) });
+    },
     async me(req, res) {
       res.json({ user: await authService.me(req.auth.userId) });
     },

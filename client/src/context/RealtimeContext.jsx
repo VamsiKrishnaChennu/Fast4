@@ -8,6 +8,8 @@ import {
   useState,
 } from 'react';
 import { io } from 'socket.io-client';
+import { LIMITS } from '@fastfour/shared';
+import * as socialApi from '../api/socialApi.js';
 import { getAccessToken, refreshAccessToken } from '../api/axiosClient.js';
 import { setServerOffset } from '../utils/serverClock.js';
 import { S } from '../utils/strings.js';
@@ -50,11 +52,20 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
   const [notice, setNotice] = useState(null);
   /** The last word check that could not run (only the player who asked sees it). */
   const [checkError, setCheckError] = useState(null);
+  /** The room's chat, newest last. Messages from blocked players are filtered when shown. */
+  const [chat, setChat] = useState([]);
+  /** Players this user blocked: [{ userId, nickname, avatarColor }]. */
+  const [blocked, setBlocked] = useState([]);
   const socketRef = useRef(null);
   const roomRef = useRef(null);
   useEffect(() => {
     roomRef.current = room;
   }, [room]);
+  /** Leaving a room empties the chat. Joining never does: the history may arrive before or after the join answer. */
+  const dropRoom = useCallback(() => {
+    setRoom(null);
+    setChat([]);
+  }, []);
 
   useEffect(() => {
     if (status !== 'authed') return undefined;
@@ -98,6 +109,14 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
       }
     });
     socket.on('room:state', (state) => setRoom(state));
+    socket.on('chat:history', ({ messages }) => setChat(messages));
+    socket.on('chat:message', ({ message }) =>
+      setChat((list) => [...list, message].slice(-LIMITS.CHAT_HISTORY)),
+    );
+    socialApi
+      .listBlocks()
+      .then(setBlocked)
+      .catch(() => {});
     socket.on('challenge:resolved', (result) => {
       if (result.outcome === 'error') setCheckError({ ...result, at: Date.now() });
     });
@@ -108,12 +127,12 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         type: reason === 'takeover' ? 'takeover' : 'removed',
         hostNickname: host?.nickname ?? '',
       });
-      setRoom(null);
+      dropRoom();
     });
     socket.on('error:notice', ({ code }) => {
       if (code === 'ROOM_CLOSED') {
         setNotice({ type: 'closed', hostNickname: '' });
-        setRoom(null);
+        dropRoom();
       }
     });
 
@@ -121,11 +140,13 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
       socket.removeAllListeners();
       socket.close();
       socketRef.current = null;
-      setRoom(null);
+      dropRoom();
+      setChat([]);
+      setBlocked([]);
       setNotice(null);
       setConnection('connecting');
     };
-  }, [status, socketFactory]);
+  }, [status, socketFactory, dropRoom]);
 
   /** Sends a request and resolves with the server's data; rejects with a RealtimeError. */
   const emitAck = useCallback(
@@ -157,6 +178,14 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
 
   const clearCheckError = useCallback(() => setCheckError(null), []);
 
+  const blockUser = useCallback(async (userId) => {
+    setBlocked(await socialApi.addBlock(userId));
+  }, []);
+  const unblockUser = useCallback(async (userId) => {
+    await socialApi.removeBlock(userId);
+    setBlocked((list) => list.filter((b) => b.userId !== userId));
+  }, []);
+
   const value = useMemo(
     () => ({
       connection,
@@ -178,7 +207,7 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         try {
           await emitAck('room:leave');
         } finally {
-          setRoom(null);
+          dropRoom();
         }
       },
       async updateSettings(settings) {
@@ -196,6 +225,11 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         emitAck('challenge:create', { roundIndex, targetUserId, category }),
       checkError,
       clearCheckError,
+      chat,
+      blocked,
+      blockUser,
+      unblockUser,
+      sendChat: (text) => emitAck('chat:send', { text }),
       async playAgain() {
         const data = await emitAck('game:playAgain');
         setRoom(data.room);
@@ -205,7 +239,19 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         setRoom(data.room);
       },
     }),
-    [connection, room, notice, emitAck, checkError, clearCheckError],
+    [
+      connection,
+      room,
+      notice,
+      emitAck,
+      checkError,
+      clearCheckError,
+      chat,
+      blocked,
+      blockUser,
+      unblockUser,
+      dropRoom,
+    ],
   );
 
   return <RealtimeContext.Provider value={value}>{children}</RealtimeContext.Provider>;

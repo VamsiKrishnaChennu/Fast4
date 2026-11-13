@@ -473,11 +473,12 @@ describe('ranks', () => {
     installFakeServer({
       ...base(),
       'GET /leaderboards/single': () => ({ data: { entries: [], you: null } }),
+      'GET /leaderboards/group': () => ({ data: { entries: [], you: null } }),
     });
     renderApp('/ranks');
     expect(await screen.findByText(/No finished games yet/)).toBeInTheDocument();
     await user.click(screen.getByRole('radio', { name: 'Group' }));
-    expect(screen.getByText(/Group ranks arrive/)).toBeInTheDocument();
+    expect(await screen.findByText(/No group games finished yet/)).toBeInTheDocument();
   });
 
   test('a failed load shows an error', async () => {

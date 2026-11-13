@@ -2758,3 +2758,271 @@
 .ff-review__note--show {
   display: block;
 }
+
+/* Chat, report and block (Phase 9) */
+.ff-chatfab {
+  position: fixed;
+  right: 16px;
+  bottom: 104px;
+  z-index: 30;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--ff-name);
+  color: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.ff-chatfab__count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 11px;
+  background: var(--ff-thing);
+  color: #fff;
+  font: 800 12px/22px var(--ff-font-heading);
+  text-align: center;
+}
+.ff-chatsheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.ff-chatsheet__close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+}
+.ff-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+.ff-chat__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-right: 48px;
+}
+.ff-chat__head h2 {
+  margin: 0;
+  font-size: 22px;
+}
+.ff-chat__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: min(46dvh, 340px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ff-chat__empty {
+  text-align: center;
+  margin: auto;
+}
+.ff-chat__msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.ff-chat__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ff-chat__name {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ff-muted);
+}
+.ff-chat__text {
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.ff-chat__msg.is-me .ff-chat__name {
+  color: var(--ff-name);
+}
+.ff-chat__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+.ff-chat__form .ff-btn {
+  min-height: 56px;
+  padding: 0 18px;
+}
+.ff-chat__notice {
+  margin: 0;
+  min-height: 0;
+  font-weight: 700;
+  color: var(--ff-place);
+}
+.ff-chat__notice:empty {
+  display: none;
+}
+.ff-chat__quote {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--ff-segment-bg);
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.ff-modal__actions--stack {
+  grid-template-columns: 1fr;
+}
+.ff-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+.ff-reason {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  font-weight: 700;
+}
+.ff-reason input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--ff-name);
+}
+.ff-textarea {
+  min-height: 72px;
+  padding: 12px 18px;
+  resize: none;
+  margin-bottom: 12px;
+}
+@media (min-width: 900px) {
+  .ff-chatfab {
+    bottom: 28px;
+  }
+  .ff-overlay--sheet:has(.ff-chatsheet) {
+    align-items: center;
+    padding: 24px;
+  }
+  .ff-chatsheet {
+    border-radius: 32px;
+  }
+}
+
+/* Profile, games and blocked players (Phase 9) */
+.ff-statgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+.ff-stat {
+  padding: 12px;
+  text-align: center;
+}
+.ff-stat dd {
+  margin: 0;
+  font: 800 26px/1.1 var(--ff-font-heading);
+}
+.ff-stat dt {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ff-muted);
+}
+.ff-games {
+  padding: 4px 16px;
+  margin-bottom: 16px;
+}
+.ff-games__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ff-game {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  border-bottom: 1px solid var(--ff-line);
+}
+.ff-game:last-child {
+  border-bottom: 0;
+}
+.ff-game__main {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+.ff-game__score {
+  font-family: var(--ff-font-heading);
+}
+.ff-blocklist {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 4px 16px;
+}
+.ff-blocklist__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  border-bottom: 1px solid var(--ff-line);
+}
+.ff-blocklist__row:last-child {
+  border-bottom: 0;
+}
+.ff-blocklist__name {
+  flex: 1 1 auto;
+  font-weight: 800;
+}
+.ff-editprofile {
+  text-align: left;
+}
+.ff-editprofile .ff-modal__actions {
+  margin-top: 14px;
+}
+@media (min-width: 900px) and (min-height: 600px) {
+  .ff-profile .ff-statgrid {
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 10px;
+  }
+  .ff-profile .ff-stat {
+    padding: 8px 4px;
+  }
+  .ff-profile .ff-stat dd {
+    font-size: 22px;
+  }
+  .ff-profile .ff-games {
+    max-height: 18dvh;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  .ff-profile .ff-game {
+    min-height: 44px;
+  }
+  .ff-profile .ff-row {
+    min-height: 50px;
+  }
+}
+
+.ff-deskhead {
+  display: none;
+}
+@media (min-width: 900px) {
+  .ff-deskhead {
+    display: block;
+    margin: 0 0 8px;
+  }
+}

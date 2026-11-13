@@ -129,3 +129,16 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Reason shown for a removed answer.** A challenged answer that is overturned is stored with the reason `challenged` and shows "Removed after a check" with a "Removed" badge.
 - **Single-player mode has no challenges** (playbook non-goal).
 - The e2e server uses a fake judge (`tiger` invalid, words starting `tz` valid, everything else inconclusive); it never calls the internet.
+
+## 2026-11-13 (Phase 9: chat, moderation, profile and group ranks)
+
+- **Chat is a button and a bottom sheet, not an inline panel**, in the lobby as well as in review, results and game over. Reason: the desktop lobby grid is tuned to fit the window without scrolling, and a fixed chat button keeps that layout untouched. The sheet header links to the Terms of Use.
+- **Delivery.** The room manager keeps the last 50 messages per room in memory, sends them as `chat:history` after join, create and rejoin, and sends each new message to every player who has not blocked the sender. Messages are also saved (`ChatMessage`) so a report can copy the text. `ChatMessage` has no TTL index (same reason as rooms and sessions); the server deletes messages older than 7 days at start-up and every minute.
+- **Blocking only hides.** Nobody leaves the room and no score changes. The client also hides messages already on screen at once.
+- **Reports** copy the message text (or the nickname) when sent, so later deletion or edits do not change what the admin sees. The reporter's 10 a day limit uses the server clock. Nobody can report themselves, and an admin account cannot be muted or banned through a report.
+- **Ban** also deletes the player's refresh sessions and closes their sockets with an `ACCOUNT_SUSPENDED` notice.
+- **`roomId` is still not stored on the Game.** The Game's `roomId` field is an ObjectId and room codes are not; history does not need it. Dropped from the list.
+- **Group leaderboard** reads the players' running stats (`groupWins`, `groupTotalScore`) and ranks ties equally; suspended players and players with no group games are left out.
+- **Not built in the screens:** reporting a nickname or an answer (API ready), and an admin screen for reports.
+
+Decision update: Chat opens from a round chat button as a bottom sheet in every phase where it is allowed (lobby included), instead of an inline panel in the lobby.

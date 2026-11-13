@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { SINGLE_ROUND_OPTIONS } from '@fastfour/shared';
 import { readApiError } from '../api/axiosClient.js';
 import * as singleApi from '../api/singleApi.js';
+import * as socialApi from '../api/socialApi.js';
 import Avatar from '../components/common/Avatar.jsx';
 import SegmentedControl from '../components/common/SegmentedControl.jsx';
 import { S } from '../utils/strings.js';
@@ -26,6 +27,99 @@ function Row({ entry, rounds, you }) {
       </span>
       <strong className="ff-rank__score">{entry.totalScore}</strong>
     </li>
+  );
+}
+
+/** Group ranks: every player's running wins or points, with the caller's own row marked. */
+function GroupRanks() {
+  const [metric, setMetric] = useState('wins');
+  const [loaded, setLoaded] = useState({ metric: '', data: null, error: '' });
+
+  useEffect(() => {
+    let live = true;
+    socialApi
+      .groupLeaderboard({ metric })
+      .then((data) => live && setLoaded({ metric, data, error: '' }))
+      .catch(
+        (err) =>
+          live &&
+          setLoaded({
+            metric,
+            data: null,
+            error: readApiError(err, S.errors.network, S.ranks.loadError).message,
+          }),
+      );
+    return () => {
+      live = false;
+    };
+  }, [metric]);
+  const { data, error } = loaded.metric === metric ? loaded : { data: null, error: '' };
+
+  const row = (e, you) => (
+    <li
+      key={`${you ? 'you-' : ''}${e.userId}`}
+      className={`ff-rank${e.isYou ? ' is-you' : ''}`}
+      data-testid="rank-row"
+    >
+      <span className={`ff-rank__pos ff-rank__pos--${e.rank <= 3 ? e.rank : 'n'}`}>{e.rank}</span>
+      <Avatar nickname={e.nickname} color={e.avatarColor ?? '#FFC247'} size={44} />
+      <span className="ff-rank__who">
+        <span className="ff-rank__name">{you ? S.ranks.you : e.nickname}</span>
+        <span className="ff-rank__sub">
+          {metric === 'wins' ? S.ranks.pointsCount(e.points) : S.ranks.winsCount(e.wins)}
+          {' · '}
+          {S.ranks.games(e.games)}
+        </span>
+      </span>
+      <strong className="ff-rank__score">{metric === 'wins' ? e.wins : e.points}</strong>
+    </li>
+  );
+
+  const inList = data?.entries.some((e) => e.isYou);
+  return (
+    <>
+      <div className="ff-chips">
+        {[
+          { value: 'wins', label: S.ranks.wins },
+          { value: 'points', label: S.ranks.points },
+        ].map((m) => (
+          <button
+            key={m.value}
+            type="button"
+            className="ff-chip"
+            aria-pressed={metric === m.value}
+            onClick={() => setMetric(m.value)}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      {error && (
+        <div className="ff-alert" role="alert">
+          {error}
+        </div>
+      )}
+      {!error && !data && (
+        <p className="ff-muted ff-center" role="status">
+          {S.loading}
+        </p>
+      )}
+      {data && data.entries.length === 0 && (
+        <p className="ff-muted ff-center" style={{ marginTop: 24 }}>
+          {S.ranks.groupEmpty}
+        </p>
+      )}
+      {data && data.entries.length > 0 && (
+        <ol className="ff-card ff-ranklist" aria-label={S.ranks.group}>
+          {data.entries.map((e) => row(e, false))}
+        </ol>
+      )}
+      {data?.you && !inList && (
+        <div className="ff-youbar" data-testid="you">
+          <ol className="ff-ranklist ff-ranklist--you">{row(data.you, true)}</ol>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -81,9 +175,7 @@ export default function RanksPage() {
         ]}
       />
       {tab === 'group' ? (
-        <p className="ff-muted ff-center" style={{ marginTop: 24 }}>
-          {S.ranks.groupSoon}
-        </p>
+        <GroupRanks />
       ) : (
         <>
           <div className="ff-chips">

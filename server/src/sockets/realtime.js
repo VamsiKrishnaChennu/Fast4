@@ -3,6 +3,7 @@ import {
   C2S,
   answerSchema,
   challengeSchema,
+  chatSendSchema,
   emptyPayloadSchema,
   roomCreateSchema,
   roomJoinSchema,
@@ -24,9 +25,10 @@ const FLOOD_PER_SECOND = 100;
  * @param {import('pino').Logger} deps.logger
  * @param {{ verifyAccess: (token: string) => { sub: string, tv?: number } }} deps.tokenService
  * @param {ReturnType<import('../services/roomManager.js').createRoomManager>} deps.roomManager
+ * @param {{ setDisconnect: Function }} [deps.moderation] told how to close a banned user's connections
  * @returns {{ io: import('socket.io').Server, shutdown: () => Promise<void> }}
  */
-export function createRealtime({ httpServer, env, logger, tokenService, roomManager }) {
+export function createRealtime({ httpServer, env, logger, tokenService, roomManager, moderation }) {
   const io = new Server(httpServer, {
     transports: ['websocket', 'polling'],
     pingInterval: 25_000,
@@ -48,6 +50,18 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
     socket: (socketId, event, payload) => io.to(socketId).emit(event, payload),
     join: (socketId, code) => io.sockets.sockets.get(socketId)?.join(code),
     leave: (socketId, code) => io.sockets.sockets.get(socketId)?.leave(code),
+  });
+
+  moderation?.setDisconnect((userId) => {
+    for (const socket of io.sockets.sockets.values()) {
+      if (socket.data.user?.id === userId) {
+        socket.emit('error:notice', {
+          code: 'ACCOUNT_SUSPENDED',
+          message: 'This account has been suspended.',
+        });
+        socket.disconnect(true);
+      }
+    }
   });
 
   io.use(async (socket, next) => {
@@ -156,6 +170,9 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
     );
     register(socket, C2S.CHALLENGE_CREATE, challengeSchema, (data) =>
       roomManager.challenge({ userId: user.id, ...data }),
+    );
+    register(socket, C2S.CHAT_SEND, chatSendSchema, ({ text }) =>
+      roomManager.sendChat({ userId: user.id, text }),
     );
     register(socket, C2S.REVIEW_SKIP, emptyPayloadSchema, () => {
       roomManager.skipReview({ userId: user.id });

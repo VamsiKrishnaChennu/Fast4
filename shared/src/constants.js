@@ -35,7 +35,21 @@ export const LIMITS = {
   ALONE_SECONDS: 30,
   AGE_MIN: 13,
   REPORT_REASONS: ['harassment', 'hate', 'sexual', 'spam', 'cheating', 'other'],
+  CHAT_HISTORY: 50,
+  CHAT_RATE_COUNT: 5,
+  CHAT_RATE_WINDOW_MS: 10_000,
+  REPORT_DETAILS_MAX: 200,
+  REPORTS_PER_DAY: 10,
+  MUTE_HOURS_DEFAULT: 24,
+  MUTE_HOURS_MAX: 24 * 30,
+  HISTORY_PAGE: 20,
 };
+
+/** Phases in which room chat works (it is off while players write so answers cannot be shared). */
+export const CHAT_PHASES = ['LOBBY', 'REVIEW', 'ROUND_RESULT', 'GAME_OVER'];
+
+export const REPORT_CONTEXTS = ['chat', 'nickname', 'answer'];
+export const REPORT_ACTIONS = ['dismiss', 'mute', 'ban'];
 
 export const SINGLE_ROUND_OPTIONS = [5, 10, 15, 20];
 

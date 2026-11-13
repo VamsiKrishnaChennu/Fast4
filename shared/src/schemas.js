@@ -4,6 +4,8 @@ import {
   AVATAR_COLORS,
   CATEGORIES,
   LIMITS,
+  REPORT_ACTIONS,
+  REPORT_CONTEXTS,
   ROOM_DEFAULTS,
   SINGLE_ROUND_OPTIONS,
 } from './constants.js';
@@ -152,4 +154,54 @@ export const challengeSchema = z
 /** answer:draft and answer:submit. */
 export const answerSchema = z
   .object({ roundIndex: z.number().int().min(0).max(LIMITS.ROUNDS_MAX), answers: typedAnswers })
+  .strict();
+
+/** chat:send. Length and emptiness are checked by the chat service so the error says why. */
+export const chatSendSchema = z.object({ text: z.string().max(2000) }).strict();
+
+export const reportCreateSchema = z
+  .object({
+    targetUserId: objectId,
+    context: z.enum(REPORT_CONTEXTS),
+    refId: objectId.optional(),
+    reason: z.enum(LIMITS.REPORT_REASONS),
+    details: z.string().trim().max(LIMITS.REPORT_DETAILS_MAX).optional(),
+  })
+  .strict();
+
+export const blockCreateSchema = z.object({ userId: objectId }).strict();
+export const blockParamsSchema = z.object({ userId: objectId }).strict();
+
+/** PATCH /users/me. The nickname is checked for length here and for profanity in the service. */
+export const profileUpdateSchema = z
+  .object({ nickname: nicknameSchema.optional(), avatarColor: z.enum(AVATAR_COLORS).optional() })
+  .strict()
+  .refine((v) => v.nickname !== undefined || v.avatarColor !== undefined, {
+    message: 'Nothing to change.',
+  });
+
+export const historyQuerySchema = z
+  .object({
+    limit: z.coerce.number().int().min(1).max(50).default(LIMITS.HISTORY_PAGE),
+    cursor: z.string().max(64).optional(),
+  })
+  .strict();
+
+export const GROUP_LEADERBOARD_METRICS = ['wins', 'points'];
+export const groupLeaderboardQuerySchema = z
+  .object({
+    metric: z.enum(GROUP_LEADERBOARD_METRICS).default('wins'),
+    limit: z.coerce.number().int().min(1).max(50).default(50),
+  })
+  .strict();
+
+export const reportListQuerySchema = z
+  .object({ status: z.enum(['open', 'dismissed', 'muted', 'banned']).default('open') })
+  .strict();
+export const reportParamsSchema = z.object({ id: objectId }).strict();
+export const reportActionSchema = z
+  .object({
+    action: z.enum(REPORT_ACTIONS),
+    hours: z.number().int().min(1).max(LIMITS.MUTE_HOURS_MAX).optional(),
+  })
   .strict();

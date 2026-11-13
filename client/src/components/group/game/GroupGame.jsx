@@ -4,6 +4,7 @@ import { S } from '../../../utils/strings.js';
 import Button from '../../common/Button.jsx';
 import Icon from '../../common/Icon.jsx';
 import Modal from '../../common/Modal.jsx';
+import ChatDock from '../ChatDock.jsx';
 import ConnectionBanner from '../ConnectionBanner.jsx';
 import GroupGameOver from './GroupGameOver.jsx';
 import GroupResults from './GroupResults.jsx';
@@ -67,6 +68,7 @@ export default function GroupGame({ room, me, onLeave }) {
     <>
       <ConnectionBanner />
       {screen}
+      <ChatDock me={me} phase={phase} />
       {confirming && (
         <Modal title={S.game.leaveTitle} icon={<Icon name="logout" size={32} />} tone="warning">
           <p className="ff-muted ff-modal__body">{S.game.leaveBody}</p>

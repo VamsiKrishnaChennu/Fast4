@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, PublicOnlyRoute, TabsLayout } from './components/layout/RouteGuards.jsx';
+import BlockedPage from './pages/BlockedPage.jsx';
 import ComingSoonPage from './pages/ComingSoonPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 import GroupPage from './pages/GroupPage.jsx';
@@ -33,6 +34,7 @@ export default function AppRoutes() {
           <Route path="/ranks" element={<RanksPage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
+        <Route path="/profile/blocked" element={<BlockedPage />} />
         <Route path="/single" element={<SingleSetupPage />} />
         <Route path="/single/play/:gameId" element={<SingleGamePage />} />
         <Route path="/group" element={<GroupPage />} />

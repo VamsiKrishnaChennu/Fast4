@@ -3,15 +3,15 @@
 | Phase                                                                  | Status           |
 | ---------------------------------------------------------------------- | ---------------- |
 | 0. Bootstrap                                                           | done (see notes) |
-| 1. Server foundation                                                   | not started      |
-| 2. Authentication (includes forgot/reset password)                     | not started      |
+| 1. Server foundation                                                   | done (see notes) |
+| 2. Authentication (includes forgot/reset password)                     | done (see notes) |
 | 3. Dictionary and validation                                           | done (see notes) |
 | 4. Scoring engine                                                      | done (see notes) |
 | 5. Single-player mode                                                  | done (see notes) |
 | 6. Rooms and lobby                                                     | done (see notes) |
-| 7. Group game engine                                                   | not started      |
-| 8. Challenges and appeals                                              | not started      |
-| 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | not started      |
+| 7. Group game engine                                                   | done (see notes) |
+| 8. Challenges and appeals                                              | done (see notes) |
+| 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | done (see notes) |
 | 10. Polish and PWA (no sounds)                                         | not started      |
 | 11. Hardening                                                          | not started      |
 | 12. Play Store readiness                                               | not started      |
@@ -85,3 +85,10 @@
 - Client: "N challenges left" chip, the help line, flags on other players' valid answers, Appeal on your own unknown word, the confirmation popup, the Checking state (shown to everyone and restored on reconnect), result badges (Confirmed, Removed, Accepted, Still invalid, Could not decide), the error notice, and the host's Skip waiting for a running check. Client tests: 134.
 - End-to-end: two browsers challenge and appeal live, with the result badges and counters checked on both screens, and no page scrollbar on desktop. E2E total: 56.
 - Not built yet: chat and moderation in the review (Phase 9).
+
+## Phase 9 notes
+
+- Server: `chatService` (trim and collapse spaces, 1 to 200 characters, 5 messages per 10 seconds, muted check, profanity masking, 7-day purge in code), `blockService` (cached block sets), `moderationService` (reports with a copied snapshot, 10 reports a day, admin dismiss / mute / ban; a ban sets `bannedAt`, bumps `tokenVersion`, deletes sessions and closes live sockets), `socialService` (paginated game history, group leaderboard by wins or points with the caller's rank), `PATCH /api/users/me`, `chat:send` / `chat:history` / `chat:message`, and models `ChatMessage`, `Report`, `Block`. Server tests: 459.
+- Client: chat button and sheet in the lobby, review, results and game over (hidden while a round runs), Report and Block from each message, Profile (stats, recent games with Show more, edit nickname and avatar, Blocked players link, dark mode, log out), the Blocked players screen with Unblock, and the Group tab of Ranks (wins or points, your row pinned when outside the list). Client tests: 143.
+- End-to-end: two browsers chat, report, block and unblock; profile edit and Group ranks, with no page scrollbar on desktop. E2E total: 60.
+- Not built yet: reporting a nickname or an answer from the screens (the API supports both), an admin screen for reports (API only), Delete account (Phase 12).
