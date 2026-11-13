@@ -3044,3 +3044,58 @@ a[href$='terms'],
 a[href$='privacy'] {
   text-decoration: underline;
 }
+
+/* ===== Legal and delete-account pages (Phase 12) ===== */
+.ff-legalpage__title {
+  margin: 8px 0 4px;
+}
+.ff-legalpage__date {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.ff-legaltext {
+  padding: 8px 20px 20px;
+  line-height: 1.55;
+  font-size: 16px;
+}
+.ff-legaltext h2 {
+  font-family: var(--ff-font-heading);
+  font-size: 20px;
+  margin: 20px 0 6px;
+}
+.ff-legaltext p,
+.ff-legaltext ul {
+  margin: 8px 0;
+}
+.ff-legaltext ul {
+  padding-left: 22px;
+}
+.ff-legaltext li {
+  margin: 6px 0;
+}
+@media (min-width: 900px) {
+  .ff-page--legal {
+    max-width: 760px;
+    justify-content: flex-start;
+    padding-top: 72px;
+  }
+  .ff-page--legal .ff-topbar {
+    left: 0;
+  }
+  .ff-page--legal .ff-legalpage__title {
+    font-size: 32px;
+  }
+}
+@media (min-width: 900px) and (min-height: 600px) {
+  /* The page itself never scrolls; the text card scrolls on its own. */
+  .ff-page--legal {
+    overflow: hidden;
+  }
+  .ff-page--legal .ff-legaltext {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+}

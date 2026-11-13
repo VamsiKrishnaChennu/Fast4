@@ -33,7 +33,15 @@ for (const scheme of ['light', 'dark']) {
   test(`no serious accessibility violations on any screen (${scheme})`, async ({ page }) => {
     test.setTimeout(120_000);
     await page.emulateMedia({ colorScheme: scheme });
-    for (const path of ['/', '/signup', '/login', '/forgot-password']) {
+    for (const path of [
+      '/',
+      '/signup',
+      '/login',
+      '/forgot-password',
+      '/privacy',
+      '/terms',
+      '/delete-account',
+    ]) {
       await page.goto(path);
       await page.waitForLoadState('networkidle');
       await scan(page, `${scheme} ${path}`);

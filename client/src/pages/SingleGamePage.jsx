@@ -11,6 +11,7 @@ import ResultView from '../components/single/ResultView.jsx';
 import SummaryView from '../components/single/SummaryView.jsx';
 import TossView from '../components/single/TossView.jsx';
 import WritingView from '../components/single/WritingView.jsx';
+import { useBackGuard } from '../hooks/useBackGuard.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useCountdown } from '../hooks/useCountdown.js';
 import { syncServerTime } from '../utils/serverClock.js';
@@ -60,6 +61,7 @@ export default function SingleGamePage() {
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const exit = useBackGuard(view !== 'summary', () => setLeaving(true));
   const answersRef = useRef(answers);
   useEffect(() => {
     answersRef.current = answers;
@@ -84,7 +86,7 @@ export default function SingleGamePage() {
         setView('summary');
         refreshUser();
       } else if (g.status !== 'in_progress') {
-        navigate('/single', { replace: true });
+        exit(() => navigate('/single', { replace: true }));
       } else if (g.round) {
         setRound(g.round);
         setAnswers(readDraft(gameId, g.round.index));
@@ -104,7 +106,7 @@ export default function SingleGamePage() {
       setError(readApiError(err, S.errors.network, S.single.loadError).message);
       setView('error');
     }
-  }, [gameId, navigate, refreshUser, startRound]);
+  }, [exit, gameId, navigate, refreshUser, startRound]);
 
   useEffect(() => {
     // Loads the game on arrival; state is only set after the request returns.
@@ -170,7 +172,7 @@ export default function SingleGamePage() {
     } catch {
       // Leaving should always work from the player's side.
     }
-    navigate('/home', { replace: true });
+    exit(() => navigate('/home', { replace: true }));
   };
 
   const playAgain = async () => {

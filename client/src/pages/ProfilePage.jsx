@@ -4,6 +4,7 @@ import { readApiError } from '../api/axiosClient.js';
 import * as socialApi from '../api/socialApi.js';
 import Avatar from '../components/common/Avatar.jsx';
 import AvatarPicker from '../components/common/AvatarPicker.jsx';
+import DeleteAccountModal from '../components/common/DeleteAccountModal.jsx';
 import Button from '../components/common/Button.jsx';
 import Icon from '../components/common/Icon.jsx';
 import Modal from '../components/common/Modal.jsx';
@@ -103,6 +104,7 @@ export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
   const [games, setGames] = useState({ list: [], next: null, error: '', loaded: false });
   const [more, setMore] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -246,10 +248,28 @@ export default function ProfilePage() {
           </span>
           <span className="ff-row__label">{S.profile.logout}</span>
         </button>
+        {user.role !== 'admin' && (
+          <button type="button" className="ff-row" onClick={() => setDeleting(true)}>
+            <span className="ff-row__icon">
+              <Icon name="trash" size={22} />
+            </span>
+            <span className="ff-row__label">{S.deleteAccount.row}</span>
+          </button>
+        )}
       </div>
+      <p className="ff-center ff-muted" style={{ fontSize: 13, marginTop: 12 }}>
+        <Link className="ff-link" to="/privacy">
+          {S.legal.privacy}
+        </Link>{' '}
+        &middot;{' '}
+        <Link className="ff-link" to="/terms">
+          {S.legal.terms}
+        </Link>
+      </p>
       <p className="ff-center ff-muted" style={{ fontSize: 13, marginTop: 12 }}>
         {S.profile.version(meta?.appVersion ?? '')}
       </p>
+      {deleting && <DeleteAccountModal onClose={() => setDeleting(false)} />}
       {editing && (
         <EditProfile
           onClose={(didSave) => {

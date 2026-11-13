@@ -8,6 +8,7 @@ import Modal from '../components/common/Modal.jsx';
 import ConnectionBanner from '../components/group/ConnectionBanner.jsx';
 import GroupGame from '../components/group/game/GroupGame.jsx';
 import Lobby from '../components/group/Lobby.jsx';
+import { useBackGuard } from '../hooks/useBackGuard.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useRealtime } from '../context/RealtimeContext.jsx';
 import { S } from '../utils/strings.js';
@@ -27,8 +28,14 @@ export default function RoomPage() {
   const { room, notice, connection, joinRoom, leaveRoom, clearNotice } = useRealtime();
   const [problem, setProblem] = useState(null);
   const [leaving, setLeaving] = useState(false);
+  const [askingBack, setAskingBack] = useState(false);
   const tried = useRef('');
   const inThisRoom = room?.code === code;
+  const inPlay = inThisRoom && !notice && !problem;
+  const exit = useBackGuard(true, (leaveNow) => {
+    if (inPlay) setAskingBack(true);
+    else leaveNow(() => navigate('/home', { replace: true }));
+  });
 
   // Opening a share link (or reloading) puts the player in the room once the connection is up.
   useEffect(() => {
@@ -44,12 +51,13 @@ export default function RoomPage() {
     } catch {
       // Leaving always works from the player's side; the server drops them on disconnect anyway.
     }
-    navigate('/home', { replace: true });
+    setAskingBack(false);
+    exit(() => navigate('/home', { replace: true }));
   }
 
   const goHome = () => {
     clearNotice();
-    navigate('/home', { replace: true });
+    exit(() => navigate('/home', { replace: true }));
   };
 
   if (notice) {
@@ -87,7 +95,9 @@ export default function RoomPage() {
             {notFound ? S.group.notFoundBody : (BLOCKED[problem] ?? S.errors.generic)}
           </p>
           <Button
-            onClick={() => navigate(notFound ? '/group?tab=join' : '/group', { replace: true })}
+            onClick={() =>
+              exit(() => navigate(notFound ? '/group?tab=join' : '/group', { replace: true }))
+            }
             data-autofocus
           >
             {notFound ? S.group.tryAgain : S.lobby.backHome}
@@ -111,9 +121,33 @@ export default function RoomPage() {
     );
   }
 
-  if (room.phase === 'LOBBY') {
-    return <Lobby room={room} me={user.id} onLeave={leave} busy={leaving} />;
-  }
+  const backModal = askingBack && (
+    <Modal
+      title={S.room.backTitle}
+      icon={<Icon name="logout" size={32} />}
+      tone="warning"
+      onClose={() => setAskingBack(false)}
+    >
+      <p className="ff-muted ff-modal__body">{S.room.backBody}</p>
+      <div className="ff-modal__actions">
+        <Button variant="secondary" onClick={() => setAskingBack(false)} data-autofocus>
+          {S.game.stay}
+        </Button>
+        <Button variant="red" onClick={leave} disabled={leaving}>
+          {S.room.backLeave}
+        </Button>
+      </div>
+    </Modal>
+  );
 
-  return <GroupGame room={room} me={user.id} onLeave={leave} />;
+  return (
+    <>
+      {room.phase === 'LOBBY' ? (
+        <Lobby room={room} me={user.id} onLeave={leave} busy={leaving} />
+      ) : (
+        <GroupGame room={room} me={user.id} onLeave={leave} />
+      )}
+      {backModal}
+    </>
+  );
 }

@@ -7,9 +7,9 @@ const COOKIE_PATH = '/api/auth';
 
 /**
  * Thin HTTP layer over the auth service.
- * @param {{ authService: object, env: object }} deps
+ * @param {{ authService: object, deletionService: object, env: object }} deps
  */
-export function createAuthController({ authService, env }) {
+export function createAuthController({ authService, deletionService, env }) {
   const cookieOptions = {
     httpOnly: true,
     secure: env.COOKIE_SECURE,
@@ -52,6 +52,11 @@ export function createAuthController({ authService, env }) {
 
     async updateMe(req, res) {
       res.json({ user: await authService.updateProfile(req.auth.userId, req.body) });
+    },
+    async deleteMe(req, res) {
+      await deletionService.deleteAccount(req.auth.userId, req.body.password);
+      res.clearCookie(REFRESH_COOKIE, cookieOptions);
+      res.status(204).end();
     },
     async me(req, res) {
       res.json({ user: await authService.me(req.auth.userId) });

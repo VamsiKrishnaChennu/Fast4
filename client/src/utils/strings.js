@@ -158,10 +158,53 @@ export const S = {
     you: 'You',
     unread: (n) => `${n} new messages`,
   },
-  soon: {
-    title: 'Coming soon',
-    body: 'This part of Fast Four is still being built.',
-    home: 'Back to home',
+  room: {
+    backTitle: 'Leave this room?',
+    backBody:
+      'You will leave the room and its game. You can rejoin a room that has not started with its code.',
+    backLeave: 'Leave room',
+  },
+  legal: {
+    supportFallback: 'creatiquework@gmail.com',
+    effective: (date) => `Last updated ${date}`,
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Use',
+  },
+  deleteAccount: {
+    title: 'Delete account',
+    row: 'Delete account',
+    intro:
+      'You can delete your Fast Four account and personal data here, any time. This cannot be undone.',
+    deletedTitle: 'What is deleted',
+    deleted: [
+      'Your account, nickname, email or phone number, and avatar',
+      'Your sign-in sessions on every device',
+      'Your chat messages, blocks and reports you sent',
+      'Your solo games, scores and leaderboard entries',
+    ],
+    keptTitle: 'What stays',
+    kept: [
+      'Group games you played stay so other players keep their results. Your entry becomes "Deleted player", is no longer linked to you, and the words you typed are removed.',
+      'Server logs are kept up to 14 days and backups up to 30 days, then removed.',
+    ],
+    loginFirst: 'To delete your account, log in first.',
+    login: 'Log in to delete my account',
+    cannotLogin: (email) =>
+      `Cannot log in? Email ${email} from the address on your account. We will delete it after checking it is yours, within 30 days.`,
+    button: 'Delete my account',
+    modalTitle: 'Delete your account?',
+    modalBody:
+      'Your account, solo games, chat messages and blocks will be deleted for good. Your group game entries become "Deleted player". Enter your password to confirm.',
+    password: 'Password',
+    cancel: 'Keep my account',
+    confirm: 'Delete my account',
+    deleting: 'Deleting...',
+    failed: 'Could not delete your account. Try again.',
+    doneTitle: 'Your account has been deleted',
+    doneBody: 'Your personal data has been removed. Thanks for playing Fast Four.',
+    adminNote: 'Admin accounts cannot be deleted here.',
+    home: 'Back to start',
+    legalLinks: 'See our',
   },
   notFound: { title: 'Page not found', body: 'That page does not exist.', home: 'Go home' },
   loading: 'Loading...',

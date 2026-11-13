@@ -110,7 +110,7 @@ function GroupRanks() {
         </p>
       )}
       {data && data.entries.length > 0 && (
-        <ol className="ff-card ff-ranklist" aria-label={S.ranks.group}>
+        <ol className="ff-card ff-ranklist" aria-label={S.ranks.group} tabIndex={0}>
           {data.entries.map((e) => row(e, false))}
         </ol>
       )}
@@ -215,7 +215,7 @@ export default function RanksPage() {
             </p>
           )}
           {data && data.entries.length > 0 && (
-            <ol className="ff-card ff-ranklist" aria-label={S.ranks.title}>
+            <ol className="ff-card ff-ranklist" aria-label={S.ranks.title} tabIndex={0}>
               {data.entries.map((e) => (
                 <Row key={e.userId} entry={e} rounds={rounds} />
               ))}

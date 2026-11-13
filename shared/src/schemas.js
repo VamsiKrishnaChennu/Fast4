@@ -61,6 +61,11 @@ export const loginSchema = z
   })
   .strict();
 
+/** DELETE /users/me: the password is asked again as confirmation. */
+export const deleteAccountSchema = z
+  .object({ password: z.string().min(1, 'Enter your password.').max(AUTH.PASSWORD_MAX) })
+  .strict();
+
 export const forgotSchema = z.object({ email: emailSchema }).strict();
 
 export const resetSchema = z

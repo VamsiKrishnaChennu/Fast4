@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  deleteAccountSchema,
   forgotSchema,
   loginSchema,
   profileUpdateSchema,
@@ -46,6 +47,13 @@ export function authRoutes({ controller, auth, authLimiter }) {
     auth.requireAuth,
     validate({ body: profileUpdateSchema }),
     asyncHandler(controller.updateMe),
+  );
+  router.delete(
+    '/users/me',
+    authLimiter,
+    auth.requireAuth,
+    validate({ body: deleteAccountSchema }),
+    asyncHandler(controller.deleteMe),
   );
   return router;
 }

@@ -158,3 +158,8 @@ Chat works in `LOBBY`, `REVIEW`, `ROUND_RESULT` and `GAME_OVER`. Text is plain; 
 
 - `GET /api/admin/metrics` (admin only; 401 without a token, 403 for others) returns `{uptimeSeconds, rooms, sockets, eventLoopLagMs: {mean, p99}, memoryMb: {rss, heapUsed}, games: {gamesStarted, gamesFinished, gamesAbandoned}}`.
 - Every socket event is limited to 30 per 10 seconds per socket. Over the limit the ack is `{ok: false, error: {code: 'RATE_LIMITED', message}}` and the handler does not run. More than 100 events in one second still disconnects the socket.
+
+## Account deletion and the Android link file (Phase 12)
+
+- `DELETE /api/users/me` (Bearer token) with `{ password }`. 204 and the cookie is cleared. 400 `VALIDATION_ERROR` with field `password` when the password is wrong; 403 `FORBIDDEN` for an admin account; 429 after 10 attempts in 15 minutes. It deletes or anonymizes data as listed in `docs/DELETION.md`. A connected socket receives `error:notice` with code `ACCOUNT_DELETED` and is disconnected.
+- `GET /.well-known/assetlinks.json` is public. It answers `[{ relation: ['delegate_permission/common.handle_all_urls'], target: { namespace: 'android_app', package_name, sha256_cert_fingerprints } }]` built from `ANDROID_PACKAGE_NAME` and `ANDROID_SHA256_FINGERPRINTS`, and 404 when they are not set.

@@ -17,6 +17,7 @@ import { createMetricsService } from './services/metricsService.js';
 import { createBlockService } from './services/blockService.js';
 import { createChatService } from './services/chatService.js';
 import { createModerationService } from './services/moderationService.js';
+import { createDeletionService } from './services/deletionService.js';
 import { createRoomManager } from './services/roomManager.js';
 import { createRoomPersistence } from './services/roomPersistence.js';
 import { createTokenService } from './services/tokenService.js';
@@ -80,6 +81,7 @@ async function main() {
     },
   });
 
+  const deletion = createDeletionService({ roomManager, logger });
   const app = createApp({
     env,
     logger,
@@ -93,6 +95,7 @@ async function main() {
     blocks,
     metrics,
     reporter,
+    deletion,
     clientDist: existsSync(clientDist) ? clientDist : undefined,
   });
   const server = http.createServer(app);
@@ -103,6 +106,7 @@ async function main() {
     tokenService: createTokenService(env),
     roomManager,
     moderation,
+    deletion,
     reporter,
   });
   live.io = realtime.io;

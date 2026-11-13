@@ -23,6 +23,8 @@ import { createAuthService } from './services/authService.js';
 import { createEmailProvider } from './services/emailService.js';
 import { createTokenService } from './services/tokenService.js';
 import { metricsRoutes } from './routes/metrics.js';
+import { assetLinksRoutes } from './routes/assetlinks.js';
+import { createDeletionService } from './services/deletionService.js';
 import { createSocialService } from './services/socialService.js';
 import { socialRoutes } from './routes/social.js';
 import { metaRoutes } from './routes/meta.js';
@@ -51,6 +53,7 @@ function socketOrigins(appOrigin) {
  * @param {{ list: Function }} [options.blocks] who blocked whom
  * @param {{ snapshot: Function }} [options.metrics] numbers for the admin metrics endpoint
  * @param {{ capture: Function }} [options.reporter] receives unexpected 500 errors
+ * @param {{ deleteAccount: Function }} [options.deletion] account deletion; defaults to one that also leaves the live room
  * @param {Function} [options.pickLetter] letter chooser for games; tests pass a fixed sequence
  * @returns {import('express').Express}
  */
@@ -70,6 +73,7 @@ export function createApp({
   blocks,
   metrics,
   reporter,
+  deletion = createDeletionService({ roomManager, logger }),
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -129,7 +133,7 @@ export function createApp({
   app.use(
     '/api',
     authRoutes({
-      controller: createAuthController({ authService, env }),
+      controller: createAuthController({ authService, deletionService: deletion, env }),
       auth: createAuth({ tokenService }),
       authLimiter: createAuthLimiter(authLimit),
     }),
@@ -170,8 +174,8 @@ export function createApp({
     );
   }
   if (metrics) app.use('/api', metricsRoutes({ metrics, auth: createAuth({ tokenService }) }));
-  // Later phases register their API routers here, and /.well-known/assetlinks.json (Phase 12)
-  // BEFORE the single-page-app fallback below.
+  // The Android link file goes BEFORE the single-page-app fallback below.
+  app.use(assetLinksRoutes(env));
 
   if (clientDist) serveClient(app, clientDist);
   app.use(notFound);

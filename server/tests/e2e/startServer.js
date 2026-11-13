@@ -18,6 +18,7 @@ import { fixtureDictionary } from '../helpers/fixtures.js';
 import { letterSequence } from '../helpers/singleHelpers.js';
 import { createBlockService } from '../../src/services/blockService.js';
 import { createChatService } from '../../src/services/chatService.js';
+import { createDeletionService } from '../../src/services/deletionService.js';
 import { createModerationService } from '../../src/services/moderationService.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
 import { createTokenService } from '../../src/services/tokenService.js';
@@ -43,6 +44,8 @@ const env = loadEnv({
   JWT_REFRESH_SECRET: 'e2e-refresh-secret-e2e-refresh-secret-2',
   SUPPORT_EMAIL: 'support@example.com',
   APP_VERSION: 'e2e',
+  ANDROID_PACKAGE_NAME: 'com.npatarena.app',
+  ANDROID_SHA256_FINGERPRINTS: Array.from({ length: 32 }, () => 'AB').join(':'),
   CLIENT_ORIGIN: `http://localhost:${port}`,
   // Short rounds and a short toss keep game tests fast. Honored only because NODE_ENV is test.
   TEST_ROUND_SECONDS: '10',
@@ -77,6 +80,7 @@ const roomManager = createRoomManager({
     dictionary,
   },
 });
+const deletion = createDeletionService({ roomManager, logger: createLogger(env) });
 const app = createApp({
   env,
   logger: createLogger(env),
@@ -87,6 +91,7 @@ const app = createApp({
   roomManager,
   moderation,
   blocks,
+  deletion,
   // Fixed letters so scores are predictable: T, C, S, A, B.
   pickLetter: letterSequence(['T', 'C', 'S', 'A', 'B']),
   authLimit: { limit: 1000 },
@@ -104,5 +109,6 @@ createRealtime({
   tokenService: createTokenService(env),
   roomManager,
   moderation,
+  deletion,
 });
 server.listen(port);

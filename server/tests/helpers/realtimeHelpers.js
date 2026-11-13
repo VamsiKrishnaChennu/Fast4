@@ -8,6 +8,7 @@ import { createBlockService } from '../../src/services/blockService.js';
 import { createChatService } from '../../src/services/chatService.js';
 import { createMetricsService } from '../../src/services/metricsService.js';
 import { createModerationService } from '../../src/services/moderationService.js';
+import { createDeletionService } from '../../src/services/deletionService.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
 import { createValidationService } from '../../src/services/validationService.js';
 import { createRoomPersistence } from '../../src/services/roomPersistence.js';
@@ -83,7 +84,17 @@ export async function startRealtimeServer({
     roomCount: () => roomManager.size(),
     socketCount: () => live.io?.engine.clientsCount ?? 0,
   });
-  const app = createApp({ env, logger, dictionary, roomManager, moderation, blocks, metrics });
+  const deletion = createDeletionService({ roomManager, logger });
+  const app = createApp({
+    env,
+    logger,
+    dictionary,
+    roomManager,
+    moderation,
+    blocks,
+    metrics,
+    deletion,
+  });
   const server = http.createServer(app);
   const realtime = createRealtime({
     httpServer: server,
@@ -92,6 +103,7 @@ export async function startRealtimeServer({
     tokenService: createTokenService(env),
     roomManager,
     moderation,
+    deletion,
   });
   live.io = realtime.io;
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));

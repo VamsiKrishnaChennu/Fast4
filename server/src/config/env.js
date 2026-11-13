@@ -79,6 +79,36 @@ const schema = z
         message: 'must differ from JWT_ACCESS_SECRET',
       });
     }
+    const hasPackage = env.ANDROID_PACKAGE_NAME !== undefined;
+    const hasPrints = env.ANDROID_SHA256_FINGERPRINTS !== undefined;
+    if (hasPackage !== hasPrints) {
+      ctx.addIssue({
+        code: 'custom',
+        path: [hasPackage ? 'ANDROID_SHA256_FINGERPRINTS' : 'ANDROID_PACKAGE_NAME'],
+        message: 'ANDROID_PACKAGE_NAME and ANDROID_SHA256_FINGERPRINTS go together',
+      });
+    }
+    if (hasPackage && !/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/i.test(env.ANDROID_PACKAGE_NAME)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['ANDROID_PACKAGE_NAME'],
+        message: 'must look like com.example.app',
+      });
+    }
+    if (hasPrints) {
+      const prints = env.ANDROID_SHA256_FINGERPRINTS.split(',')
+        .map((f) => f.trim())
+        .filter(Boolean);
+      const ok =
+        prints.length > 0 && prints.every((f) => /^([0-9A-F]{2}:){31}[0-9A-F]{2}$/i.test(f));
+      if (!ok) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['ANDROID_SHA256_FINGERPRINTS'],
+          message: 'must be comma-separated SHA-256 fingerprints like AA:BB:...:FF (32 pairs)',
+        });
+      }
+    }
     if (prod && env.COOKIE_SECURE === false) {
       ctx.addIssue({
         code: 'custom',

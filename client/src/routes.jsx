@@ -1,13 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, PublicOnlyRoute, TabsLayout } from './components/layout/RouteGuards.jsx';
 import BlockedPage from './pages/BlockedPage.jsx';
-import ComingSoonPage from './pages/ComingSoonPage.jsx';
+import DeleteAccountPage from './pages/DeleteAccountPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
 import GroupPage from './pages/GroupPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import PrivacyPage from './pages/PrivacyPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import RanksPage from './pages/RanksPage.jsx';
 import RoomPage from './pages/RoomPage.jsx';
@@ -15,6 +16,7 @@ import SingleGamePage from './pages/SingleGamePage.jsx';
 import SingleSetupPage from './pages/SingleSetupPage.jsx';
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
+import TermsPage from './pages/TermsPage.jsx';
 
 export default function AppRoutes() {
   return (
@@ -26,8 +28,9 @@ export default function AppRoutes() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Route>
       <Route path="/reset-password" element={<ResetPasswordPage />} />
-      <Route path="/terms" element={<ComingSoonPage />} />
-      <Route path="/privacy" element={<ComingSoonPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/delete-account" element={<DeleteAccountPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<TabsLayout />}>
           <Route path="/home" element={<HomePage />} />

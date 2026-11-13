@@ -79,6 +79,14 @@ export function AuthProvider({ children }) {
         setUser(next);
         return next;
       },
+      /** Deletes the account. `onDone` runs before the signed-out screen shows, to choose where to go. */
+      async deleteAccount(password, onDone) {
+        await authApi.deleteAccount(password);
+        onDone?.();
+        setLoggedOut(true);
+        setUser(null);
+        setStatus('anon');
+      },
       async logout() {
         try {
           await authApi.logout();

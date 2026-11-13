@@ -30,6 +30,7 @@ const BUCKET = { capacity: 30, windowMs: 10_000 };
  * @param {ReturnType<import('../services/roomManager.js').createRoomManager>} deps.roomManager
  * @param {{ capture: Function }} [deps.reporter] receives unexpected handler errors
  * @param {{ setDisconnect: Function }} [deps.moderation] told how to close a banned user's connections
+ * @param {{ setDisconnect: Function }} [deps.deletion] told how to close a deleted user's connections
  * @returns {{ io: import('socket.io').Server, shutdown: () => Promise<void> }}
  */
 export function createRealtime({
@@ -39,6 +40,7 @@ export function createRealtime({
   tokenService,
   roomManager,
   moderation,
+  deletion,
   reporter,
 }) {
   const io = new Server(httpServer, {
@@ -62,6 +64,18 @@ export function createRealtime({
     socket: (socketId, event, payload) => io.to(socketId).emit(event, payload),
     join: (socketId, code) => io.sockets.sockets.get(socketId)?.join(code),
     leave: (socketId, code) => io.sockets.sockets.get(socketId)?.leave(code),
+  });
+
+  deletion?.setDisconnect((userId) => {
+    for (const socket of io.sockets.sockets.values()) {
+      if (socket.data.user?.id === userId) {
+        socket.emit('error:notice', {
+          code: 'ACCOUNT_DELETED',
+          message: 'This account has been deleted.',
+        });
+        socket.disconnect(true);
+      }
+    }
   });
 
   moderation?.setDisconnect((userId) => {

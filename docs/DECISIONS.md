@@ -161,3 +161,18 @@ Decision update: Phase 10 uses a hand-written service worker (no vite-plugin-pwa
 - **Soak script lives in `server/tests/soak/`** and uses the real socket test harness, so it needs a test MongoDB.
 
 Decision update: Sockets are limited to 30 events per 10 seconds each, and no Sentry packages are installed (hook only).
+
+## 2026-11-13 (Phase 12: Play Store readiness)
+
+- **Play rules re-checked on 2026-11-13** (web; the owner must confirm in Play Console before submitting):
+  - New apps and updates must target Android 16 (API level 36) since 31 August 2026 (extension to 1 November 2026 was available on request), so use a current Bubblewrap and check its target level.
+  - A personal developer account created after 13 November 2023 needs a closed test with at least 12 testers opted in for 14 continuous days before applying for production access (organization accounts are exempt). Internal testing does not count.
+  - July 2026 policy updates: unrated apps are not allowed (fill in the content rating questionnaire); anonymous and random chat apps come under the age-restricted and child-safety policies from 26 August 2026 (Fast Four has room-code chat between players who joined the same room, not anonymous or random chat, but read the policy and answer the Console questions with that in mind); apps must be registered in Play Console for Android developer verification.
+- **One legal text, two outputs.** The privacy policy and terms are written once in `client/src/legal/` and rendered by the pages; `docs/legal/*.md` is generated (`npm run docs:legal`) and a test checks they match. They state Chennu Vamsi Krishna, India, as publisher, `creatiquework@gmail.com` as contact, governing law of India, and no Sentry (nothing in the policy about crash reports). They need a human review. One point for the reviewer: some laws set a higher age of digital consent than 13 (for example India's DPDP Act uses 18); the app is 13+ as decided.
+- **Deleted group-game entries get a new random id per deleted player**, not one shared placeholder id. Two deleted players in the same game would otherwise break the unique `(roundId, userId)` index and be indistinguishable. The id belongs to no account.
+- **Reports about a deleted player are deleted too**, along with reports they filed. A banned player who deletes the account loses the moderation record, but nothing stops them signing up again anyway.
+- **Admin accounts cannot be deleted through the API.** Remove them by hand in the database.
+- **Back-button guard instead of router blockers.** The app uses the plain browser router, which has no blocker hook, so a small history guard (`useBackGuard`) adds one history entry while a room or solo game is open. Every way out goes through its `exit` function so no stray page is left behind. Android's Back button in the TWA is the browser Back.
+- **No `vite-plugin-pwa` or extra packages were added.** The delete confirmation, legal pages and guard use what was already installed.
+
+Decision update: Phase 12 uses one legal text for the web pages and docs, per-player random ids for deleted group entries, no admin self-deletion through the API, and a history-based Back guard in rooms and solo games.

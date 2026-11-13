@@ -30,3 +30,10 @@ export async function me() {
 
 export const forgot = (email) => plainClient.post('/auth/forgot', { email });
 export const reset = (payload) => plainClient.post('/auth/reset', payload);
+
+/** Deletes the signed-in account after the password is confirmed. */
+export async function deleteAccount(password) {
+  await api.delete('/users/me', { data: { password } });
+  setAccessToken(null);
+  setSessionHint(false);
+}

@@ -14,8 +14,7 @@
 | 9. Chat, moderation, leaderboards, profile (includes dark-mode toggle) | done (see notes) |
 | 10. Polish and PWA (no sounds)                                         | done (see notes) |
 | 11. Hardening                                                          | done (see notes) |
-| 11. Hardening                                                          | not started      |
-| 12. Play Store readiness                                               | not started      |
+| 12. Play Store readiness                                               | done (see notes) |
 | 13. Release readiness                                                  | not started      |
 
 ## Phase 0 notes
@@ -110,3 +109,14 @@
 - Security tests (`security.test.js`): tampered, wrong-secret, `alg: none`, expired and old-version tokens; Mongo operator injection on login and signup; unknown fields rejected; production headers (HSTS, CSP, nosniff, referrer and permissions policy, no x-powered-by, no CORS); rate limits; socket abuse; admin-only metrics. Server tests: 479; client 149; end-to-end 74.
 - Soak: `npm run soak -w server -- --minutes 30` (needs `TEST_MONGODB_URI`) churns rooms, joins, chat and leaves through real sockets and fails on errors, leftover rooms or heap growth over 20%. A 2-minute run here gave 115 cycles, 0 failures, 0 rooms left, heap flat at 43 MB. **The 30-minute run is for staging, as is a load test with many concurrent rooms.**
 - Not done: Sentry packages are deliberately not installed (hook only; see decisions). The "please refresh" version banner and service-worker update prompt are left for Phase 13.
+
+## Phase 12 notes
+
+- **Legal pages:** public `/privacy`, `/terms` and `/delete-account` (no login), linked from signup, the welcome screen, Profile and the chat sheet. The text lives once in `client/src/legal/` and `docs/legal/*.md` is generated from it (`npm run docs:legal`; a client test fails if they drift apart). **A person, ideally a lawyer or a reputable policy generator, must review both texts before launch; they are drafts, not legal advice.**
+- **Account deletion:** `DELETE /api/users/me` (password confirm) via Profile, Delete account, and on the web at `/delete-account` (log in, then delete). It deletes the account, sessions, chat, blocks, reports and solo games, and anonymizes group-game entries to "Deleted player". It also removes the player from a live room and closes their sockets. Details: `docs/DELETION.md`. Admin accounts cannot be deleted this way.
+- **Android link file:** `GET /.well-known/assetlinks.json` from `ANDROID_PACKAGE_NAME` and `ANDROID_SHA256_FINGERPRINTS` (404 until both are set; startup fails on a half-set or malformed pair).
+- **Back button:** a history guard asks "Leave this room?" in a room and "Leave this game?" in a running solo game, then leaves without leaving a stray page in the history. On Home Back exits the app (nothing is in the way).
+- **Bubblewrap project:** `android/README.md` (exact commands, key and fingerprint steps) and `android/twa-manifest.template.json`. **Not built here:** it needs Java, the Android SDK, a keystore and your live `APP_ORIGIN`.
+- **Play paperwork:** `docs/PLAY_DATA_SAFETY.md` (worksheet), `docs/play-listing/listing.md` and `assets.md` (text and asset list).
+- **Tests:** server 489, client 159, end-to-end 112 (new `play.spec.js`, and the three public pages in the accessibility scan).
+- **Still yours (needs a device or an account):** build the TWA and run it on a real Android phone (full screen, Back button, rotation, sign-in survives a restart); create the Play developer account; recruit closed-test testers; make the feature graphic and screenshots; buy a domain before the closed test; confirm the "Fast Four" name is free.
