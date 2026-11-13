@@ -81,3 +81,44 @@ The server runs every round: letter, clock, judging, scoring and standings. Ever
 **Events to the room:** `round:toss { index, startsAt, revealAt }` (no letter), `round:started { index, letter, endsAt, serverNow }`, `round:playerFinished { userId, order }` (no answers), `round:review` (the `review` object), `round:results` (the `results` object), `game:over` (the `gameOver` object). Other players' answers appear only in `round:review` and in `room:state` during `REVIEW`.
 
 **Saved:** a `Game` when the game starts, a `Round` when writing starts, the `Submission` documents when the round is judged, and the final standings plus each player's stats (`gamesPlayed`, `groupGamesPlayed`, `groupWins`, `groupTotalScore`, `uniqueAnswers`) when the game ends.
+
+## Challenges and appeals (Phase 8)
+
+No voting: one outside word check decides, and the result is final. A player gets 3 challenges **and appeals combined** per game; a check that could not run is not counted.
+
+**Client to server** (acknowledgement `{ ok: true, data: { challengeId, type } }` right after validation; the check then runs in the background)
+
+| Event              | Payload                                  | Errors                                                                                                                                                                                                                       |
+| ------------------ | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `challenge:create` | `{ roundIndex, targetUserId, category }` | `VALIDATION_ERROR`, `INVALID_PHASE` (not in the review of that round, or the review is closing), `CHALLENGE_DUPLICATE` (that answer was already challenged, pending or resolved), `CHALLENGE_NOT_ALLOWED`, `CHALLENGE_LIMIT` |
+
+The server decides the type: someone else's **valid** answer is a `challenge`; your own answer rejected only for `not_in_dictionary` is an `appeal`. Blanks, rule failures (wrong letter, too short) and your own valid answers cannot be checked.
+
+**Server to everyone in the room**
+
+| Event                                      | Payload                                                                                                                                                                                                                                 |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `challenge:pending`                        | `{ challengeId, roundIndex, targetUserId, initiatorId, category, type }`                                                                                                                                                                |
+| `challenge:resolved`                       | `{ challengeId, roundIndex, targetUserId, initiatorId, category, type, outcome, source, countsAsFailed, bonusWinnerId, submission, submissions, standings, challengesLeft }` with `outcome` of `overturned`, `upheld` or `inconclusive` |
+| `challenge:resolved` (check could not run) | `{ challengeId, roundIndex, targetUserId, initiatorId, category, type, outcome: 'error', challengesLeft }`; nothing changes and it is not counted, so the player may try again while the review is open                                 |
+
+`submission` is the target's row, `submissions` every row (the first-finisher bonus can move to a different player), `challengesLeft` is the initiator's number left.
+
+| Type      | Check says   | Outcome      | Effect                                                                                                          |
+| --------- | ------------ | ------------ | --------------------------------------------------------------------------------------------------------------- |
+| challenge | invalid      | overturned   | answer becomes invalid (`challenge_invalid`); scores and bonus recomputed; the word's `overturnedCount` goes up |
+| challenge | valid        | upheld       | initiator gets a failed challenge                                                                               |
+| appeal    | valid        | overturned   | answer becomes valid (`challenge_valid`); word added to the dictionary (source `external`)                      |
+| appeal    | invalid      | upheld       | owner gets a failed challenge                                                                                   |
+| either    | inconclusive | inconclusive | verdict stays; counts as a failed challenge                                                                     |
+
+**Room snapshot additions during `REVIEW`:** `openChallenges[]` (checks still running, so a reconnecting player sees "Checking"), `checked[]` (`{ targetUserId, category, type, outcome }` already resolved), `challengesLeft` (the viewer's), and `review.closing` (the time is up but a check is still running; no new challenges are accepted).
+
+The review ends when its time has elapsed **and** no check is pending (a check waits at most `JUDGE_TIMEOUT_MS`). The host's `review:skip` is refused with `INVALID_PHASE` while a check is running.
+
+**Admin (role `admin`, otherwise 401 or 403)**
+
+| Method and path                                | Result                                                                                                     |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `GET /api/admin/dictionary/overturned?min=3`   | `{ entries: [{ category, word, displayWord, source, overturnedCount }] }`, most overturned first           |
+| `DELETE /api/admin/dictionary/:category/:word` | 204; removes the word from the database and from memory. Overturned words are never removed automatically. |

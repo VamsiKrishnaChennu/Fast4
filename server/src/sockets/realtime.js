@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import {
   C2S,
   answerSchema,
+  challengeSchema,
   emptyPayloadSchema,
   roomCreateSchema,
   roomJoinSchema,
@@ -152,6 +153,9 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
     });
     register(socket, C2S.ANSWER_SUBMIT, answerSchema, (data) =>
       roomManager.submit({ userId: user.id, ...data }),
+    );
+    register(socket, C2S.CHALLENGE_CREATE, challengeSchema, (data) =>
+      roomManager.challenge({ userId: user.id, ...data }),
     );
     register(socket, C2S.REVIEW_SKIP, emptyPayloadSchema, () => {
       roomManager.skipReview({ userId: user.id });

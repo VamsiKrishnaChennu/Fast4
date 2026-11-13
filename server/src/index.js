@@ -8,6 +8,8 @@ import { EnvError, loadEnv, loadEnvFile } from './config/env.js';
 import { createLogger } from './config/logger.js';
 import { gameTiming } from './config/gameTiming.js';
 import { createDictionaryService } from './services/dictionaryService.js';
+import { createJudgeService } from './services/judgeService.js';
+import { createMongoJudgeCache } from './services/judgeCache.js';
 import { createGameStore } from './services/gameStore.js';
 import { pickLetter } from './services/letterService.js';
 import { createRoomManager } from './services/roomManager.js';
@@ -39,6 +41,9 @@ async function main() {
   await dictionary.init();
   logger.info({ words: dictionary.counts() }, 'dictionary loaded');
 
+  const judgeCache = createMongoJudgeCache({ logger });
+  await judgeCache.sweep();
+  const judge = createJudgeService({ env, cache: judgeCache });
   const persistence = createRoomPersistence({ logger });
   const abandoned = await persistence.abandonOpenRooms();
   if (abandoned > 0) logger.info({ abandoned }, 'rooms from the last run marked abandoned');
@@ -48,6 +53,8 @@ async function main() {
     game: {
       validation: createValidationService({ dictionary }),
       store: createGameStore(),
+      judge,
+      dictionary,
       pickLetter: (used) => pickLetter(used),
       timing: gameTiming(env),
       logger,

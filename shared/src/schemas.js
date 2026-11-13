@@ -140,6 +140,15 @@ const typedAnswers = z
   .object(Object.fromEntries(CATEGORIES.map((c) => [c, z.string().max(100).default('')])))
   .strict();
 
+/** challenge:create. The server decides whether it is a challenge or an appeal. */
+export const challengeSchema = z
+  .object({
+    roundIndex: z.number().int().min(0).max(LIMITS.ROUNDS_MAX),
+    targetUserId: z.string().min(1).max(64),
+    category: z.enum(CATEGORIES),
+  })
+  .strict();
+
 /** answer:draft and answer:submit. */
 export const answerSchema = z
   .object({ roundIndex: z.number().int().min(0).max(LIMITS.ROUNDS_MAX), answers: typedAnswers })

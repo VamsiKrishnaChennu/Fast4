@@ -198,9 +198,11 @@ const row = (n, answers, over = {}) => ({
 });
 const four = (name, place, animal, thing) => ({ name, place, animal, thing });
 
-const review = (host = 'u1') =>
+const review = (host = 'u1', extra = {}) =>
   gameRoom('REVIEW', {
     hostId: host,
+    challengesLeft: 3,
+    ...extra,
     review: {
       index: 2,
       letter: 'S',
@@ -272,6 +274,126 @@ describe('review', () => {
     await openRoom(review('u2'));
     await screen.findByText('Round 3 review');
     expect(screen.queryByRole('button', { name: 'Skip review' })).not.toBeInTheDocument();
+  });
+});
+
+describe('challenges and appeals', () => {
+  const flags = () => screen.getByRole('region', { name: 'Name' });
+
+  test('shows the challenges left, flags on others valid answers and Appeal only on my own unknown word', async () => {
+    await openRoom(review());
+    await screen.findByText('Round 3 review');
+    expect(screen.getByTestId('challenges-left')).toHaveTextContent('3 challenges left');
+    expect(screen.getByText(/Think an answer is wrong/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Appeal Sitar' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Challenge Sweden' })).toBeInTheDocument();
+    // Not my own valid answer, not a blank, not someone's invalid answer.
+    expect(screen.queryByRole('button', { name: 'Challenge Spain' })).toBeInTheDocument(); // u3's
+    expect(screen.queryByRole('button', { name: /Challenge Sara/ })).toBeInTheDocument(); // u2's
+    expect(within(flags()).getAllByRole('button')).toHaveLength(1);
+  });
+
+  test('asks first, then sends the challenge for that answer', async () => {
+    const user = userEvent.setup();
+    const socket = await openRoom(review(), {
+      'challenge:create': () => ok({ challengeId: 'x', type: 'challenge' }),
+    });
+    await user.click(await screen.findByRole('button', { name: 'Challenge Sweden' }));
+    expect(screen.getByRole('dialog')).toHaveTextContent('You have 3 left');
+    expect(socket.calls('challenge:create')).toHaveLength(0);
+    await user.click(screen.getByRole('button', { name: 'Check it' }));
+    await waitFor(() => expect(socket.calls('challenge:create')).toHaveLength(1));
+    expect(socket.calls('challenge:create')[0].payload).toEqual({
+      roundIndex: 2,
+      targetUserId: 'u2',
+      category: 'place',
+    });
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  test('cancel sends nothing', async () => {
+    const user = userEvent.setup();
+    const socket = await openRoom(review());
+    await user.click(await screen.findByRole('button', { name: 'Appeal Sitar' }));
+    expect(screen.getByRole('dialog')).toHaveTextContent('Appeal this answer?');
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    expect(socket.calls('challenge:create')).toHaveLength(0);
+  });
+
+  test('a refused challenge shows why and keeps the dialog open', async () => {
+    const user = userEvent.setup();
+    await openRoom(review(), {
+      'challenge:create': () => ({
+        ok: false,
+        error: { code: 'CHALLENGE_DUPLICATE', message: 'x' },
+      }),
+    });
+    await user.click(await screen.findByRole('button', { name: 'Challenge Sweden' }));
+    await user.click(screen.getByRole('button', { name: 'Check it' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('already been checked');
+  });
+
+  test('shows Checking while a check runs and hides the flag for that answer', async () => {
+    await openRoom(
+      review('u1', {
+        openChallenges: [
+          {
+            challengeId: 'c',
+            roundIndex: 2,
+            targetUserId: 'u2',
+            initiatorId: 'u3',
+            category: 'place',
+            type: 'challenge',
+          },
+        ],
+      }),
+    );
+    expect(await screen.findByTestId('checking-place')).toHaveTextContent('Checking…');
+    expect(screen.queryByRole('button', { name: 'Challenge Sweden' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'A word check is still running.' })).toBeDisabled();
+  });
+
+  test.each([
+    ['challenge', 'upheld', 'Confirmed'],
+    ['challenge', 'overturned', 'Removed'],
+    ['appeal', 'overturned', 'Accepted'],
+    ['appeal', 'upheld', 'Still invalid'],
+    ['challenge', 'inconclusive', 'Could not decide'],
+  ])('a finished %s that was %s shows "%s"', async (type, outcome, label) => {
+    await openRoom(
+      review('u1', { checked: [{ targetUserId: 'u2', category: 'place', type, outcome }] }),
+    );
+    expect(await screen.findByTestId('checked-place')).toHaveTextContent(label);
+  });
+
+  test('no buttons when none are left or the review is closing', async () => {
+    await openRoom(review('u1', { challengesLeft: 0 }));
+    await screen.findByText('Round 3 review');
+    expect(screen.getByTestId('challenges-left')).toHaveTextContent('0 challenges left');
+    expect(screen.queryByRole('button', { name: /Challenge |Appeal / })).not.toBeInTheDocument();
+  });
+
+  test('closing review waits for the last check', async () => {
+    const room = review();
+    room.review.closing = true;
+    await openRoom(room);
+    expect(await screen.findByText('Finishing the last check…')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Challenge |Appeal / })).not.toBeInTheDocument();
+  });
+
+  test('tells only the player who asked when a check could not run', async () => {
+    const socket = await openRoom(review());
+    await screen.findByText('Round 3 review');
+    act(() =>
+      socket.receive('challenge:resolved', { outcome: 'error', initiatorId: 'u2', roundIndex: 2 }),
+    );
+    expect(screen.queryByTestId('check-error')).not.toBeInTheDocument();
+    act(() =>
+      socket.receive('challenge:resolved', { outcome: 'error', initiatorId: 'u1', roundIndex: 2 }),
+    );
+    expect(await screen.findByTestId('check-error')).toHaveTextContent(
+      'Could not check right now, try again.',
+    );
   });
 });
 

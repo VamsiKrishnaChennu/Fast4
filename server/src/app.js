@@ -13,6 +13,7 @@ import { createAuthController } from './controllers/authController.js';
 import { healthRoutes } from './routes/health.js';
 import { authRoutes } from './routes/auth.js';
 import { singleRoutes } from './routes/single.js';
+import { adminRoutes } from './routes/admin.js';
 import { roomRoutes } from './routes/rooms.js';
 import { createSingleController } from './controllers/singleController.js';
 import { createLeaderboardService } from './services/leaderboardService.js';
@@ -139,6 +140,9 @@ export function createApp({
         auth: createAuth({ tokenService }),
       }),
     );
+  }
+  if (dictionary?.overturned) {
+    app.use('/api', adminRoutes({ dictionary, auth: createAuth({ tokenService }) }));
   }
   if (roomManager) {
     app.use('/api', roomRoutes({ roomManager, auth: createAuth({ tokenService }) }));

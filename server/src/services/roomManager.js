@@ -382,6 +382,8 @@ export function createRoomManager({
         pickLetter: game.pickLetter,
         store: game.store,
         timing: game.timing,
+        judge: game.judge,
+        dictionary: game.dictionary,
         logger: game.logger,
         emit: {
           room: (event, payload) => toRoom(room.code, event, payload),
@@ -417,6 +419,14 @@ export function createRoomManager({
     const room = inGame(userId);
     room.lastActivity = clock.now();
     return room.engine.submit(userId, roundIndex, answers);
+  }
+
+  /** A player challenges another player's answer or appeals their own. The check runs in the background. */
+  function challenge({ userId, ...data }) {
+    const room = inGame(userId);
+    room.lastActivity = clock.now();
+    const { challengeId, type } = room.engine.challenge(userId, data);
+    return { challengeId, type };
   }
 
   /** The host moves on from the review. */
@@ -522,6 +532,7 @@ export function createRoomManager({
     draft,
     submit,
     skipReview,
+    challenge,
     playAgain,
     disconnect,
     sweepIdle,

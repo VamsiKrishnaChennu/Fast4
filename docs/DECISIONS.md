@@ -115,3 +115,17 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **New shared constants:** `LIMITS.STARTING_SECONDS` (3), `LIMITS.ALONE_SECONDS` (30), `PHASES`, and the `answerSchema` used by `answer:draft` and `answer:submit`.
 - **Review and results screens do not have the challenge flags yet** (Phase 8): the "N challenges left" chip, the flag buttons and the "Checking" row from the designs arrive with challenges.
 - **Typed answers in group games** are saved on the server (drafts) instead of sessionStorage, so another device or a reload both restore them.
+
+## 2026-11-13 (Phase 8: challenges and appeals)
+
+- **Challenge logic lives in the game engine** (`engine.challenge`, `resolveChallenge`), next to the round's rows and the totals, so one place recomputes scores. `roomManager.challenge` only finds the player's room. The outside word check (`judge`) and the dictionary are injected, so tests use a fake judge.
+- **Every successful or failed check uses up one of the 3 challenges** (overturned, upheld and inconclusive). Only a check that could not run (error or timeout) is given back. The playbook says "used up" for upheld and inconclusive and is silent on overturned; counting it keeps the rule simple ("3 per game"). Failed challenges (upheld or inconclusive) are tracked separately for the tie-break.
+- **The acknowledgement comes right after validation**, not after the check, so the sender is not held for up to 6 seconds; the result arrives as `challenge:resolved`. A check that fails or times out sends `challenge:resolved` with `outcome: error` to the whole room; only the player who asked is shown "Could not check right now, try again".
+- **Totals are recomputed, not patched.** Each round remembers what it added to a player's totals; after a verdict changes, `scoreRound` runs again on the final verdicts (including the first-finisher bonus, which can move to an earlier or later finisher) and the difference is applied.
+- **Verdicts are saved once per round**, when the review ends (and at game end), through `store.updateRound`, which also updates `Round.bonusWinnerId`. Each finished check is saved as a `Challenge` document the moment it resolves; a duplicate insert is ignored. A check that could not run saves nothing.
+- **Review timing.** At the end of the review time the review stays open while a check is running (`review.closing`, no new challenges), then moves on. The host cannot skip while one runs. In test mode the review lasts 12 seconds instead of 5 so end-to-end challenge tests are not racy.
+- **`JudgeCache` has no TTL index**, like rooms and sessions: expired entries are ignored (and deleted) on read, and `sweep()` deletes the rest at start-up. This keeps the tests runnable on the stand-in database.
+- **A won appeal adds the word as an `external` dictionary entry** and the in-memory set at once, so the next game accepts it without any check. An overturned challenge on a dictionary word only increments `overturnedCount`; the admin endpoints list and remove such words.
+- **Reason shown for a removed answer.** A challenged answer that is overturned is stored with the reason `challenged` and shows "Removed after a check" with a "Removed" badge.
+- **Single-player mode has no challenges** (playbook non-goal).
+- The e2e server uses a fake judge (`tiger` invalid, words starting `tz` valid, everything else inconclusive); it never calls the internet.

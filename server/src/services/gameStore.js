@@ -1,4 +1,5 @@
 import { CATEGORIES } from '@fastfour/shared';
+import { Challenge } from '../models/Challenge.js';
 import { Game } from '../models/Game.js';
 import { Round } from '../models/Round.js';
 import { Submission } from '../models/Submission.js';
@@ -67,6 +68,49 @@ export function createGameStore({ clock = { now: () => Date.now() } } = {}) {
         })),
       );
       await Round.updateOne({ _id: roundId }, { $set: { bonusWinnerId, status: 'review' } });
+    },
+
+    /** Writes verdicts, points and the bonus winner again after a challenge changed them. */
+    async updateRound({ roundId, bonusWinnerId, rows }) {
+      for (const r of rows) {
+        await Submission.updateOne(
+          { roundId, userId: r.userId },
+          {
+            $set: {
+              answers: Object.fromEntries(
+                CATEGORIES.map((c) => {
+                  const a = r.answers[c];
+                  return [
+                    c,
+                    {
+                      raw: a.raw,
+                      normalized: a.normalized,
+                      verdict: a.verdict,
+                      verdictSource: a.source ?? undefined,
+                      reason: a.reason ?? undefined,
+                      matchKey: a.matchKey,
+                      count: a.count,
+                      points: a.points,
+                    },
+                  ];
+                }),
+              ),
+              firstFinisherBonus: r.firstFinisherBonus,
+              roundScore: r.roundScore,
+            },
+          },
+        );
+      }
+      await Round.updateOne({ _id: roundId }, { $set: { bonusWinnerId } });
+    },
+
+    /** Saves one finished challenge or appeal. A duplicate is ignored (each answer is checked once). */
+    async saveChallenge(data) {
+      try {
+        await Challenge.create(data);
+      } catch (err) {
+        if (err?.code !== 11000) throw err;
+      }
     },
 
     /** Writes the final result once and, when the game was played, updates every player's stats. */

@@ -49,12 +49,25 @@ const emailProvider = createMemoryEmailProvider();
 const dictionary = fixtureDictionary();
 // Fixed letters so scores are predictable: T, C, S, A, B.
 const groupLetters = letterSequence(['T', 'C', 'S', 'A', 'B']);
+// A fake outside word check, so end-to-end tests never call the internet:
+// words starting with "tz" and starting with "zz" are valid, "fake..." are invalid, everything else cannot be decided.
+const stubJudge = {
+  async check(category, word) {
+    if (word.startsWith('zz') || word.startsWith('tz'))
+      return { result: 'valid', source: 'wikidata' };
+    if (word.startsWith('fake') || word === 'tiger')
+      return { result: 'invalid', source: 'wikidata' };
+    return { result: 'inconclusive', source: 'wikidata' };
+  },
+};
 const roomManager = createRoomManager({
   game: {
     validation: createValidationService({ dictionary }),
     store: createGameStore(),
     pickLetter: groupLetters,
     timing: gameTiming(env),
+    judge: stubJudge,
+    dictionary,
   },
 });
 const app = createApp({

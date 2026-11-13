@@ -11,7 +11,7 @@ export function gameTiming(env) {
     Object.assign(timing, {
       startingMs: 500,
       graceMs: 300,
-      reviewMs: 5000,
+      reviewMs: 12000,
       resultMs: 2500,
       aloneMs: 4000,
     });

@@ -52,6 +52,7 @@ export async function startRealtimeServer({
   clock = createFakeTimers(),
   persist = false,
   letters = ['T', 'C', 'S', 'A', 'B'],
+  judge = null,
 } = {}) {
   const env = loadEnv(validEnvSource);
   const logger = createLogger(env);
@@ -65,6 +66,8 @@ export async function startRealtimeServer({
       validation: createValidationService({ dictionary }),
       store: createGameStore({ clock }),
       pickLetter: letterSequence(letters),
+      judge,
+      dictionary,
     },
   });
   const app = createApp({ env, logger, dictionary, roomManager });

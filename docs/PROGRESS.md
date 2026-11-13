@@ -78,3 +78,10 @@
 - Client: the toss, writing (autosaved drafts, locked state with the finished banner and who is still writing), review (cards per category, badges, bonus holder, skip for the host), standings with rank movement and the player's round breakdown, and game over (podium, facts, Play again for the host), in light and dark from designs 15 to 21. Client tests: 121.
 - End-to-end (desktop and 360 px phone): three browsers play five rounds from the lobby to the podium, with a reload that restores typed answers, bonus and shared scoring checked on screen, the host-only skip, Play again back to the lobby, and no page scrollbar on desktop in the writing, review, results and game over screens.
 - Not built yet (Phase 8): challenges and appeals (flags, "Checking", the challenge counter). Chat in the review and results phases arrives in Phase 9.
+
+## Phase 8 notes
+
+- Server: `Challenge` and `JudgeCache` models, MongoDB-backed judge cache (same interface as the in-memory one), challenge flow in the game engine (type decided by the server, limit of 3 with appeals counted, one check per answer, simultaneous duplicates rejected, error and timeout not counted, recomputed scores and first-finisher bonus, failed challenges feeding the tie-break, review waits for a pending check, host skip blocked while checking), `challenge:create` / `challenge:pending` / `challenge:resolved`, verdict and challenge persistence, won appeals added to the dictionary, `overturnedCount`, and the admin endpoints for overturned words. Server tests: 445.
+- Client: "N challenges left" chip, the help line, flags on other players' valid answers, Appeal on your own unknown word, the confirmation popup, the Checking state (shown to everyone and restored on reconnect), result badges (Confirmed, Removed, Accepted, Still invalid, Could not decide), the error notice, and the host's Skip waiting for a running check. Client tests: 134.
+- End-to-end: two browsers challenge and appeal live, with the result badges and counters checked on both screens, and no page scrollbar on desktop. E2E total: 56.
+- Not built yet: chat and moderation in the review (Phase 9).

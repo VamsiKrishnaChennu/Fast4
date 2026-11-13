@@ -48,6 +48,8 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
   const [connection, setConnection] = useState('connecting');
   const [room, setRoom] = useState(null);
   const [notice, setNotice] = useState(null);
+  /** The last word check that could not run (only the player who asked sees it). */
+  const [checkError, setCheckError] = useState(null);
   const socketRef = useRef(null);
   const roomRef = useRef(null);
   useEffect(() => {
@@ -96,6 +98,9 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
       }
     });
     socket.on('room:state', (state) => setRoom(state));
+    socket.on('challenge:resolved', (result) => {
+      if (result.outcome === 'error') setCheckError({ ...result, at: Date.now() });
+    });
     socket.on('room:kicked', ({ reason }) => {
       const before = roomRef.current;
       const host = before?.players.find((p) => p.userId === before.hostId);
@@ -150,6 +155,8 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
     [],
   );
 
+  const clearCheckError = useCallback(() => setCheckError(null), []);
+
   const value = useMemo(
     () => ({
       connection,
@@ -185,6 +192,10 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
       },
       submitAnswers: (roundIndex, answers) => emitAck('answer:submit', { roundIndex, answers }),
       skipReview: () => emitAck('review:skip'),
+      challenge: (roundIndex, targetUserId, category) =>
+        emitAck('challenge:create', { roundIndex, targetUserId, category }),
+      checkError,
+      clearCheckError,
       async playAgain() {
         const data = await emitAck('game:playAgain');
         setRoom(data.room);
@@ -194,7 +205,7 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         setRoom(data.room);
       },
     }),
-    [connection, room, notice, emitAck],
+    [connection, room, notice, emitAck, checkError, clearCheckError],
   );
 
   return <RealtimeContext.Provider value={value}>{children}</RealtimeContext.Provider>;

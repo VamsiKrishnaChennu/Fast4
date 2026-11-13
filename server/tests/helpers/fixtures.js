@@ -106,5 +106,17 @@ export function fixtureDictionary(extra = {}) {
       new Set([...words, ...(extra[c] ?? [])]),
     ]),
   );
-  return { has: (category, word) => sets[category].has(word), sets };
+  const overturned = new Map();
+  return {
+    has: (category, word) => sets[category].has(word),
+    async add(category, word) {
+      sets[category].add(word);
+    },
+    async markOverturned(category, word) {
+      const key = `${category}:${word}`;
+      overturned.set(key, (overturned.get(key) ?? 0) + 1);
+    },
+    overturned,
+    sets,
+  };
 }

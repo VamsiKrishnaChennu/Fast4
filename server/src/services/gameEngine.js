@@ -1,4 +1,4 @@
-import { CATEGORIES, LIMITS, PHASES } from '@fastfour/shared';
+import { CATEGORIES, LIMITS, PHASES, matchKey } from '@fastfour/shared';
 import { AppError } from '../utils/AppError.js';
 import { rankPlayers, scoreRound } from './scoringService.js';
 
@@ -30,6 +30,8 @@ const cleanAnswers = (answers) =>
  * @param {{ room: Function, socket: Function }} deps.emit sends events (to the room, to one socket)
  * @param {() => void} deps.onChange called after every phase change so the room state is resent
  * @param {object} [deps.timing] overrides for DEFAULT_TIMING
+ * @param {{ check: Function } | null} [deps.judge] the outside word check used by challenges and appeals
+ * @param {{ add: Function, markOverturned: Function } | null} [deps.dictionary] receives words that won an appeal
  * @param {import('pino').Logger} [deps.logger]
  */
 export function createGameEngine({
@@ -41,6 +43,8 @@ export function createGameEngine({
   emit,
   onChange,
   timing = {},
+  judge: judgeService = null,
+  dictionary = null,
   logger,
 }) {
   const t = { ...DEFAULT_TIMING, ...timing };
@@ -70,6 +74,8 @@ export function createGameEngine({
   let disposed = false;
   let previousRanks = new Map();
   let judgedRounds = 0;
+  /** Challenges and appeals used per player this game (a check that failed to run is not counted). */
+  const challengeUse = new Map(participants.map((id) => [id, 0]));
 
   const setPhase = (phase) => {
     room.phase = phase;
@@ -156,6 +162,9 @@ export function createGameEngine({
       startsAt: clock.now(),
       endsAt: null,
       roundId: null,
+      challenges: new Map(),
+      applied: new Map(),
+      dirty: false,
     };
     review = null;
     results = null;
@@ -249,30 +258,14 @@ export function createGameEngine({
       };
     });
     round.rows = rows;
-    for (const row of rows) {
-      const total = totals.get(row.userId);
-      total.totalScore += row.roundScore;
-      total.uniqueAnswers += row.uniqueAnswers;
-      if (row.firstFinisherBonus > 0) total.firstFinisherCount += 1;
-    }
-    syncScores();
+    applyRound();
     const bonusWinnerId = rows.find((r) => r.firstFinisherBonus > 0)?.userId ?? null;
     round.bonusWinnerId = bonusWinnerId;
     judgedRounds += 1;
-    round.roundIdPromise.then(async (roundId) => {
+    round.savedPromise = round.roundIdPromise.then(async (roundId) => {
       const gameId = await gameIdPromise;
       if (!roundId || !gameId) return;
-      await safe(() =>
-        store.saveRound({
-          roundId,
-          gameId,
-          bonusWinnerId,
-          rows: rows.map((r) => ({
-            ...r,
-            finishedAt: r.finishedAt === null ? null : new Date(r.finishedAt),
-          })),
-        }),
-      );
+      await safe(() => store.saveRound({ roundId, gameId, bonusWinnerId, rows: storedRows() }));
     });
     const reviewEndsAt = clock.now() + t.reviewMs;
     review = {
@@ -280,12 +273,102 @@ export function createGameEngine({
       letter,
       bonusWinnerId,
       reviewEndsAt,
+      closing: false,
       submissions: rows.map(publicRow),
     };
     setPhase(PHASES.REVIEW);
     emit.room('round:review', review);
-    arm(t.reviewMs, endReview);
+    arm(t.reviewMs, reviewTimeUp);
   }
+
+  const storedRows = () =>
+    round.rows.map((r) => ({
+      ...r,
+      finishedAt: r.finishedAt === null ? null : new Date(r.finishedAt),
+    }));
+
+  /**
+   * Makes the players' totals match the round's current rows. Recomputed, never patched: the
+   * contribution this round made last time is taken off first.
+   */
+  function applyRound() {
+    for (const row of round.rows) {
+      const total = totals.get(row.userId);
+      const before = round.applied.get(row.userId) ?? { score: 0, unique: 0, bonus: 0 };
+      total.totalScore += row.roundScore - before.score;
+      total.uniqueAnswers += row.uniqueAnswers - before.unique;
+      total.firstFinisherCount += (row.firstFinisherBonus > 0 ? 1 : 0) - before.bonus;
+      round.applied.set(row.userId, {
+        score: row.roundScore,
+        unique: row.uniqueAnswers,
+        bonus: row.firstFinisherBonus > 0 ? 1 : 0,
+      });
+    }
+    syncScores();
+  }
+
+  /** Scores the round again from the current verdicts, including the first-finisher bonus. */
+  function rescore() {
+    const scored = scoreRound(
+      round.rows.map((r) => ({
+        userId: r.userId,
+        finishedAt: r.finishedAt,
+        finishOrder: r.finishOrder,
+        answers: Object.fromEntries(
+          CATEGORIES.map((c) => [
+            c,
+            { verdict: r.answers[c].verdict, matchKey: r.answers[c].matchKey },
+          ]),
+        ),
+      })),
+    );
+    round.rows.forEach((r, i) => {
+      for (const c of CATEGORIES) {
+        r.answers[c].count = scored[i].answers[c].count;
+        r.answers[c].points = scored[i].answers[c].points;
+      }
+      r.firstFinisherBonus = scored[i].firstFinisherBonus;
+      r.uniqueAnswers = scored[i].uniqueAnswers;
+      r.roundScore = scored[i].roundScore;
+    });
+    round.bonusWinnerId = round.rows.find((r) => r.firstFinisherBonus > 0)?.userId ?? null;
+    applyRound();
+    review = {
+      ...review,
+      bonusWinnerId: round.bonusWinnerId,
+      submissions: round.rows.map(publicRow),
+    };
+  }
+
+  /** Writes changed verdicts and scores to the database once the round's first save is done. */
+  async function flushRound() {
+    if (!round?.dirty || !store.updateRound) return;
+    round.dirty = false;
+    const r = round;
+    await safe(async () => {
+      await r.savedPromise;
+      const roundId = await r.roundIdPromise;
+      if (!roundId) return;
+      await store.updateRound({
+        roundId,
+        bonusWinnerId: r.bonusWinnerId,
+        rows: r.rows.map((row) => ({ ...row })),
+      });
+    });
+  }
+
+  /** The review time is up: wait for any check that is still running, then move on. */
+  function reviewTimeUp() {
+    if (room.phase !== PHASES.REVIEW) return undefined;
+    if (pendingCount() > 0) {
+      review = { ...review, closing: true };
+      onChange();
+      return undefined;
+    }
+    return endReview();
+  }
+  const pendingCount = () =>
+    round ? [...round.challenges.values()].filter((c) => c.status === 'pending').length : 0;
 
   const publicRow = (r) => ({
     userId: r.userId,
@@ -312,6 +395,7 @@ export function createGameEngine({
 
   function endReview() {
     if (room.phase !== PHASES.REVIEW) return undefined;
+    flushRound();
     const board = standings();
     const resultsAt = clock.now();
     results = {
@@ -342,6 +426,7 @@ export function createGameEngine({
     timer = null;
     if (aloneTimer) clock.clearTimeout(aloneTimer);
     aloneTimer = null;
+    await flushRound();
     const ranked = standings();
     const winnerIds = ranked.filter((p) => p.rank === 1).map((p) => p.userId);
     gameOver = {
@@ -422,9 +507,205 @@ export function createGameEngine({
   function skipReview() {
     if (room.phase !== PHASES.REVIEW)
       throw new AppError('INVALID_PHASE', 'There is no review to skip.');
+    if (pendingCount() > 0)
+      throw new AppError('INVALID_PHASE', 'A word check is still running. Wait a moment.');
     if (timer) clock.clearTimeout(timer);
     timer = null;
     endReview();
+  }
+
+  // ----- challenges and appeals -----------------------------------------------------------------
+
+  const challengesLeft = (userId) => LIMITS.CHALLENGES_PER_PLAYER - (challengeUse.get(userId) ?? 0);
+
+  /**
+   * A player disputes an answer. The server decides whether it is a challenge (someone else's valid
+   * answer) or an appeal (their own answer rejected only for missing from the dictionary), checks
+   * the rules, then runs one outside word check in the background. There is no voting.
+   * @returns {{ challengeId: string, type: 'challenge'|'appeal', done: Promise<void> }} `done` settles when the check is resolved
+   * @throws {AppError} INVALID_PHASE, ROUND_EXPIRED, CHALLENGE_DUPLICATE, CHALLENGE_NOT_ALLOWED or CHALLENGE_LIMIT
+   */
+  function challenge(userId, { roundIndex, targetUserId, category }) {
+    if (!round?.entries.has(userId))
+      throw new AppError('INVALID_PHASE', 'You are not in this game.');
+    if (room.phase !== PHASES.REVIEW || review?.closing || roundIndex !== round.index) {
+      throw new AppError('INVALID_PHASE', 'Challenges are only open during the review.');
+    }
+    const row = round.rows.find((r) => r.userId === targetUserId);
+    if (!row || !CATEGORIES.includes(category)) {
+      throw new AppError('CHALLENGE_NOT_ALLOWED', 'That answer cannot be checked.');
+    }
+    const key = `${targetUserId}:${category}`;
+    if (round.challenges.has(key)) {
+      throw new AppError('CHALLENGE_DUPLICATE', 'That answer has already been checked.');
+    }
+    const answer = row.answers[category];
+    const own = userId === targetUserId;
+    const type = own ? 'appeal' : 'challenge';
+    const allowed = own
+      ? answer.verdict === 'invalid' && answer.reason === 'not_in_dictionary'
+      : answer.verdict === 'valid';
+    if (!allowed) throw new AppError('CHALLENGE_NOT_ALLOWED', 'That answer cannot be checked.');
+    if (challengesLeft(userId) <= 0) {
+      throw new AppError('CHALLENGE_LIMIT', 'You have used all your challenges this game.');
+    }
+
+    const record = {
+      id: `${round.index}-${targetUserId}-${category}`,
+      targetUserId,
+      initiatorId: userId,
+      category,
+      type,
+      word: answer.normalized,
+      wasDictionary: answer.source === 'dictionary',
+      status: 'pending',
+    };
+    round.challenges.set(key, record);
+    challengeUse.set(userId, (challengeUse.get(userId) ?? 0) + 1);
+    emit.room('challenge:pending', {
+      challengeId: record.id,
+      roundIndex: round.index,
+      targetUserId,
+      initiatorId: userId,
+      category,
+      type,
+    });
+    onChange();
+    return { challengeId: record.id, type, done: resolveChallenge(round, key, record) };
+  }
+
+  /** Waits for the word check (with a timeout), then applies the result. */
+  async function resolveChallenge(forRound, key, record) {
+    let outcome = null;
+    let source = 'none';
+    let failed = false;
+    try {
+      if (!judgeService) throw new Error('no judge');
+      const result = await withTimeout(judgeService.check(record.category, record.word));
+      source = result.source;
+      if (result.result === 'inconclusive') outcome = 'inconclusive';
+      else if (record.type === 'challenge') {
+        outcome = result.result === 'invalid' ? 'overturned' : 'upheld';
+      } else {
+        outcome = result.result === 'valid' ? 'overturned' : 'upheld';
+      }
+    } catch (err) {
+      failed = true;
+      logger?.info({ err, code: room.code }, 'word check could not run');
+    }
+    if (disposed || round !== forRound) return;
+
+    if (failed) {
+      // Not counted, not used up: the player may try again while the review is open.
+      forRound.challenges.delete(key);
+      challengeUse.set(
+        record.initiatorId,
+        Math.max(0, (challengeUse.get(record.initiatorId) ?? 1) - 1),
+      );
+      emit.room('challenge:resolved', {
+        challengeId: record.id,
+        roundIndex: forRound.index,
+        targetUserId: record.targetUserId,
+        initiatorId: record.initiatorId,
+        category: record.category,
+        type: record.type,
+        outcome: 'error',
+        challengesLeft: challengesLeft(record.initiatorId),
+      });
+      onChange();
+      finishPending();
+      return;
+    }
+
+    record.status = 'resolved';
+    record.outcome = outcome;
+    const countsAsFailed = outcome === 'upheld' || outcome === 'inconclusive';
+    if (countsAsFailed) totals.get(record.initiatorId).failedChallenges += 1;
+    const row = forRound.rows.find((r) => r.userId === record.targetUserId);
+    const answer = row.answers[record.category];
+    if (outcome === 'overturned') {
+      if (record.type === 'challenge') {
+        answer.verdict = 'invalid';
+        answer.source = 'challenge_invalid';
+        answer.reason = 'challenged';
+        answer.matchKey = undefined;
+      } else {
+        answer.verdict = 'valid';
+        answer.source = 'challenge_valid';
+        answer.reason = null;
+        answer.matchKey = matchKey(answer.normalized, record.category);
+      }
+      forRound.dirty = true;
+      rescore();
+    }
+    // Side effects on the word lists never block or fail the game.
+    if (outcome === 'overturned' && record.type === 'appeal') {
+      safe(() => dictionary?.add(record.category, record.word));
+    } else if (outcome === 'overturned' && record.wasDictionary) {
+      safe(() => dictionary?.markOverturned(record.category, record.word));
+    }
+    forRound.roundIdPromise.then(async (roundId) => {
+      const gameId = await gameIdPromise;
+      if (!roundId || !gameId || !store.saveChallenge) return;
+      await safe(() =>
+        store.saveChallenge({
+          gameId,
+          roundId,
+          targetUserId: record.targetUserId,
+          initiatorId: record.initiatorId,
+          category: record.category,
+          word: record.word,
+          type: record.type,
+          outcome,
+          source,
+          countsAsFailed,
+          resolvedAt: new Date(clock.now()),
+        }),
+      );
+    });
+    emit.room('challenge:resolved', {
+      challengeId: record.id,
+      roundIndex: forRound.index,
+      targetUserId: record.targetUserId,
+      initiatorId: record.initiatorId,
+      category: record.category,
+      type: record.type,
+      outcome,
+      source,
+      countsAsFailed,
+      bonusWinnerId: forRound.bonusWinnerId,
+      submission: publicRow(row),
+      submissions: forRound.rows.map(publicRow),
+      standings: standings(),
+      challengesLeft: challengesLeft(record.initiatorId),
+    });
+    onChange();
+    finishPending();
+  }
+
+  /** After a check ends: if the review time already ran out and nothing else is pending, move on. */
+  function finishPending() {
+    if (room.phase === PHASES.REVIEW && review?.closing && pendingCount() === 0) endReview();
+  }
+
+  /** Rejects after JUDGE_TIMEOUT_MS on the game clock so a stuck check cannot hold the review open. */
+  function withTimeout(promise) {
+    return new Promise((resolve, reject) => {
+      const handle = clock.setTimeout(
+        () => reject(new Error('word check timed out')),
+        LIMITS.JUDGE_TIMEOUT_MS + 1000,
+      );
+      Promise.resolve(promise).then(
+        (value) => {
+          clock.clearTimeout(handle);
+          resolve(value);
+        },
+        (err) => {
+          clock.clearTimeout(handle);
+          reject(err);
+        },
+      );
+    });
   }
 
   /** Called when someone connects, disconnects or leaves. */
@@ -468,7 +749,28 @@ export function createGameEngine({
           .sort((a, b) => a.order - b.order),
       };
     }
-    if (phase === PHASES.REVIEW && review) out.review = review;
+    if (phase === PHASES.REVIEW && review) {
+      out.review = review;
+      out.openChallenges = [...round.challenges.values()]
+        .filter((c) => c.status === 'pending')
+        .map((c) => ({
+          challengeId: c.id,
+          roundIndex: round.index,
+          targetUserId: c.targetUserId,
+          initiatorId: c.initiatorId,
+          category: c.category,
+          type: c.type,
+        }));
+      out.checked = [...round.challenges.values()]
+        .filter((c) => c.status === 'resolved')
+        .map((c) => ({
+          targetUserId: c.targetUserId,
+          category: c.category,
+          type: c.type,
+          outcome: c.outcome,
+        }));
+    }
+    if (userId && challengeUse.has(userId)) out.challengesLeft = challengesLeft(userId);
     if (phase === PHASES.ROUND_RESULT && results) out.results = results;
     if (phase === PHASES.GAME_OVER && gameOver) out.gameOver = gameOver;
     if (userId && round?.entries.has(userId) && writing) {
@@ -487,5 +789,5 @@ export function createGameEngine({
     aloneTimer = null;
   }
 
-  return { start, draft, submit, skipReview, playersChanged, state, dispose, standings };
+  return { start, draft, submit, skipReview, challenge, playersChanged, state, dispose, standings };
 }

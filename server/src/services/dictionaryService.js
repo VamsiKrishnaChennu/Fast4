@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { CATEGORIES } from '@fastfour/shared';
 import { DictionaryEntry } from '../models/DictionaryEntry.js';
 
@@ -45,6 +46,20 @@ export function createDictionaryService({ model = DictionaryEntry } = {}) {
         { upsert: true },
       );
       set.add(normalized);
+    },
+
+    /** A word the local dictionary accepted lost a challenge. Counted so an admin can review it. */
+    async markOverturned(category, normalized) {
+      await model.updateOne({ category, word: normalized }, { $inc: { overturnedCount: 1 } });
+    },
+
+    /** Admin: entries overturned at least `min` times, most first. */
+    async overturned(min = 3, limit = 200) {
+      return model
+        .find({ overturnedCount: mongoose.trusted({ $gte: min }) })
+        .sort({ overturnedCount: -1 })
+        .limit(limit)
+        .lean();
     },
 
     /** Admin only: removes a word from the database and from memory. */
