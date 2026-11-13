@@ -134,3 +134,13 @@ export const roomKickSchema = z.object({ userId: objectId }).strict();
 export const emptyPayloadSchema = z.object({}).strict().default({});
 
 export const roomCodeParamsSchema = z.object({ code: z.string().trim().max(20) }).strict();
+
+/** The four typed answers. Missing ones count as empty. */
+const typedAnswers = z
+  .object(Object.fromEntries(CATEGORIES.map((c) => [c, z.string().max(100).default('')])))
+  .strict();
+
+/** answer:draft and answer:submit. */
+export const answerSchema = z
+  .object({ roundIndex: z.number().int().min(0).max(LIMITS.ROUNDS_MAX), answers: typedAnswers })
+  .strict();

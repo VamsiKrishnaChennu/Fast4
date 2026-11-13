@@ -6,10 +6,14 @@ import { createApp } from './app.js';
 import { connectWithRetry, disconnectDb, isDbConnected } from './config/db.js';
 import { EnvError, loadEnv, loadEnvFile } from './config/env.js';
 import { createLogger } from './config/logger.js';
+import { gameTiming } from './config/gameTiming.js';
 import { createDictionaryService } from './services/dictionaryService.js';
+import { createGameStore } from './services/gameStore.js';
+import { pickLetter } from './services/letterService.js';
 import { createRoomManager } from './services/roomManager.js';
 import { createRoomPersistence } from './services/roomPersistence.js';
 import { createTokenService } from './services/tokenService.js';
+import { createValidationService } from './services/validationService.js';
 import { createRealtime } from './sockets/realtime.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +45,13 @@ async function main() {
   const roomManager = createRoomManager({
     onChange: (snapshot) => persistence.save(snapshot),
     onClose: (code) => persistence.close(code),
+    game: {
+      validation: createValidationService({ dictionary }),
+      store: createGameStore(),
+      pickLetter: (used) => pickLetter(used),
+      timing: gameTiming(env),
+      logger,
+    },
   });
 
   const app = createApp({

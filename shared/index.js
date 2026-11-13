@@ -4,3 +4,4 @@ export * from './src/errorCodes.js';
 export * from './src/schemas.js';
 export * from './src/normalize.js';
 export * from './src/roomCode.js';
+export * from './src/phases.js';

@@ -179,6 +179,16 @@ export function RealtimeProvider({ children, socketFactory = createSocket }) {
         setRoom(data.room);
       },
       kick: (userId) => emitAck('room:kick', { userId }),
+      /** Sends the typed answers so a reload or reconnect can bring them back. Never throws. */
+      sendDraft(roundIndex, answers) {
+        socketRef.current?.emit('answer:draft', { roundIndex, answers });
+      },
+      submitAnswers: (roundIndex, answers) => emitAck('answer:submit', { roundIndex, answers }),
+      skipReview: () => emitAck('review:skip'),
+      async playAgain() {
+        const data = await emitAck('game:playAgain');
+        setRoom(data.room);
+      },
       async startGame() {
         const data = await emitAck('game:start');
         setRoom(data.room);

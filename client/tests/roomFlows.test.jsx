@@ -243,7 +243,7 @@ describe('the lobby as host', () => {
       },
     });
     await user.click(screen.getByRole('button', { name: 'Start game' }));
-    expect(await screen.findByText('Get ready!')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Get ready' })).toBeInTheDocument();
     expect(socket.calls('game:start')).toHaveLength(1);
   });
 

@@ -3,13 +3,15 @@ import { io as connectClient } from 'socket.io-client';
 import { loadEnv } from '../../src/config/env.js';
 import { createLogger } from '../../src/config/logger.js';
 import { createApp } from '../../src/app.js';
+import { createGameStore } from '../../src/services/gameStore.js';
 import { createRoomManager } from '../../src/services/roomManager.js';
+import { createValidationService } from '../../src/services/validationService.js';
 import { createRoomPersistence } from '../../src/services/roomPersistence.js';
 import { createTokenService } from '../../src/services/tokenService.js';
 import { createRealtime } from '../../src/sockets/realtime.js';
 import { validEnvSource } from './createTestApp.js';
 import { fixtureDictionary } from './fixtures.js';
-import { signUp } from './singleHelpers.js';
+import { letterSequence, signUp } from './singleHelpers.js';
 
 /** Timers the test moves by hand, so grace periods need no real waiting. */
 export function createFakeTimers(start = 1_000_000) {
@@ -46,16 +48,26 @@ export function createFakeTimers(start = 1_000_000) {
 }
 
 /** A real HTTP and Socket.IO server on a random port, using the fake timers for room rules. */
-export async function startRealtimeServer({ clock = createFakeTimers(), persist = false } = {}) {
+export async function startRealtimeServer({
+  clock = createFakeTimers(),
+  persist = false,
+  letters = ['T', 'C', 'S', 'A', 'B'],
+} = {}) {
   const env = loadEnv(validEnvSource);
   const logger = createLogger(env);
+  const dictionary = fixtureDictionary();
   const persistence = persist ? createRoomPersistence({ logger }) : undefined;
   const roomManager = createRoomManager({
     clock,
     onChange: (snapshot) => persistence?.save(snapshot),
     onClose: (code) => persistence?.close(code),
+    game: {
+      validation: createValidationService({ dictionary }),
+      store: createGameStore({ clock }),
+      pickLetter: letterSequence(letters),
+    },
   });
-  const app = createApp({ env, logger, dictionary: fixtureDictionary(), roomManager });
+  const app = createApp({ env, logger, dictionary, roomManager });
   const server = http.createServer(app);
   const realtime = createRealtime({
     httpServer: server,

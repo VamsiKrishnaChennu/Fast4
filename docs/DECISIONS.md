@@ -101,3 +101,17 @@ Source of truth for the spec is the project transcript (Final decisions) and the
 - **Chat is not in the lobby yet.** The player lobby design shows a chat panel; it arrives with the chat service in Phase 9. Until then the player lobby shows the avatar row, the settings line and the waiting bar.
 - **Round count is any whole number from 5 to 20** in rooms (the design's stepper), unlike solo, which offers 5, 10, 15 or 20.
 - **Server shutdown** sends `error:notice SERVER_RESTARTING` to everyone before closing.
+
+## 2026-11-13 (Phase 7: group game engine)
+
+- **One engine per room, held by the room object** (`room.engine`, created in `roomManager.start`). It lives in `server/src/services/gameEngine.js` (the playbook's `game/` folder was not used because the room manager already lives in `services/`). It takes the clock, validation, letter picker, store and event senders as dependencies, so tests drive whole games with a fake clock and an in-memory store.
+- **Each player gets their own `room:state` during a game** (instead of one broadcast), because it carries `myDraft` and `mySubmitted`. The lobby still uses one broadcast. The client screens render only from the snapshot, so a reload or reconnect needs nothing else.
+- **Early finish.** When every connected player has pressed Done the round is judged at once (no 1.5 s wait). Otherwise it ends at 60 s, waits 1.5 s for late Done presses, then judges. A Done that arrives in that wait counts and ranks after everyone who was on time.
+- **Bonus for a Done that is not all valid.** As in the playbook, the bonus goes to the earliest finisher with four valid answers; if that is nobody, nobody gets it. Players who never pressed Done are never eligible.
+- **Players who are away.** A disconnected player's last draft is judged. If fewer than two players stay connected the game waits 30 seconds, then ends and ranks by current scores (`reason: alone`). A game that ends before any round was judged is saved as `abandoned` and changes no stats.
+- **Play again** drops players who left, resets scores and returns the room to the lobby; the next `game:start` makes a new engine and a new `Game` document.
+- **`roomId` is not stored on the Game** yet: rooms have no stable link to games before Phase 9 (history). Added to the Phase 9 list.
+- **Test timings.** With `NODE_ENV=test` and `TEST_ROUND_SECONDS`, the pauses between phases also shrink (start 0.5 s, wait 0.3 s, review 5 s, results 2.5 s, alone 4 s) so end-to-end games take about 30 seconds. Production always uses the real values.
+- **New shared constants:** `LIMITS.STARTING_SECONDS` (3), `LIMITS.ALONE_SECONDS` (30), `PHASES`, and the `answerSchema` used by `answer:draft` and `answer:submit`.
+- **Review and results screens do not have the challenge flags yet** (Phase 8): the "N challenges left" chip, the flag buttons and the "Checking" row from the designs arrive with challenges.
+- **Typed answers in group games** are saved on the server (drafts) instead of sessionStorage, so another device or a reload both restore them.

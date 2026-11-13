@@ -6,6 +6,7 @@ import Button from '../components/common/Button.jsx';
 import Icon from '../components/common/Icon.jsx';
 import Modal from '../components/common/Modal.jsx';
 import ConnectionBanner from '../components/group/ConnectionBanner.jsx';
+import GroupGame from '../components/group/game/GroupGame.jsx';
 import Lobby from '../components/group/Lobby.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useRealtime } from '../context/RealtimeContext.jsx';
@@ -17,7 +18,7 @@ const BLOCKED = {
   FORBIDDEN: S.group.forbidden,
 };
 
-/** One screen for everything in a room. Today that is the lobby; game phases arrive in Phase 7. */
+/** One screen for everything in a room: the lobby, then the screen for each game phase. */
 export default function RoomPage() {
   const { code: rawCode } = useParams();
   const code = normalizeRoomCode(rawCode);
@@ -114,16 +115,5 @@ export default function RoomPage() {
     return <Lobby room={room} me={user.id} onLeave={leave} busy={leaving} />;
   }
 
-  return (
-    <main className="ff-page ff-page--narrow ff-center" style={{ justifyContent: 'center' }}>
-      <ConnectionBanner />
-      <div className="ff-hero">
-        <BoardLogo size={140} />
-      </div>
-      <h1 className="ff-title">{S.lobby.startingTitle}</h1>
-      <p className="ff-muted" role="status">
-        {S.lobby.startingBody}
-      </p>
-    </main>
-  );
+  return <GroupGame room={room} me={user.id} onLeave={leave} />;
 }

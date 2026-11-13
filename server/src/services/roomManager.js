@@ -7,6 +7,7 @@ import {
   ROOM_DEFAULTS,
 } from '@fastfour/shared';
 import { AppError } from '../utils/AppError.js';
+import { createGameEngine } from './gameEngine.js';
 
 const realClock = {
   now: () => Date.now(),
@@ -31,6 +32,8 @@ const noop = () => {};
  * @param {(socketId: string, code: string) => void} [deps.notify.leave] takes it out again
  * @param {(snapshot: object) => void} [deps.onChange] called after every change worth saving
  * @param {(code: string) => void} [deps.onClose] called when a room is removed
+ * @param {{ validation: object, store: object, pickLetter: Function, timing?: object, logger?: object }} [deps.game]
+ *   what the game engine needs; without it a started room stays in the STARTING phase
  */
 export function createRoomManager({
   clock = realClock,
@@ -38,6 +41,7 @@ export function createRoomManager({
   notify = {},
   onChange = noop,
   onClose = noop,
+  game = null,
 } = {}) {
   let channels = { room: noop, socket: noop, join: noop, leave: noop, ...notify };
   const toRoom = (...args) => channels.room(...args);
@@ -64,8 +68,8 @@ export function createRoomManager({
     score: p.score,
   });
 
-  /** What a player's screen needs to draw the room. */
-  function snapshot(room) {
+  /** What a player's screen needs to draw the room. `userId` adds that player's own draft. */
+  function snapshot(room, userId) {
     return {
       code: room.code,
       status: room.status,
@@ -75,6 +79,7 @@ export function createRoomManager({
       hostId: room.hostId,
       standings: [],
       openChallenges: [],
+      ...(room.engine ? room.engine.state(userId) : {}),
     };
   }
 
@@ -100,7 +105,19 @@ export function createRoomManager({
     room.lastActivity = clock.now();
     onChange(persistable(room));
   };
-  const sendState = (room) => toRoom(room.code, 'room:state', snapshot(room));
+  /**
+   * Sends the room state. In the lobby everyone gets the same copy; during a game each player gets
+   * their own (it carries their draft and whether they pressed Done).
+   */
+  const sendState = (room) => {
+    if (!room.engine) {
+      toRoom(room.code, 'room:state', snapshot(room));
+      return;
+    }
+    for (const p of room.players.values()) {
+      if (p.socketId) toSocket(p.socketId, 'room:state', snapshot(room, p.userId));
+    }
+  };
 
   function requireRoom(code) {
     const room = rooms.get(normalizeRoomCode(code));
@@ -127,6 +144,7 @@ export function createRoomManager({
   }
 
   function dropRoom(room) {
+    room.engine?.dispose();
     for (const p of room.players.values()) {
       if (p.graceTimer) clock.clearTimeout(p.graceTimer);
       if (byUser.get(p.userId) === room.code) byUser.delete(p.userId);
@@ -180,6 +198,7 @@ export function createRoomManager({
       toRoom(room.code, 'room:hostChanged', { hostId: room.hostId });
     }
     touch(room);
+    room.engine?.playersChanged();
     sendState(room);
   }
 
@@ -272,8 +291,9 @@ export function createRoomManager({
       join(socketId, room.code);
       if (!wasConnected) toRoom(room.code, 'room:playerReconnected', { userId: user.id });
       touch(room);
+      room.engine?.playersChanged();
       sendState(room);
-      return { room: snapshot(room), rejoined: true };
+      return { room: snapshot(room, user.id), rejoined: true };
     }
 
     if (room.kicked.has(user.id)) {
@@ -334,8 +354,8 @@ export function createRoomManager({
   }
 
   /**
-   * Locks the room and begins the game. The rounds themselves are the game engine's job
-   * (Phase 7); until it is attached the room stays in the STARTING phase.
+   * Locks the room and starts the game engine, which then runs the rounds on its own clock.
+   * Without a game configuration (some tests) the room just stays in the STARTING phase.
    * @returns {object} the snapshot
    */
   function start({ userId }) {
@@ -352,10 +372,79 @@ export function createRoomManager({
     }
     room.status = 'in_progress';
     room.phase = 'STARTING';
+    for (const p of room.players.values()) p.score = 0;
     toRoom(room.code, 'game:started', { totalRounds: room.settings.rounds });
+    if (game) {
+      room.engine = createGameEngine({
+        room,
+        clock,
+        validation: game.validation,
+        pickLetter: game.pickLetter,
+        store: game.store,
+        timing: game.timing,
+        logger: game.logger,
+        emit: {
+          room: (event, payload) => toRoom(room.code, event, payload),
+          socket: toSocket,
+        },
+        onChange: () => {
+          touch(room);
+          sendState(room);
+        },
+      });
+      room.engine.start();
+    } else {
+      touch(room);
+      sendState(room);
+    }
+    return snapshot(room, userId);
+  }
+
+  function inGame(userId) {
+    const room = rooms.get(byUser.get(userId));
+    if (!room?.engine) throw new AppError('INVALID_PHASE', 'There is no game running.');
+    return room;
+  }
+
+  /** The player's typed answers, kept in memory until the round ends. Never fails loudly. */
+  function draft({ userId, roundIndex, answers }) {
+    const room = rooms.get(byUser.get(userId));
+    room?.engine?.draft(userId, roundIndex, answers);
+  }
+
+  /** The player pressed Done. @returns {{ finishOrder: number }} */
+  function submit({ userId, roundIndex, answers }) {
+    const room = inGame(userId);
+    room.lastActivity = clock.now();
+    return room.engine.submit(userId, roundIndex, answers);
+  }
+
+  /** The host moves on from the review. */
+  function skipReview({ userId }) {
+    const room = inGame(userId);
+    requireHost(room, userId);
+    room.engine.skipReview();
+  }
+
+  /** The host takes everyone back to the lobby after a game. Players who left are dropped. */
+  function playAgain({ userId }) {
+    const room = rooms.get(byUser.get(userId));
+    if (!room) throw new AppError('ROOM_NOT_FOUND', 'You are not in a room.');
+    requireHost(room, userId);
+    if (room.phase !== 'GAME_OVER') {
+      throw new AppError('INVALID_PHASE', 'The game is not over yet.');
+    }
+    room.engine?.dispose();
+    room.engine = null;
+    for (const p of [...room.players.values()]) {
+      if (p.left) room.players.delete(p.userId);
+      else p.score = 0;
+    }
+    room.status = 'lobby';
+    room.phase = 'LOBBY';
     touch(room);
     sendState(room);
-    return snapshot(room);
+    return snapshot(room, userId);
   }
 
   /** A socket dropped. The seat is kept for the grace period; then the player leaves. */
@@ -367,6 +456,7 @@ export function createRoomManager({
     player.socketId = null;
     toRoom(room.code, 'room:playerDisconnected', { userId });
     touch(room);
+    room.engine?.playersChanged();
     sendState(room);
     player.graceTimer = clock.setTimeout(() => {
       player.graceTimer = null;
@@ -396,7 +486,7 @@ export function createRoomManager({
   /** @returns {object|null} the snapshot of the room this player is in */
   function findByUser(userId) {
     const room = rooms.get(byUser.get(userId));
-    return room ? snapshot(room) : null;
+    return room ? snapshot(room, userId) : null;
   }
 
   /**
@@ -429,6 +519,10 @@ export function createRoomManager({
     updateSettings,
     kick,
     start,
+    draft,
+    submit,
+    skipReview,
+    playAgain,
     disconnect,
     sweepIdle,
     findByUser,

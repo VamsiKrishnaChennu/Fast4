@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import {
   C2S,
+  answerSchema,
   emptyPayloadSchema,
   roomCreateSchema,
   roomJoinSchema,
@@ -143,6 +144,18 @@ export function createRealtime({ httpServer, env, logger, tokenService, roomMana
     register(socket, C2S.GAME_START, emptyPayloadSchema, () => ({
       room: roomManager.start({ userId: user.id }),
     }));
+    register(socket, C2S.GAME_PLAY_AGAIN, emptyPayloadSchema, () => ({
+      room: roomManager.playAgain({ userId: user.id }),
+    }));
+    register(socket, C2S.ANSWER_DRAFT, answerSchema, (data) => {
+      roomManager.draft({ userId: user.id, ...data });
+    });
+    register(socket, C2S.ANSWER_SUBMIT, answerSchema, (data) =>
+      roomManager.submit({ userId: user.id, ...data }),
+    );
+    register(socket, C2S.REVIEW_SKIP, emptyPayloadSchema, () => {
+      roomManager.skipReview({ userId: user.id });
+    });
     register(socket, C2S.TIME_SYNC, emptyPayloadSchema, () => ({ serverNow: Date.now() }));
 
     socket.on('disconnect', () => roomManager.disconnect({ userId: user.id, socketId: socket.id }));

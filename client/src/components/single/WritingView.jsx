@@ -32,6 +32,11 @@ export default function WritingView({
   onLeave,
   locked,
   error,
+  autoSubmit = true,
+  onTimeUp,
+  side,
+  bottom,
+  hideTimeUp = false,
 }) {
   const left = useCountdown(round.endsAt);
   const sent = useRef(false);
@@ -44,12 +49,12 @@ export default function WritingView({
   }, []);
 
   useEffect(() => {
-    if (left === 0 && !sent.current) {
-      sent.current = true;
-      setTimeUp(true);
-      onSubmit();
-    }
-  }, [left, onSubmit]);
+    if (left !== 0 || sent.current) return;
+    sent.current = true;
+    setTimeUp(true);
+    if (autoSubmit) onSubmit();
+    else onTimeUp?.();
+  }, [left, onSubmit, autoSubmit, onTimeUp]);
 
   useEffect(() => {
     if (error) sent.current = false;
@@ -104,6 +109,7 @@ export default function WritingView({
               style={{ width: `${Math.min(100, (left / (roundSeconds * 1000)) * 100)}%` }}
             />
           </div>
+          {side}
         </div>
         <form
           className="ff-write__form"
@@ -137,7 +143,11 @@ export default function WritingView({
                   />
                 </span>
                 <span className={`ff-answer__check${good ? ' is-on' : ''}`} aria-hidden="true">
-                  {good && <Icon name="check" size={16} />}
+                  {locked ? (
+                    <Icon name="lock" size={16} />
+                  ) : (
+                    good && <Icon name="check" size={16} />
+                  )}
                 </span>
               </label>
             );
@@ -148,18 +158,21 @@ export default function WritingView({
               {error}
             </div>
           )}
-          <Button type="submit" disabled={!allGood || locked}>
-            <span className="ff-btn__icon">
-              <Icon name="check" size={20} />
-            </span>
-            {S.single.done}
-          </Button>
+          {locked && autoSubmit === false ? null : (
+            <Button type="submit" disabled={!allGood || locked}>
+              <span className="ff-btn__icon">
+                <Icon name="check" size={20} />
+              </span>
+              {S.single.done}
+            </Button>
+          )}
+          {bottom}
         </form>
       </div>
       <div className="ff-sr" role="status" aria-live="polite">
         {announce}
       </div>
-      {timeUp && !error && (
+      {timeUp && !error && !hideTimeUp && (
         <Modal title={S.single.timeUpTitle} icon={<Icon name="timer" size={34} />}>
           <p className="ff-muted ff-modal__body">{S.single.timeUpBody}</p>
           <div className="ff-dots ff-dots--color" aria-hidden="true">

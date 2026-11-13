@@ -31,6 +31,8 @@ export const LIMITS = {
   ROOM_IDLE_MINUTES: 30,
   ROOM_TTL_HOURS: 6,
   ROUND_RESULT_SECONDS: 10,
+  STARTING_SECONDS: 3,
+  ALONE_SECONDS: 30,
   AGE_MIN: 13,
   REPORT_REASONS: ['harassment', 'hate', 'sexual', 'spam', 'cheating', 'other'],
 };

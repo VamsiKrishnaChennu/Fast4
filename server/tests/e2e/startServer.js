@@ -10,6 +10,9 @@ import { createApp } from '../../src/app.js';
 import { loadEnv } from '../../src/config/env.js';
 import { createLogger } from '../../src/config/logger.js';
 import { isDbConnected } from '../../src/config/db.js';
+import { gameTiming } from '../../src/config/gameTiming.js';
+import { createGameStore } from '../../src/services/gameStore.js';
+import { createValidationService } from '../../src/services/validationService.js';
 import { createMemoryEmailProvider } from '../../src/services/emailService.js';
 import { fixtureDictionary } from '../helpers/fixtures.js';
 import { letterSequence } from '../helpers/singleHelpers.js';
@@ -43,14 +46,24 @@ const env = loadEnv({
   TEST_LETTER_REVEAL_MS: '600',
 });
 const emailProvider = createMemoryEmailProvider();
-const roomManager = createRoomManager();
+const dictionary = fixtureDictionary();
+// Fixed letters so scores are predictable: T, C, S, A, B.
+const groupLetters = letterSequence(['T', 'C', 'S', 'A', 'B']);
+const roomManager = createRoomManager({
+  game: {
+    validation: createValidationService({ dictionary }),
+    store: createGameStore(),
+    pickLetter: groupLetters,
+    timing: gameTiming(env),
+  },
+});
 const app = createApp({
   env,
   logger: createLogger(env),
   readinessChecks: [{ name: 'database', check: isDbConnected }],
   clientDist: path.join(root, 'client', 'dist'),
   emailProvider,
-  dictionary: fixtureDictionary(),
+  dictionary,
   roomManager,
   // Fixed letters so scores are predictable: T, C, S, A, B.
   pickLetter: letterSequence(['T', 'C', 'S', 'A', 'B']),

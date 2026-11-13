@@ -24,6 +24,10 @@ export function createFakeSocket(handlers = {}) {
     connect() {
       socket.open();
     },
+    /** A send with no answer expected (such as answer:draft). */
+    emit(event, payload) {
+      socket.emitted.push({ event, payload });
+    },
     timeout() {
       return {
         emit(event, payload, cb) {

@@ -90,8 +90,8 @@ test('create a room, join by code, edit settings, see who is there, then start',
   await page.getByRole('button', { name: 'Cancel' }).click();
 
   await page.getByRole('button', { name: 'Start game' }).click();
-  await expect(page.getByText('Get ready!')).toBeVisible();
-  await expect(guest.page.getByText('Get ready!')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Get ready' })).toBeVisible();
+  await expect(guest.page.getByRole('heading', { name: 'Get ready' })).toBeVisible();
   await guest.context.close();
 });
 
